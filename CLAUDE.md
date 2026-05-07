@@ -1,4 +1,42 @@
-# CLAUDE.md - Project Conventions
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Commands
+
+```bash
+npm run dev          # start dev server (localhost:3000)
+npm run build        # production build
+npm run lint         # ESLint check
+npm run lint:fix     # ESLint auto-fix
+npm run test         # Vitest watch mode
+npm run test:cov     # Vitest with coverage report
+```
+
+Run a single test file:
+```bash
+npx vitest run src/features/auth/service/auth.service.spec.ts
+```
+
+Pre-commit hook (Husky) runs `lint → build → test` in sequence and blocks the commit on failure.
+
+Required env vars (see `.env.example`):
+- `NEXTAUTH_URL`, `NEXTAUTH_SECRET` — NextAuth
+- `MONGO_URI` — MongoDB connection string
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — Google OAuth
+
+## Request Flow
+
+Understanding how a mutation flows through the stack (requires reading multiple files):
+
+1. **Client** calls `http.post('/auth/register', body)` — `http` is a singleton `HttpClient` from `src/shared/lib/http.ts` with `baseUrl='/api'`
+2. **API route** (`src/app/api/...`) calls `validateBody(req, ZodSchema)` from `src/shared/middleware/validate-body.ts`; returns 400 on invalid input
+3. **Service** (`src/features/<feature>/service/`) receives validated data, returns `ServiceResult<T>` — never throws
+4. **Repository** (`src/features/<feature>/repository/`) calls `await mongo.connect()`, runs raw Mongoose query, returns typed document
+
+Route groups: `(public)` for unauthenticated pages, `(protected)` for authenticated pages. `src/proxy.ts` is the Next.js middleware — it inspects `authjs.session-token` cookie only (no DB/Node imports).
+
+Password hashing uses SHA-256 via Node.js `crypto` (not bcrypt). Auth config lives in `src/shared/lib/auth.ts`; session properties (`id`, `role`, `avatar`) are cast inline — no `next-auth.d.ts`.
 
 ## 0. CRITICAL — Architecture Discipline and Coding Rules
 
