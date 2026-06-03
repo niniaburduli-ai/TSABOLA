@@ -1,15 +1,10 @@
-import { createHash } from 'crypto';
-
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 
 import { userRepository } from '@/features/auth/repository/user.repository';
 import { upsertOAuthUserService } from '@/features/auth/service/auth.service';
-
-function hashPassword(password: string): string {
-  return createHash('sha256').update(password).digest('hex');
-}
+import { hashPassword } from '@/shared/utils/password';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [

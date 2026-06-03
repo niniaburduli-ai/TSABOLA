@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 
-
+import { useLogin } from '@/features/auth/hooks/use-login';
+import { useAuthStore } from '@/features/auth/hooks/useAuthStore';
+import { LoginSchema, LoginType } from '@/features/auth/validations/auth.validation';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import {
@@ -16,10 +18,6 @@ import {
   FormMessage,
 } from '@/shared/components/ui/form';
 import { Input } from '@/shared/components/ui/input';
-
-import { useLogin } from '../hooks/use-login';
-import { useAuthStore } from '../hooks/useAuthStore';
-import { LoginSchema, LoginType } from '../validations/auth.validation';
 
 export const LoginForm = () => {
   const { login } = useLogin();

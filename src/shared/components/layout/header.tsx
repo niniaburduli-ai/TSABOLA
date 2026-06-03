@@ -1,4 +1,5 @@
 'use client';
+import { Triangle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -6,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useLogout } from '@/features/auth/hooks/use-logout';
 import { ThemeToggle } from '@/shared/components/layout/theme-toggle';
 import { Button } from '@/shared/components/ui/button';
+import { APP_NAME } from '@/shared/const/app.const';
 
 type SessionUser = {
   name?: string | null;
@@ -30,14 +32,12 @@ export const Header = () => {
       <Link href="/" className="flex items-center gap-2.5">
         <span
           aria-hidden="true"
-          className="inline-flex h-7 w-7 items-center justify-center rounded-[6px] bg-foreground text-background"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-foreground text-background"
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <polygon points="7,1 13,11 1,11" fill="currentColor" />
-          </svg>
+          <Triangle className="size-3 fill-current" />
         </span>
         <span className="text-sm font-semibold tracking-tight text-foreground">
-          NextJS Starter
+          {APP_NAME}
         </span>
       </Link>
 

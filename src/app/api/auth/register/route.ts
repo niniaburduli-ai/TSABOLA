@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const validated = await validateBody(req, SignUpSchema);
     if (validated instanceof NextResponse) return validated;
 
-    const {data, status} = await registerService(validated.data);
+    const { data, status } = await registerService(validated.data);
     return NextResponse.json(data, { status });
   } catch {
     return NextResponse.json({ error: 'INTERNAL_ERROR' }, { status: 500 });

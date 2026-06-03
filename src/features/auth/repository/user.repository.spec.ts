@@ -33,18 +33,22 @@ const fakeUser = {
   role: 'user' as const,
 };
 
+function makeLeanQuery<T>(result: T) {
+  return { lean: () => ({ exec: () => Promise.resolve(result) }) };
+}
+
 describe('userRepository', () => {
   beforeEach(() => vi.clearAllMocks());
 
   it('findByEmail connects and calls findOne', async () => {
-    (mockModel.findOne as ReturnType<typeof vi.fn>).mockReturnValueOnce({ lean: () => Promise.resolve(fakeUser) });
+    (mockModel.findOne as ReturnType<typeof vi.fn>).mockReturnValueOnce(makeLeanQuery(fakeUser));
     const result = await userRepository.findByEmail('alice@example.com');
     expect(mockMongo.connect).toHaveBeenCalled();
     expect(result).toEqual(fakeUser);
   });
 
   it('findByEmail returns null when not found', async () => {
-    (mockModel.findOne as ReturnType<typeof vi.fn>).mockReturnValueOnce({ lean: () => Promise.resolve(null) });
+    (mockModel.findOne as ReturnType<typeof vi.fn>).mockReturnValueOnce(makeLeanQuery(null));
     const result = await userRepository.findByEmail('none@test.com');
     expect(result).toBeNull();
   });

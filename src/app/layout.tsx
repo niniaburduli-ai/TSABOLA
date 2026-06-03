@@ -1,6 +1,7 @@
 import { Geist_Mono, Inter } from 'next/font/google';
 import { type ReactNode } from 'react';
 
+import { APP_DESCRIPTION, APP_NAME } from '@/shared/const/app.const';
 import { ThemeProvider } from '@/shared/providers/theme-provider';
 
 import type { Metadata } from 'next';
@@ -18,10 +19,9 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-
 export const metadata: Metadata = {
-  title: 'NextJS Starter',
-  description: 'A production-ready Next.js starter with auth, database, and state management',
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

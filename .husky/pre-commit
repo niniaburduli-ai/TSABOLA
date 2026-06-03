@@ -7,4 +7,4 @@ echo "---BUILD PROJECT---"
 npm run build
 
 echo "---RUN TESTS---"
-npm run test
+npm run test:run

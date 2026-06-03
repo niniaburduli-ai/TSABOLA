@@ -1,13 +1,8 @@
-import { createHash } from 'crypto';
-
 import { userRepository } from '@/features/auth/repository/user.repository';
 import { User } from '@/features/auth/types/auth.types';
 import { LoginType, SignUpType } from '@/features/auth/validations/auth.validation';
 import { ServiceResult } from '@/shared/types/common';
-
-function hashPassword(password: string): string {
-  return createHash('sha256').update(password).digest('hex');
-}
+import { hashPassword } from '@/shared/utils/password';
 
 export async function registerService(
   input: SignUpType

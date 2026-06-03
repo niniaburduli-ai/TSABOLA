@@ -1,203 +1,158 @@
 # Next.js Starter
 
-A production-ready Next.js 16 starter with authentication, MongoDB, Zustand state management, and shadcn/ui.
+Production-ready Next.js 16 starter with App Router, TypeScript, Tailwind CSS,
+shadcn/ui, NextAuth v5, MongoDB via Mongoose, Zustand, Zod, and Vitest.
 
-## Tech Stack
+## Stack
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript (strict) |
-| Auth | NextAuth v5 — Credentials + Google OAuth |
-| Database | MongoDB via Mongoose |
-| Styling | Tailwind CSS + shadcn/ui (new-york) |
-| Validation | Zod + react-hook-form |
-| State | Zustand (vanilla store + context) |
-| Testing | Vitest |
-| Linting | ESLint + import/order |
-| Git hooks | Husky (pre-commit: lint, build, test) |
-
----
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── layout.tsx                        # Root layout
-│   ├── globals.css                       # Global styles + Tailwind theme
-│   ├── (public)/                         # Unauthenticated routes
-│   │   ├── layout.tsx                    # Wraps SessionProvider + StoreProvider
-│   │   ├── page.tsx                      # Landing / homepage
-│   │   ├── sign-in/page.tsx              # Login page
-│   │   └── sign-up/page.tsx              # Registration page
-│   ├── (protected)/                      # Auth-guarded routes
-│   │   ├── layout.tsx                    # Auth check + app shell
-│   │   ├── error.tsx                     # Error boundary
-│   │   ├── loading.tsx                   # Loading skeleton
-│   │   └── dashboard/page.tsx            # Dashboard page
-│   └── api/
-│       ├── auth/
-│       │   ├── [...nextauth]/route.ts    # NextAuth handler
-│       │   └── register/route.ts         # POST /api/auth/register
-│       └── health/route.ts               # GET /api/health
-│
-├── features/                             # Feature modules (vertical slices)
-│   ├── auth/
-│   │   ├── schema/user.schema.ts         # Mongoose schema + model + inferred type
-│   │   ├── repository/user.repository.ts # DB access (only layer using Mongoose models)
-│   │   ├── service/auth.service.ts       # Business logic, returns { data, status }
-│   │   ├── validations/auth.validation.ts# Zod schemas: LoginSchema, SignUpSchema
-│   │   ├── types/auth.types.ts           # TypeScript types (no interfaces)
-│   │   ├── store/auth-store.ts           # Zustand vanilla store factory
-│   │   ├── hooks/
-│   │   │   ├── useAuthStore.ts           # Store context hook
-│   │   │   ├── use-login.ts              # Login action hook
-│   │   │   ├── use-logout.ts             # Logout action hook
-│   │   │   └── use-register.ts           # Register action hook
-│   │   └── components/
-│   │       ├── login-form.tsx            # Login form (react-hook-form + zod)
-│   │       └── signup-form.tsx           # Sign-up form (react-hook-form + zod)
-│   │
-│   └── sessions/
-│       ├── schema/session.schema.ts
-│       ├── repository/session.repository.ts
-│       ├── service/sessions.service.ts
-│       ├── validations/sessions.validation.ts
-│       ├── types/sessions.types.ts
-│       ├── store/sessions-store.ts
-│       ├── hooks/
-│       │   ├── useSessionsStore.ts
-│       │   └── use-sessions.ts
-│       └── components/
-│           ├── sessions-page.tsx
-│           └── sessions-table.tsx
-│
-├── shared/
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── header.tsx                # Top navigation bar
-│   │   │   └── sidebar.tsx               # Side navigation
-│   │   └── ui/                           # shadcn/ui components
-│   ├── hooks/
-│   │   └── use-debounce.ts
-│   ├── lib/
-│   │   ├── auth.ts                       # NextAuth config (Credentials + Google)
-│   │   ├── http.ts                       # OOP HttpClient (fetch wrapper)
-│   │   ├── mongo.ts                      # OOP MongoClientManager (retry logic)
-│   │   └── utils.ts                      # cn() utility
-│   ├── middleware/
-│   │   └── validate-body.ts              # Zod request body validator
-│   ├── providers/
-│   │   ├── session-provider.tsx          # NextAuth SessionProvider wrapper
-│   │   └── store-provider.tsx            # All Zustand store contexts
-│   ├── const/
-│   │   └── home.const.ts                 # Static constants and arrays
-│   ├── types/
-│   │   ├── common.ts                     # ServiceResult<T> and shared types
-│   │   └── http-method.ts
-│   └── utils/
-│       └── format.ts
-│
-├── proxy.ts                              # Edge route protection (replaces middleware)
-```
-
----
+| Framework | Next.js 16 App Router |
+| Language | TypeScript strict mode |
+| Auth | NextAuth v5 with Credentials and Google OAuth |
+| Database | MongoDB with Mongoose |
+| Styling | Tailwind CSS and shadcn/ui |
+| Validation | Zod, react-hook-form, zodResolver |
+| State | Zustand vanilla store with React context |
+| Testing | Vitest and Testing Library |
+| Linting | ESLint, Next core web vitals, import/order |
+| Git hooks | Husky pre-commit: lint, build, test:run |
 
 ## Getting Started
 
-### 1. Install dependencies
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### 2. Configure environment
+Create local environment:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
+Required values:
 
 ```env
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your-secret-here
 MONGO_URI=mongodb://localhost:27017/nextjs-starter
-
-# Optional — Google OAuth
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```
 
-### 3. Run development server
+Start development server:
 
 ```bash
 npm run dev
 ```
 
----
-
-## Docker
-
-> If you already have a MongoDB URI (e.g. MongoDB Atlas), skip `docker compose` and run the app standalone:
->
-> ```bash
-> # Development
-> npm run dev
->
-> # Or build and run the image directly
-> docker build -t nextjs-starter .
-> docker run -p 3000:8080 --env-file .env nextjs-starter
-> ```
-
-### With docker compose (includes local MongoDB)
-
-```bash
-# Start all services (app + MongoDB)
-docker compose up
-
-# Start in background
-docker compose up -d
-
-# Rebuild after code changes
-docker compose up --build
-
-# Stop all services
-docker compose down
-
-# Stop and remove volumes (wipes MongoDB data)
-docker compose down -v
-
-# View logs
-docker compose logs -f app
-
-# Open a shell in the running container
-docker compose exec app sh
-```
-
----
+Open `http://localhost:3000`.
 
 ## Scripts
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
+npm run dev          # Start local dev server
+npm run build        # Production build
 npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run lint:fix     # Run ESLint with auto-fix
-npm run test         # Run Vitest
-npm run test:cov     # Run Vitest with coverage
+npm run lint         # ESLint check
+npm run lint:fix     # ESLint auto-fix
+npm run typecheck    # TypeScript check
+npm run test         # Vitest watch mode
+npm run test:run     # Vitest one-shot run
+npm run test:cov     # Vitest coverage report
 ```
 
----
+Run one test file:
 
-## Key Conventions
+```bash
+npx vitest run src/features/auth/service/auth.service.spec.ts
+```
 
-- **API routes are thin controllers** — validate body, call service, return JSON, catch to 500
-- **Services always return `{ data, status }`** — never throw for handled cases
-- **Repositories are the only layer that imports Mongoose models** — call `mongo.connect()` at the top of every method
-- **Zustand stores use vanilla pattern** — store factory + context + `useStore` hook (3 files per feature)
-- **Forms use react-hook-form + zodResolver** — no manual form state
-- **Route protection via `src/proxy.ts`** — Edge-safe, no Node.js imports
+## Project Structure
 
+```text
+src/
+  app/
+    (public)/                  Public routes: home, sign-in, sign-up
+    (protected)/               Auth-protected routes: dashboard
+    api/                       Thin route handlers
+    globals.css                Tailwind theme and CSS variables
+    layout.tsx                 Root metadata, fonts, theme provider
+  features/
+    auth/
+      components/              Forms and auth page shell
+      hooks/                   Store hook and async auth actions
+      repository/              Mongoose query layer
+      schema/                  User schema and inferred document type
+      service/                 Business logic returning ServiceResult
+      store/                   Zustand vanilla store factory
+      types/                   Auth feature types
+      validations/             Zod schemas
+    dashboard/
+      components/              Protected dashboard UI
+    marketing/
+      components/              Public home page UI
+  shared/
+    components/                Layout and shadcn/ui primitives
+    const/                     Static app, route, nav, and page constants
+    hooks/                     Cross-feature React hooks
+    lib/                       OOP singleton libraries with tests
+    middleware/                Request validation helpers
+    providers/                 App providers
+    types/                     Shared service/result types
+    utils/                     Small shared utilities with tests
+  proxy.ts                     Cookie-based route protection
+```
+
+## Architecture Rules
+
+- Page files stay thin. Layout and structural UI live in components.
+- API routes validate input with `validateBody`, call one service, and return JSON.
+- Services own business decisions and always return `{ data, status }`.
+- Repositories only perform raw database queries and call `mongo.connect()` first.
+- Static arrays and reusable constants live in `src/shared/const`.
+- Cross-directory imports use the `@/` alias.
+- Forms use `react-hook-form` with `zodResolver`.
+- Shared `lib` files use class syntax, export a singleton, and have co-located tests.
+
+## Docker
+
+Start app and local MongoDB:
+
+```bash
+docker compose up
+```
+
+Run in background:
+
+```bash
+docker compose up -d
+```
+
+Rebuild:
+
+```bash
+docker compose up --build
+```
+
+Stop:
+
+```bash
+docker compose down
+```
+
+Wipe local MongoDB data:
+
+```bash
+docker compose down -v
+```
+
+## Production Notes
+
+- `next.config.ts` pins Turbopack root to this repository to avoid parent-lockfile
+  workspace inference.
+- Remote image optimization is limited to Google OAuth avatars by default.
+- `npm audit fix` has been applied without force. A package override keeps
+  transitive `postcss` on the patched version used by the toolchain.
