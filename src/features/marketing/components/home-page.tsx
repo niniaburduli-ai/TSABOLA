@@ -1,97 +1,98 @@
+import { ArrowRight, Boxes, Layers, Shield, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import { Footer } from '@/shared/components/layout/footer';
 import { Header } from '@/shared/components/layout/header';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/shared/components/ui/card';
-import { HOME_FEATURES } from '@/shared/const/home.const';
-import { cn } from '@/shared/lib/utils';
+import { HOME_FEATURES, HOME_STATS, type FeatureCard } from '@/shared/const/home.const';
+
+const FEATURE_ICON_MAP: Record<FeatureCard['icon'], LucideIcon> = {
+  layers: Layers,
+  shield: Shield,
+  boxes: Boxes,
+};
 
 export const HomePage = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
 
-      <main className="flex flex-1 flex-col items-center justify-center px-6 pb-24 pt-20 text-center sm:px-10">
-        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-4 py-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" aria-hidden="true" />
-          <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Production-ready starter
-          </span>
-        </div>
-
-        <h1
-          className={cn(
-            'mx-auto max-w-3xl bg-gradient-to-br from-foreground to-muted-foreground',
-            'bg-clip-text text-5xl font-black leading-tight tracking-tight text-transparent',
-            'sm:text-6xl md:text-7xl'
-          )}
-        >
-          Ship faster.
-          <br />
-          Worry less.
-        </h1>
-
-        <p className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          A full-stack Next.js 16 starter with authentication, database, state
-          management, and UI configured and ready to go on day one.
-        </p>
-
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <Button size="lg" asChild className="px-8 font-semibold">
-            <Link href="/sign-up">Get started</Link>
-          </Button>
-          <Button variant="outline" size="lg" asChild className="px-8">
-            <Link href="/sign-in">Sign in</Link>
-          </Button>
-        </div>
-
-        <div className="mt-24 h-px w-full max-w-5xl bg-gradient-to-r from-transparent via-border to-transparent" aria-hidden="true" />
-
-        <section className="mt-20 w-full max-w-5xl" aria-label="Features">
-          <div className="mb-12 text-left">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              What&apos;s included
-            </p>
+      <main className="flex-1">
+        <section className="mx-auto w-full max-w-5xl px-6 pb-16 pt-20 sm:px-10 sm:pt-28">
+          <div className="animate-rise inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1">
+            <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
+            <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Production-ready starter
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3">
-            {HOME_FEATURES.map((feature) => (
-              <Card
-                key={feature.index}
-                className="group relative gap-0 rounded-none border-0 shadow-none transition-colors duration-300 hover:bg-accent"
-              >
-                <div
-                  className={cn(
-                    'absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent',
-                    'via-border to-transparent opacity-0 transition-opacity duration-300',
-                    'group-hover:opacity-100'
-                  )}
-                  aria-hidden="true"
-                />
-                <CardHeader className="flex flex-row items-start justify-between px-8 pb-5 pt-8">
-                  <span
-                    className={cn(
-                      'inline-flex items-center rounded-md border border-border bg-muted/40',
-                      'px-2 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground'
-                    )}
-                  >
-                    {feature.label}
-                  </span>
-                  <span className="font-mono text-xs text-muted-foreground/60">
-                    {feature.index}
-                  </span>
-                </CardHeader>
-                <CardContent className="px-8 pb-8">
-                  <h3 className="text-xl font-bold tracking-tight text-foreground">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
+          <h1 className="animate-rise animate-rise-1 mt-6 max-w-3xl text-4xl font-bold leading-tight sm:text-6xl">
+            Launch your SaaS on a foundation that&apos;s{' '}
+            <span className="text-primary">already built.</span>
+          </h1>
+
+          <p className="animate-rise animate-rise-2 mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Auth, database, state, and UI wired together and tested — so day one
+            starts at feature one, not setup.
+          </p>
+
+          <div className="animate-rise animate-rise-3 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button size="lg" asChild className="font-semibold">
+              <Link href="/sign-up">
+                Get started
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <Link href="/sign-in">Sign in</Link>
+            </Button>
+          </div>
+
+          <dl className="animate-rise animate-rise-4 mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-3">
+            {HOME_STATS.map(({ value, label }) => (
+              <div key={label} className="bg-background px-5 py-4">
+                <dt className="font-heading text-xl font-bold tracking-tight">{value}</dt>
+                <dd className="mt-0.5 text-sm text-muted-foreground">{label}</dd>
+              </div>
             ))}
+          </dl>
+        </section>
+
+        <section
+          aria-label="What's included"
+          className="mx-auto w-full max-w-5xl px-6 pb-24 sm:px-10"
+        >
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            What&apos;s included
+          </p>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {HOME_FEATURES.map((feature) => {
+              const Icon = FEATURE_ICON_MAP[feature.icon];
+
+              return (
+                <Card
+                  key={feature.title}
+                  className="gap-0 transition-colors duration-300 hover:border-primary/40"
+                >
+                  <CardHeader className="pb-3">
+                    <span className="inline-flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Icon className="size-5" />
+                    </span>
+                    <p className="mt-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      {feature.label}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-lg font-bold">{feature.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </section>
       </main>

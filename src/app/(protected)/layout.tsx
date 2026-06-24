@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 import { type ReactNode } from 'react';
 
+import { DashboardShell } from '@/shared/components/layout/dashboard-shell';
 import { Header } from '@/shared/components/layout/header';
-import { Sidebar } from '@/shared/components/layout/sidebar';
 import { auth } from '@/shared/lib/auth';
 import { SessionProvider } from '@/shared/providers/session-provider';
 import { StoreProvider } from '@/shared/providers/store-provider';
@@ -21,14 +21,9 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
   return (
     <SessionProvider>
       <StoreProvider>
-        <div className="min-h-screen flex flex-col">
+        <div className="flex min-h-screen flex-col">
           <Header />
-          <div className="flex flex-1">
-            <Sidebar />
-            <main className="flex-1 p-6 overflow-auto">
-              {children}
-            </main>
-          </div>
+          <DashboardShell>{children}</DashboardShell>
         </div>
       </StoreProvider>
     </SessionProvider>

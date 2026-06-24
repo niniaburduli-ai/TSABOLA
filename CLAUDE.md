@@ -40,6 +40,8 @@ Password hashing uses SHA-256 via Node.js `crypto` (not bcrypt). Auth config liv
 
 ## 0. CRITICAL — Architecture Discipline and Coding Rules
 
+**DESIGN GATE — RUN BEFORE ANY UI WORK.** Before building, restyling, or adding any user-facing UI, read the **Active Design Direction** block in §19. If `STATUS: unset`, you MUST stop and ask the design questions in §19 via the AskUserQuestion tool, then write the answers into the block and set `STATUS: locked` — do this *before* writing any UI code. If `STATUS: locked`, follow the recorded direction exactly and never ask again. This is what stops every project shipping the same default home page. See §19 for the full flow.
+
 **NEVER USE INLINE STYLES.** All visual styling must use Tailwind CSS utility classes. Never use the `style` prop or `style={{ }}` on any element under any circumstances.
 
 **NEVER USE ARBITRARY TAILWIND VALUES.** Never write classes like `text-[10px]`, `px-[28px]`, `min-h-[400px]`, `tracking-[0.18em]`, or any `[...]` bracket syntax. Always use Tailwind's standard scale: `text-xs`, `text-sm`, `text-base`, `text-lg`, etc. for font sizes; `p-1`, `p-2`, `px-4`, `py-2`, etc. for spacing; `min-h-96`, `min-h-screen`, etc. for sizing.
@@ -266,3 +268,48 @@ NextAuth uses JWT strategy with Google OAuth + Credentials providers. The `jwt` 
 Never create `next-auth.d.ts` or any global NextAuth type augmentation files. Use inline local `type SessionUser = { ... }` casts wherever session user properties like `id` or `role` are needed.
 
 OAuth users are persisted via `userRepository.upsertOAuthUser()`. `passwordHash` is optional (empty string for OAuth users).
+
+## 19. Design Direction (per-project brand)
+
+This repo is a **template**. Its job is to become a different-looking product every time it is reused — never to ship the same default home page, logo, and styles twice. This section is the mechanism that guarantees that. The §0 Design Gate points here.
+
+### The flow (ask once, save, never ask again)
+
+1. **Before any UI work**, read the **Active Design Direction** block below.
+2. If `STATUS: unset` → ask the **Design questions** below using the **AskUserQuestion** tool (one call, all questions). Do not write UI code first.
+3. Take the answers, fill every field in the block, set `STATUS: locked`, and commit the block. Also update the brand basics: `APP_NAME` in `src/shared/const/app.const.ts` and `metadata` in `src/app/layout.tsx`.
+4. If `STATUS: locked` → follow the recorded direction exactly for all UI. **Do not ask the design questions again.**
+
+### Starting a NEW startup from this template
+
+Set `STATUS: unset` in the block below (optionally clear the fields). The next UI prompt will re-run the questions and lock a fresh identity. That single edit is the "reset" — nothing else.
+
+### Design questions (the AskUserQuestion catalog)
+
+Ask these exact axes; each meaningfully changes the design:
+
+1. **Product** — what kind of product is this? (dev/technical tool · SaaS dashboard / B2B · consumer app · creative/editorial)
+2. **Palette** — color direction (monochrome + one electric accent · deep & moody + neon accent · warm & earthy · clean & trustworthy blue). Capture concrete hex values.
+3. **Type** — typography personality (geometric sans · editorial serif display + sans body · mono/technical · humanist & friendly). Name the display + body faces.
+4. **Feel** — density & motion (minimal & calm · balanced · maximal & animated).
+
+### How answers map to code (do not improvise file locations)
+
+- **Palette** → CSS custom properties in `src/app/globals.css` (`:root` + `.dark`). Convert hex to `oklch(...)`. Set `--primary`/`--ring`/`--chart-*` to the accent; keep neutrals for surfaces. Accent is for actions + focus + positive signal only.
+- **Type** → load fonts in `src/app/layout.tsx` via `next/font/google`, expose CSS variables, and map `--font-heading` / `--font-sans` / `--font-mono` in the `@theme inline` block of `globals.css`. A base rule applies `font-heading` to `h1,h2,h3`.
+- **Feel/motion** → CSS keyframe utilities in the `@layer utilities` block of `globals.css` (e.g. `.animate-rise` + stagger classes), always guarded by `@media (prefers-reduced-motion: reduce)`. Never inline-style animations.
+- All visual rules in §0 still apply: no inline styles, no arbitrary `[...]` Tailwind values, components over primitive HTML in pages, constants in `src/shared/const/`.
+
+### Active Design Direction
+
+```
+STATUS: locked
+Product:    SaaS dashboard / B2B
+Palette:    Monochrome + electric indigo accent
+            base #FAFAFA (light) / #0A0A0A (dark); accent #5B5BFF
+            tokens: --primary oklch(0.555 0.243 271) light / oklch(0.62 0.21 271) dark
+Type:       Geometric sans — Space Grotesk (display, 500/600/700) + Inter (body) + Geist Mono (data)
+Feel:       Balanced — CSS load-rise stagger + hover micro-interactions; reduced-motion respected
+Signature:  Left-aligned typographic hero with one accent word + honest stat strip;
+            dashboard app-shell with mobile drawer sidebar and segmented indigo channel meters
+```
