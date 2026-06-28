@@ -1,5 +1,5 @@
-import { HomePage as MarketingHomePage } from '@/features/marketing/components/home-page';
+import { TsabolaPage } from '@/features/tsabola/components/tsabola-page'
 
 export default function HomePage() {
-  return <MarketingHomePage />;
+  return <TsabolaPage />
 }
