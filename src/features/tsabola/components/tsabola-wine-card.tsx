@@ -28,7 +28,7 @@ export function TsabolaWineCard({ item, lang }: Props) {
         </span>
         <h3 className="font-display text-2xl font-bold text-charcoal">{r(item.name, lang)}</h3>
         <p className="text-sm text-charcoal/60 leading-relaxed flex-1">{r(item.description, lang)}</p>
-        <p className="font-heading text-xl font-bold text-wine mt-auto">{item.price}</p>
+        <p className="font-display text-xl font-bold text-wine mt-auto">{item.price}</p>
       </div>
     </article>
   )
