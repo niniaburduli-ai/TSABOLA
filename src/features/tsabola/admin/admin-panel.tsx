@@ -4,18 +4,16 @@ import { useState } from 'react'
 
 import { AdminHeader } from './admin-header'
 import { AdminSidebar } from './admin-sidebar'
+import { AboutEditor } from './editors/about-editor'
+import { ContactEditor } from './editors/contact-editor'
 import { FooterEditor } from './editors/footer-editor'
+import { GalleryEditor } from './editors/gallery-editor'
 import { HeroEditor } from './editors/hero-editor'
 import { SiteEditor } from './editors/site-editor'
+import { WinesEditor } from './editors/wines-editor'
 import { ExportReset } from './export-reset'
-
-// Stubs for Tasks 12-14
-function WinesEditor() { return <div className="p-4 text-sm text-charcoal/60">Wines editor — coming soon</div> }
-function GalleryEditor() { return <div className="p-4 text-sm text-charcoal/60">Gallery editor — coming soon</div> }
-function AboutEditor() { return <div className="p-4 text-sm text-charcoal/60">About editor — coming soon</div> }
-function ContactEditor() { return <div className="p-4 text-sm text-charcoal/60">Contact editor — coming soon</div> }
-function ThemeEditor() { return <div className="p-4 text-sm text-charcoal/60">Theme editor — coming soon</div> }
-function VisibilityEditor() { return <div className="p-4 text-sm text-charcoal/60">Visibility editor — coming soon</div> }
+import { ThemeEditor } from './theme-editor'
+import { VisibilityEditor } from './visibility-editor'
 
 const EDITOR_MAP: Record<string, React.ComponentType> = {
   site: SiteEditor,
