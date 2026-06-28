@@ -4,16 +4,16 @@ import { useState } from 'react'
 
 import { AdminHeader } from './admin-header'
 import { AdminSidebar } from './admin-sidebar'
+import { FooterEditor } from './editors/footer-editor'
+import { HeroEditor } from './editors/hero-editor'
+import { SiteEditor } from './editors/site-editor'
 import { ExportReset } from './export-reset'
 
-// These will be replaced in later tasks — stubs for Tasks 11-14
-function SiteEditor() { return <div className="p-4 text-sm text-charcoal/60">Site editor — coming soon</div> }
-function HeroEditor() { return <div className="p-4 text-sm text-charcoal/60">Hero editor — coming soon</div> }
+// Stubs for Tasks 12-14
 function WinesEditor() { return <div className="p-4 text-sm text-charcoal/60">Wines editor — coming soon</div> }
 function GalleryEditor() { return <div className="p-4 text-sm text-charcoal/60">Gallery editor — coming soon</div> }
 function AboutEditor() { return <div className="p-4 text-sm text-charcoal/60">About editor — coming soon</div> }
 function ContactEditor() { return <div className="p-4 text-sm text-charcoal/60">Contact editor — coming soon</div> }
-function FooterEditor() { return <div className="p-4 text-sm text-charcoal/60">Footer editor — coming soon</div> }
 function ThemeEditor() { return <div className="p-4 text-sm text-charcoal/60">Theme editor — coming soon</div> }
 function VisibilityEditor() { return <div className="p-4 text-sm text-charcoal/60">Visibility editor — coming soon</div> }
 
