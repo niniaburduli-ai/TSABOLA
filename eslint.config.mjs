@@ -71,6 +71,13 @@ const eslintConfig = defineConfig([
     rules: {
       "no-console": "off",
     }
+  },
+  {
+    files: ['src/shared/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      "max-len": "off",
+      "max-lines": "off",
+    },
   }
 ]);
 
