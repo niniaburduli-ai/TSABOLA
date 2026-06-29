@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { TsabolaWineCard } from './tsabola-wine-card'
 import { TsabolaWineLightbox } from './tsabola-wine-lightbox'
@@ -11,6 +11,7 @@ import type { WineItem } from '../types'
 export function TsabolaWineCatalog() {
   const { t, lang, r } = useLang()
   const [activeWine, setActiveWine] = useState<WineItem | null>(null)
+  const handleClose = useCallback(() => setActiveWine(null), [])
 
   return (
     <section id="wines" className="bg-cream py-24 px-6">
@@ -41,7 +42,7 @@ export function TsabolaWineCatalog() {
         wine={activeWine}
         lang={lang}
         open={activeWine !== null}
-        onClose={() => setActiveWine(null)}
+        onClose={handleClose}
       />
     </section>
   )
