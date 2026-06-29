@@ -31,7 +31,7 @@ export function TsabolaWineCatalog() {
               key={wine.id}
               item={wine}
               lang={lang}
-              onOpen={() => setActiveWine(wine)}
+              onOpen={setActiveWine}
             />
           ))}
         </div>

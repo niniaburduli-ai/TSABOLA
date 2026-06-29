@@ -7,7 +7,7 @@ import type { WineItem } from '../types'
 type Props = {
   item: WineItem
   lang: 'ka' | 'en'
-  onOpen?: () => void
+  onOpen: (wine: WineItem) => void
 }
 
 export function TsabolaWineCard({ item, lang, onOpen }: Props) {
@@ -17,11 +17,21 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
       {item.image ? (
         <button
           type="button"
+          onClick={() => onOpen(item)}
           aria-label={r(item.name, lang)}
-          onClick={onOpen}
-          className="w-full h-80 bg-cream/20 flex items-center justify-center p-4 cursor-pointer"
+          className={
+            'w-full h-80 bg-cream/20 flex items-center justify-center p-4 ' +
+            'overflow-hidden cursor-pointer focus:outline-none ' +
+            'focus-visible:ring-2 focus-visible:ring-wine/50'
+          }
         >
-          <img src={item.image} alt={r(item.name, lang)} className="h-full w-full object-contain" />
+          <div className="h-full w-full flex items-center justify-center group-hover:animate-wine-float">
+            <img
+              src={item.image}
+              alt={r(item.name, lang)}
+              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         </button>
       ) : (
         <div

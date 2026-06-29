@@ -14,8 +14,8 @@ beforeEach(() => {
 describe('TsabolaWineCatalog', () => {
   it('renders all wines', () => {
     render(<TsabolaWineCatalog />)
-    expect(screen.getByText('თეთრი ღვინო')).toBeInTheDocument()
-    expect(screen.getByText('წითელი ღვინო')).toBeInTheDocument()
+    expect(screen.getByText('თეთრი მშრალი')).toBeInTheDocument()
+    expect(screen.getByText('წითელი მშრალი')).toBeInTheDocument()
   })
 
   it('renders prices', () => {
@@ -32,7 +32,7 @@ describe('TsabolaWineCatalog', () => {
 
   it('opens lightbox when wine image is clicked', () => {
     render(<TsabolaWineCatalog />)
-    const buttons = screen.getAllByRole('button', { name: /თეთრი ღვინო/i })
+    const buttons = screen.getAllByRole('button', { name: /თეთრი მშრალი/i })
     fireEvent.click(buttons[0])
     expect(screen.getByRole('dialog')).toBeInTheDocument()
     expect(screen.getByText(/ჩინებულის ჯიშის/)).toBeInTheDocument()
@@ -40,7 +40,7 @@ describe('TsabolaWineCatalog', () => {
 
   it('closes lightbox when close button is clicked', () => {
     render(<TsabolaWineCatalog />)
-    const imageButtons = screen.getAllByRole('button', { name: /თეთრი ღვინო/i })
+    const imageButtons = screen.getAllByRole('button', { name: /თეთრი მშრალი/i })
     fireEvent.click(imageButtons[0])
     expect(screen.getByRole('dialog')).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: /close/i }))
@@ -49,7 +49,7 @@ describe('TsabolaWineCatalog', () => {
 
   it('closes lightbox on Escape key', () => {
     render(<TsabolaWineCatalog />)
-    const imageButtons = screen.getAllByRole('button', { name: /თეთრი ღვინო/i })
+    const imageButtons = screen.getAllByRole('button', { name: /თეთრი მშრალი/i })
     fireEvent.click(imageButtons[0])
     expect(screen.getByRole('dialog')).toBeInTheDocument()
     fireEvent.keyDown(window, { key: 'Escape' })

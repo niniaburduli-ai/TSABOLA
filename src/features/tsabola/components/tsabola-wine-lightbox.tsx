@@ -54,7 +54,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
         </button>
 
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-2/5 flex items-center justify-center p-8 bg-charcoal/60">
+          <div className="md:w-2/5 min-h-64 flex items-center justify-center p-8 bg-charcoal/60">
             {wine.image ? (
               <img
                 src={wine.image}

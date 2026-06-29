@@ -24,68 +24,57 @@ export const DEFAULT_CONTENT: SiteContent = {
   wines: [
     {
       id: 'white',
-      name: { ka: 'თეთრი ღვინო', en: 'White Wine' },
+      name: { ka: 'თეთრი მშრალი', en: 'White Dry' },
       type: { ka: 'თეთრი', en: 'White' },
       typeBadge: { ka: 'თეთრი', en: 'White' },
       price: '30₾',
       description: {
-        ka: 'სუფთა, ყვავილოვანი. ატმის, ჟასმინის ნოტებით.',
-        en: 'Crisp and floral. Hints of white peach and jasmine.',
+        ka: 'ღია ჩალისფერი. ნაზი არომატი, სიხალისე, ჰარმონიული დაბოლოება.',
+        en: 'Light straw. Delicate aroma, pleasant freshness, harmonious finish.',
       },
       image: '/white wine.png',
       details: {
-        ka: 'ღვინო: თეთრი მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი; შიდა ქართლი.',
-        en: 'Wine: White Dry | Grape: Chinebuli\nRegion: Zemo Khandaki; Shida Kartli.',
+        ka: 'ღვინო: მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
+        en: 'Wine: Dry | Grape: Chinebuli\nRegion: Zemo Khandaki, Shida Kartli',
       },
       longDescription: {
-        ka: (
-          '„ცაბოს" თეთრი მშრალი ღვინო დამზადებულია ჩინებულის ' +
-          'ჯიშის რჩეული ყურძნისგან. ღვინო გამოირჩევა ღია ' +
-          'ჩალისფერი შეფერილობით, ნაზი არომატით, სასიამოვნო ' +
-          'სიხალისითა და ხანგრძლივი დაბოლოებით.'
-        ),
-        en: (
-          'Tsabo\'s White Dry wine is crafted from select Chinebuli ' +
-          'grapes. Pale straw color, delicate aroma, pleasant ' +
-          'freshness, and lingering finish.'
-        ),
+        ka: '„ცაბოს" თეთრი მშრალი ღვინო დამზადებულია შიდა ქართლის, სოფელ ზემო ხანდაკში ' +
+          'მოწეული ჩინებულის ჯიშის რჩეული ყურძნისგან. ღვინო გამოირჩევა ღია ჩალისფერი ' +
+          'შეფერილობით, ნაზი არომატით, სასიამოვნო სიხალისითა და ჰარმონიული, ხანგრძლივი დაბოლოებით.',
+        en: 'Tsabo\'s White Dry wine is made from selected Chinebuli variety grapes grown in ' +
+          'the village of Zemo Khandaki, Shida Kartli. The wine stands out for its light straw ' +
+          'color, delicate aroma, pleasant freshness, and a harmonious, lingering finish.',
       },
       serveTemp: '10–12°C',
-      alcohol: '13%',
+      alcohol: '13.5%',
       volume: '750 მლ',
     },
     {
       id: 'red',
-      name: { ka: 'წითელი ღვინო', en: 'Red Wine' },
+      name: { ka: 'წითელი მშრალი', en: 'Red Dry' },
       type: { ka: 'წითელი', en: 'Red' },
       typeBadge: { ka: 'წითელი', en: 'Red' },
       price: '50₾',
       description: {
-        ka: 'მუხის კასრში დავარგებული. მუქი კენკრა, შავი ალუბალი, ტყავი.',
-        en: 'Oak-aged full body. Dark berry, black cherry, leather.',
+        ka: 'ღრმა ლალისფერი. ხავერდოვანი სტრუქტურა, მწიფე კენკრა, დაბალანსებული დაბოლოება.',
+        en: 'Deep ruby. Velvety structure, ripe berry aromas, balanced finish.',
       },
       image: '/red wine.png',
       details: {
-        ka: 'ღვინო: წითელი მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი; შიდა ქართლი.',
-        en: 'Wine: Red Dry | Grape: Danakharuli\nRegion: Zemo Khandaki; Shida Kartli.',
+        ka: 'ღვინო: მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
+        en: 'Wine: Dry | Grape: Danakharuli\nRegion: Zemo Khandaki, Shida Kartli',
       },
       longDescription: {
-        ka: (
-          '„ცაბოს" წითელი მშრალი ღვინო დამზადებულია დანახარულის ' +
-          'ჯიშის ყურძნისგან და მუხის კასრებში ვარდება. ღვინო ' +
-          'გამოირჩევა მუქი-ყავისფერი შეფერილობით, კენკრის, ' +
-          'ალუბლისა და ვანილის ნოტებით, ხანგრძლივი ტანინიანი ' +
-          'დაბოლოებით.'
-        ),
-        en: (
-          'Tsabo\'s Red Dry wine is crafted from select Danakharuli ' +
-          'grapes and aged in oak barrels. Deep dark-ruby colour, rich ' +
-          'notes of dark berry, black cherry, and vanilla, with a ' +
-          'smooth tannic finish.'
-        ),
+        ka: '„ცაბოს" წითელი მშრალი ღვინო დამზადებულია შიდა ქართლის, სოფელ ზემო ხანდაკში ' +
+          'მოწეული დანახარულის ჯიშის რჩეული ყურძნისგან. ღვინო გამოირჩევა ღრმა ლალისფერი ' +
+          'შეფერილობით, მწიფე მტევნის ნაზი არომატებით, ხავერდოვანი სტრუქტურით და ' +
+          'დაბალანსებული, ხანგრძლივი დაბოლოებით.',
+        en: 'Tsabo\'s Red Dry wine is made from selected Danakharuli variety grapes grown in ' +
+          'the village of Zemo Khandaki, Shida Kartli. The wine stands out for its deep ruby ' +
+          'color, delicate aromas of ripe clusters, velvety structure, and a balanced, lingering finish.',
       },
       serveTemp: '16–18°C',
-      alcohol: '13.5%',
+      alcohol: '12.5%',
       volume: '750 მლ',
     },
   ],
@@ -132,23 +121,35 @@ export const DEFAULT_CONTENT: SiteContent = {
   },
   about: {
     title: {
-      ka: '"ცაბო" — ტრადიცია ქართლის გულიდან',
+      ka: '„ცაბო" — ტრადიცია ქართლის გულიდან',
       en: '"Tsabo" — A Tradition from the Heart of Kartli',
     },
     body: {
-      ka: (
-        '2018 წლიდან, შიდა ქართლის გულში, „ცაბოს" ისტორია ' +
-        'სიყვარულით და ქართული მეღვინეობის ტრადიციების ' +
-        'პატივისცემით იქმნება. ოჯახური ბრენდი, რომელიც ხარისხიან ' +
-        'ღვინოს ბუნებრივი მიდგომით ქმნის. „ცაბო" — ქართული ღვინო, ' +
-        'შექმნილი სიყვარულით, ქართლის გულიდან.'
-      ),
-      en: (
-        'Since 2018, Tsabo\'s story is written with love and respect ' +
-        'for Georgian winemaking traditions. A family brand creating ' +
-        'quality wine through natural approach. "Tsabo" — Georgian wine, ' +
-        'made with love, from the heart of Kartli.'
-      ),
+      ka:
+        '2018 წლიდან, შიდა ქართლის გულში, კასპის რაიონის სოფელ ზემო ხანდაკში, ' +
+        '„ცაბოს" ისტორია სიყვარულით, შრომითა და ქართული მეღვინეობის ტრადიციების პატივისცემით იქმნება.\n\n' +
+        '„ცაბო" ოჯახური ბრენდია, რომელიც ქვევრის ღვინის ბუნებრივ ხასიათს ინარჩუნებს. ' +
+        'გვჯერა, რომ საუკეთესო ღვინო იქმნება მაშინ, როდესაც ბუნებას თავისი საქმის კეთების საშუალებას ვაძლევთ. ' +
+        'სწორედ ამიტომ, ღვინო მინიმალური ჩარევით იწარმოება — ის ბუნებრივად იწმინდება, ' +
+        'მწიფდება და ინარჩუნებს ყურძნის ნამდვილ არომატსა და გემოს.\n\n' +
+        'ჩვენი ვენახები ზემო ხანდაკის ნოყიერ მიწაზეა გაშენებული, სადაც თითოეული მტევანი ' +
+        'მზის, ნიადაგისა და ტრადიციის უნიკალურ ისტორიას ატარებს. ყოველი ბოთლი არის ' +
+        'პატივისცემა ქართული მეღვინეობის მრავალსაუკუნოვანი მემკვიდრეობისადმი და ' +
+        'მოწვევა, რომ ეს ისტორია თქვენც გაიზიაროთ.\n\n' +
+        '„ცაბო" — ხელნაკეთი ღვინო, შექმნილი სიყვარულით, ქართლის გულიდან.',
+      en:
+        'Since 2018, in the heart of Shida Kartli, in the village of Zemo Khandaki ' +
+        'in the Kaspi district, Tsabo\'s story has been written with love, dedication, ' +
+        'and deep respect for Georgian winemaking traditions.\n\n' +
+        'Tsabo is a family brand that preserves the natural character of qvevri wine. ' +
+        'We believe that the finest wine is made when we allow nature to do its work. ' +
+        'That is why our wine is produced with minimal intervention — it clarifies ' +
+        'naturally, matures in its own time, and retains the true aroma and taste of the grape.\n\n' +
+        'Our vineyards are planted on the fertile soil of Zemo Khandaki, where every ' +
+        'cluster carries the unique story of sun, earth, and tradition. Each bottle is ' +
+        'a tribute to the centuries-old heritage of Georgian winemaking and an invitation ' +
+        'for you to share in that story.\n\n' +
+        '"Tsabo" — a handcrafted wine, made with love, from the heart of Kartli.',
     },
     imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },
     image: '/VAZI.png',
