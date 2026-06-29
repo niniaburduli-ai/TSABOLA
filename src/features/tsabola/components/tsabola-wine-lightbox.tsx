@@ -17,14 +17,13 @@ type Props = {
 export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
   useEffect(() => {
     if (!open) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    document.body.classList.add('overflow-hidden')
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
     window.addEventListener('keydown', handler)
     return () => {
-      document.body.style.overflow = prev
+      document.body.classList.remove('overflow-hidden')
       window.removeEventListener('keydown', handler)
     }
   }, [open, onClose])

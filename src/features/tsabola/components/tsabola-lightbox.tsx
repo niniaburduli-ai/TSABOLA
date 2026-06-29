@@ -13,9 +13,8 @@ type Props = {
 
 export function TsabolaLightbox({ images, index, onClose, onPrev, onNext }: Props) {
   useEffect(() => {
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = prev }
+    document.body.classList.add('overflow-hidden')
+    return () => { document.body.classList.remove('overflow-hidden') }
   }, [])
 
   useEffect(() => {
