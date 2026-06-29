@@ -22,6 +22,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     images: [
       'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
       'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
+      '',
     ],
   },
   wines: [
@@ -183,6 +184,8 @@ export const DEFAULT_THEME: ThemeConfig = {
   colorCream: '#faf8f5',
   headingSize: 'lg',
   bodySize: 'md',
+  headingFont: '--font-space-grotesk',
+  bodyFont: '--font-sans',
 }
 
 export const DEFAULT_VISIBILITY: SectionVisibility = {

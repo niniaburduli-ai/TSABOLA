@@ -39,8 +39,10 @@ export type ThemeConfig = {
   colorWine: string
   colorCharcoal: string
   colorCream: string
-  headingSize: 'sm' | 'md' | 'lg'
-  bodySize: 'sm' | 'md'
+  headingSize: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  bodySize: 'xs' | 'sm' | 'md' | 'lg'
+  headingFont: string
+  bodyFont: string
 }
 
 export type SectionVisibility = {
