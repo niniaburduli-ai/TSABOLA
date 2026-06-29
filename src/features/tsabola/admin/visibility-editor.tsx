@@ -7,6 +7,7 @@ import { Switch } from '@/shared/components/ui/switch'
 const SECTIONS = [
   { key: 'hero', label: 'Hero' },
   { key: 'wines', label: 'Wine Catalog' },
+  { key: 'news', label: 'News' },
   { key: 'gallery', label: 'Gallery' },
   { key: 'about', label: 'About' },
   { key: 'contact', label: 'Contact' },

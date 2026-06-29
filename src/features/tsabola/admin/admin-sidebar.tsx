@@ -5,7 +5,7 @@ interface Props {
   onSelect: (section: string) => void
 }
 
-const CONTENT_SECTIONS = ['site', 'hero', 'wines', 'gallery', 'about', 'contact', 'footer'] as const
+const CONTENT_SECTIONS = ['site', 'hero', 'wines', 'news', 'gallery', 'about', 'contact', 'footer'] as const
 const APPEARANCE_SECTIONS = ['theme', 'visibility'] as const
 
 export function AdminSidebar({ active, onSelect }: Props) {

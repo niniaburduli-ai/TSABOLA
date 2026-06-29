@@ -8,6 +8,7 @@ import { TsabolaFooter } from './tsabola-footer'
 import { TsabolaGallery } from './tsabola-gallery'
 import { TsabolaHeader } from './tsabola-header'
 import { TsabolaHero } from './tsabola-hero'
+import { TsabolaNews } from './tsabola-news'
 import { TsabolaWineCatalog } from './tsabola-wine-catalog'
 import { useLang } from '../hooks/use-lang'
 
@@ -32,9 +33,10 @@ export function TsabolaPage() {
       <TsabolaHeader />
       <main>
         {visibility.hero && <TsabolaHero />}
-        {visibility.wines && <TsabolaWineCatalog />}
-        {visibility.gallery && <TsabolaGallery />}
         {visibility.about && <TsabolaAbout />}
+        {visibility.wines && <TsabolaWineCatalog />}
+        {visibility.news && <TsabolaNews />}
+        {visibility.gallery && <TsabolaGallery />}
         {visibility.contact && <TsabolaContact />}
       </main>
       <TsabolaFooter />

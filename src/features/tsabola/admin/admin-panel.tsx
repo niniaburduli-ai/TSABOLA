@@ -9,6 +9,7 @@ import { ContactEditor } from './editors/contact-editor'
 import { FooterEditor } from './editors/footer-editor'
 import { GalleryEditor } from './editors/gallery-editor'
 import { HeroEditor } from './editors/hero-editor'
+import { NewsEditor } from './editors/news-editor'
 import { SiteEditor } from './editors/site-editor'
 import { WinesEditor } from './editors/wines-editor'
 import { ExportReset } from './export-reset'
@@ -19,6 +20,7 @@ const EDITOR_MAP: Record<string, React.ComponentType> = {
   site: SiteEditor,
   hero: HeroEditor,
   wines: WinesEditor,
+  news: NewsEditor,
   gallery: GalleryEditor,
   about: AboutEditor,
   contact: ContactEditor,
