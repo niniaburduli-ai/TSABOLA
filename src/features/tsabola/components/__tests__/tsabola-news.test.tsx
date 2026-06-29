@@ -30,8 +30,8 @@ describe('TsabolaNews', () => {
   })
 
   it('renders placeholder when item has no image', () => {
-    render(<TsabolaNews />)
-    const placeholders = document.querySelectorAll('[data-placeholder="true"]')
+    const { container } = render(<TsabolaNews />)
+    const placeholders = container.querySelectorAll('[data-placeholder="true"]')
     expect(placeholders.length).toBe(2)
   })
 

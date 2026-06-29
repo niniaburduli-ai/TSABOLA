@@ -140,6 +140,24 @@
 }
 
 @layer utilities {
+  @keyframes hero-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-hero-scroll {
+    animation: hero-scroll linear infinite;
+  }
+  .hero-carousel-dur-1 { animation-duration: 8s; }
+  .hero-carousel-dur-2 { animation-duration: 16s; }
+  .hero-carousel-dur-3 { animation-duration: 24s; }
+  .hero-carousel-dur-4 { animation-duration: 32s; }
+  .hero-carousel-dur-5 { animation-duration: 40s; }
+  .hero-carousel-dur-6 { animation-duration: 48s; }
+  .hero-carousel-dur-7 { animation-duration: 56s; }
+  .hero-carousel-dur-8 { animation-duration: 64s; }
+  .hero-carousel-dur-9 { animation-duration: 72s; }
+  .hero-carousel-dur-10 { animation-duration: 80s; }
+
   @keyframes rise {
     from {
       opacity: 0;
@@ -165,6 +183,30 @@
   .animate-rise-4 {
     animation-delay: 0.27s;
   }
+
+  @keyframes wine-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .animate-wine-float {
+    animation: wine-float 3s ease-in-out infinite;
+  }
+
+  @keyframes modal-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-modal-fade {
+    animation: modal-fade 0.2s ease-out both;
+  }
+
+  @keyframes modal-slide {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .animate-modal-slide {
+    animation: modal-slide 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -172,7 +214,13 @@
   .animate-rise-1,
   .animate-rise-2,
   .animate-rise-3,
-  .animate-rise-4 {
+  .animate-rise-4,
+  .animate-hero-scroll,
+  .hero-slide-fade,
+  .animate-wine-float,
+  .animate-modal-fade,
+  .animate-modal-slide {
     animation: none;
+    transition: none;
   }
 }

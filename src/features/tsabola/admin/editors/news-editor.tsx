@@ -36,7 +36,7 @@ export function NewsEditor() {
   }
 
   const addItem = () => {
-    const newItem: NewsItem = { ...EMPTY_ITEM, id: `news-${news.items.length + 1}` }
+    const newItem: NewsItem = { ...EMPTY_ITEM, id: `news-${Date.now()}` }
     setItems([...news.items, newItem])
     setExpandedId(newItem.id)
   }

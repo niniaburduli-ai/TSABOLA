@@ -19,7 +19,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       en: 'A family winery tradition spanning three generations',
     },
     cta: { ka: 'ღვინოები აღმოაჩინე', en: 'Discover Our Wines' },
-    images: ['/TSABO WHITE.png', '/TSABO RED.png'],
+    images: ['/HERO RTVELI.png', '/HERO VENAXI.png'],
   },
   wines: [
     {
@@ -94,7 +94,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   gallery: {
     title: { ka: 'გალერეა', en: 'Gallery' },
     subtitle: { ka: 'ვენახი, მარანი, ხელოვნება', en: 'Vineyard, Cellar, Craft' },
-    images: ['/gallery white.png', '/gallery red.png', '/GALLERY RTVELI.png', '', '', ''],
+    images: ['/gallery white.png', '/gallery red.png', '/GALLERY RTVELI .png', '', '', ''],
   },
   about: {
     title: {
@@ -102,23 +102,46 @@ export const DEFAULT_CONTENT: SiteContent = {
       en: '"Tsabo" — A Tradition from the Heart of Kartli',
     },
     body: {
-      ka: '2018 წლიდან შიდა ქართლის გულში, კასპის მადლიან მიწაზე, ' +
-        'სოფელ ზემო ხანდაკში ახალი, თუმცა უძველეს ფესვებზე ' +
-        'აღმოცენებული ამბავი იწერება. „ცაბო" ოჯახური სახელია, ' +
-        'რომელიც ღვინის უდიდეს სიყვარულს აერთიანებს. ჩვენ გვჯერა ' +
-        'მინიმალური ჩარევის: ღვინო თავად იწმინდება, თავად იბადება და ' +
-        'ვენახიდან პირდაპირ თქვენს მაგიდაზე ხვდება. გაუზიარეთ ' +
-        'ერთმანეთს ხელნაკეთი სიყვარული.',
-      en: 'Since 2018, in the heart of Shida Kartli, on the blessed land ' +
-        'of Kaspi, in the village of Zemo Khandaki, a new yet ' +
-        'ancient-rooted story is being written. "Tsabo" is a family name ' +
-        'that embodies a deep love for wine. We believe in minimal ' +
-        'intervention: the wine purifies itself, is born on its own, and ' +
-        'travels directly from the vineyard to your table. Share this ' +
-        'handcrafted love with one another.',
+      ka: (
+        '2018 წლიდან, შიდა ქართლის გულში, კასპის რაიონის სოფელ ' +
+        'ზემო ხანდაკში, „ცაბოს" ისტორია სიყვარულით, შრომითა და ' +
+        'ქართული მეღვინეობის ტრადიციების პატივისცემით იქმნება.\n\n' +
+        '„ცაბო" ოჯახური ბრენდია, რომელიც ხარისხიან ღვინოს ' +
+        'ბუნებრივი მიდგომით ქმნის. გვჯერა, რომ საუკეთესო შედეგი ' +
+        'მიიღწევა მაშინ, როდესაც ყურძნის ბუნებრივ თვისებებს პატივს ' +
+        'ვცემთ და წარმოების პროცესში მხოლოდ აუცილებელ ჩარევას ' +
+        'ვიყენებთ. სწორედ ამიტომ, ჩვენი ღვინო ინარჩუნებს ' +
+        'ჯიშისთვის დამახასიათებელ არომატს, გემოსა და ხასიათს.\n\n' +
+        'ჩვენი ვენახები ზემო ხანდაკის ნოყიერ მიწაზეა გაშენებული, ' +
+        'სადაც ქართლის უნიკალური კლიმატი და ტრადიცია ' +
+        'თითოეულ მოსავალს განსაკუთრებულ იდენტობას სძენს. ' +
+        'ყოველი ბოთლი ასახავს იმ შრომას, გამოცდილებასა და ' +
+        'სიყვარულს, რომელიც ვენახიდან იწყება და თქვენს ' +
+        'სუფრამდე აღწევს.\n\n' +
+        '„ცაბო" — ქართული ღვინო, შექმნილი სიყვარულით, ' +
+        'ქართლის გულიდან.'
+      ),
+      en: (
+        'Since 2018, in the heart of Shida Kartli, in the village of ' +
+        'Zemo Khandaki, Kaspi district, the story of "Tsabo" is being ' +
+        'written with love, dedication, and deep respect for the ' +
+        'traditions of Georgian winemaking.\n\n' +
+        '"Tsabo" is a family brand that creates quality wine through ' +
+        'a natural approach. We believe that the best results are ' +
+        'achieved when we respect the natural qualities of the grape ' +
+        'and use only the necessary intervention in the production ' +
+        'process. That is why our wine preserves the aroma, taste, and ' +
+        'character characteristic of each variety.\n\n' +
+        'Our vineyards are planted on the fertile land of Zemo ' +
+        'Khandaki, where the unique climate and tradition of Kartli ' +
+        'give each harvest a special identity. Every bottle reflects ' +
+        'the labor, experience, and love that begins in the vineyard ' +
+        'and reaches your table.\n\n' +
+        '"Tsabo" — Georgian wine, made with love, from the heart of Kartli.'
+      ),
     },
     imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },
-    image: '/GALLERY RTVELI.png',
+    image: '/VAZI.png',
   },
   contact: {
     title: { ka: 'კონტაქტი', en: 'Contact' },
