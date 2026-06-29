@@ -1,25 +1,37 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
 
 export function TsabolaGallery() {
   const { t, r } = useLang()
-  const validImages = t.gallery.images.filter(Boolean)
+  const staticImages = t.gallery.images.filter(Boolean)
+  const [images, setImages] = useState<string[]>(staticImages)
   const [activeIndex, setActiveIndex] = useState(-1)
 
+  useEffect(() => {
+    fetch('/api/gallery')
+      .then((res) => res.json())
+      .then((data: { url: string }[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setImages(data.map((d) => d.url))
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const looped = [...images, ...images]
+
   function openImage(src: string) {
-    const idx = validImages.indexOf(src)
+    const idx = images.indexOf(src)
     if (idx !== -1) setActiveIndex(idx)
   }
 
   function close() { setActiveIndex(-1) }
-  function prev() { setActiveIndex(i => (i - 1 + validImages.length) % validImages.length) }
-  function next() { setActiveIndex(i => (i + 1) % validImages.length) }
-
-  const looped = [...validImages, ...validImages]
+  function prev() { setActiveIndex(i => (i - 1 + images.length) % images.length) }
+  function next() { setActiveIndex(i => (i + 1) % images.length) }
 
   return (
     <section id="gallery" className="bg-white py-24 overflow-hidden">
@@ -52,7 +64,7 @@ export function TsabolaGallery() {
 
       {activeIndex !== -1 && (
         <TsabolaLightbox
-          images={validImages}
+          images={images}
           index={activeIndex}
           onClose={close}
           onPrev={prev}
