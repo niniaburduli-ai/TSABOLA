@@ -4,6 +4,22 @@ import { useContentStore } from '@/features/tsabola/store/content-store'
 import { Label } from '@/shared/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
 
+const HEADING_FONTS = [
+  { label: 'Space Grotesk', value: '--font-space-grotesk' },
+  { label: 'Playfair Display', value: '--font-display' },
+  { label: 'Cormorant Garamond', value: '--font-cormorant' },
+  { label: 'Lora', value: '--font-lora' },
+  { label: 'Poppins', value: '--font-poppins' },
+  { label: 'Raleway', value: '--font-raleway' },
+]
+
+const BODY_FONTS = [
+  { label: 'Inter', value: '--font-sans' },
+  { label: 'Poppins', value: '--font-poppins' },
+  { label: 'Lora', value: '--font-lora' },
+  { label: 'Space Grotesk', value: '--font-space-grotesk' },
+]
+
 export function ThemeEditor() {
   const { theme, setTheme } = useContentStore()
 
@@ -12,6 +28,7 @@ export function ThemeEditor() {
       <h2 className="font-display text-2xl font-bold text-charcoal">Theme</h2>
 
       <div className="space-y-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-charcoal/40">Colors</p>
         {(
           [
             ['Wine Color', 'colorWine'],
@@ -33,19 +50,57 @@ export function ThemeEditor() {
       </div>
 
       <div className="space-y-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-charcoal/40">Typography</p>
+
         <div className="flex items-center gap-4">
-          <Label className="w-32 text-sm text-charcoal/70">Heading Size</Label>
+          <Label className="w-32 text-sm text-charcoal/70">Heading Font</Label>
           <Select
-            value={theme.headingSize}
-            onValueChange={(v) => setTheme({ ...theme, headingSize: v as 'sm' | 'md' | 'lg' })}
+            value={theme.headingFont ?? '--font-space-grotesk'}
+            onValueChange={(v) => setTheme({ ...theme, headingFont: v })}
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
+              {HEADING_FONTS.map((f) => (
+                <SelectItem key={f.value} value={f.value}>{f.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Label className="w-32 text-sm text-charcoal/70">Body Font</Label>
+          <Select
+            value={theme.bodyFont ?? '--font-sans'}
+            onValueChange={(v) => setTheme({ ...theme, bodyFont: v })}
+          >
+            <SelectTrigger className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {BODY_FONTS.map((f) => (
+                <SelectItem key={f.value} value={f.value}>{f.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Label className="w-32 text-sm text-charcoal/70">Heading Size</Label>
+          <Select
+            value={theme.headingSize ?? 'lg'}
+            onValueChange={(v) => setTheme({ ...theme, headingSize: v as 'xs' | 'sm' | 'md' | 'lg' | 'xl' })}
+          >
+            <SelectTrigger className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="xs">Extra Small</SelectItem>
               <SelectItem value="sm">Small</SelectItem>
               <SelectItem value="md">Medium</SelectItem>
               <SelectItem value="lg">Large</SelectItem>
+              <SelectItem value="xl">Extra Large</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -53,21 +108,23 @@ export function ThemeEditor() {
         <div className="flex items-center gap-4">
           <Label className="w-32 text-sm text-charcoal/70">Body Size</Label>
           <Select
-            value={theme.bodySize}
-            onValueChange={(v) => setTheme({ ...theme, bodySize: v as 'sm' | 'md' })}
+            value={theme.bodySize ?? 'md'}
+            onValueChange={(v) => setTheme({ ...theme, bodySize: v as 'xs' | 'sm' | 'md' | 'lg' })}
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="xs">Extra Small</SelectItem>
               <SelectItem value="sm">Small</SelectItem>
               <SelectItem value="md">Medium</SelectItem>
+              <SelectItem value="lg">Large</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
 
-      <p className="text-xs text-charcoal/40">Color changes apply live to the public site.</p>
+      <p className="text-xs text-charcoal/40">Changes apply live to the public site.</p>
     </div>
   )
 }
