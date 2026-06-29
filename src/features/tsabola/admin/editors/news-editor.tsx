@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import type { NewsItem } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
@@ -125,12 +126,18 @@ export function NewsEditor() {
                   />
                 </div>
                 <div>
-                  <Label className="text-sm text-charcoal/70">Image path</Label>
-                  <Input
-                    value={item.image}
-                    onChange={(e) => updateItem(i, { ...item, image: e.target.value })}
-                    placeholder="/news/item.jpg"
-                  />
+                  <Label className="text-sm text-charcoal/70">Image</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      value={item.image}
+                      onChange={(e) => updateItem(i, { ...item, image: e.target.value })}
+                      placeholder="https://... or /news/item.jpg"
+                    />
+                    <ImageUploadButton
+                      onUpload={(url) => updateItem(i, { ...item, image: url })}
+                      folder="tsabola/news"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
