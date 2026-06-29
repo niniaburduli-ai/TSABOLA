@@ -26,10 +26,12 @@ export function TsabolaPage() {
     root.style.setProperty('--wine', theme.colorWine)
     root.style.setProperty('--charcoal', theme.colorCharcoal)
     root.style.setProperty('--cream', theme.colorCream)
+    root.style.setProperty('--font-heading', `var(${theme.headingFont ?? '--font-space-grotesk'})`)
+    root.style.setProperty('--font-body', `var(${theme.bodyFont ?? '--font-sans'})`)
   }, [theme])
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className={`flex flex-col min-h-screen heading-${theme.headingSize ?? 'lg'} body-${theme.bodySize ?? 'md'}`}>
       <TsabolaHeader />
       <main>
         {visibility.hero && <TsabolaHero />}

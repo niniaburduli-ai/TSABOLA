@@ -10,6 +10,7 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -51,6 +52,7 @@
   --color-cream: #faf8f5;
   --color-border-wine: #e8e0d8;
   --font-display: var(--font-display);
+  --animate-hero-scroll: hero-scroll 24s linear infinite;
 }
 
 :root {
@@ -130,7 +132,7 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-sans;
+    font-family: var(--font-body);
   }
   h1,
   h2,
@@ -139,13 +141,14 @@
   }
 }
 
+@keyframes hero-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-25%); }
+}
+
 @layer utilities {
-  @keyframes hero-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
   .animate-hero-scroll {
-    animation: hero-scroll linear infinite;
+    will-change: transform;
   }
   .hero-carousel-dur-1 { animation-duration: 8s; }
   .hero-carousel-dur-2 { animation-duration: 16s; }
@@ -211,6 +214,41 @@
   .pause-on-hover:hover {
     animation-play-state: paused;
   }
+
+  /* Hero image positioning — frames basket/table foreground */
+  .hero-img-pos {
+    object-position: center 65%;
+  }
+  @media (max-width: 768px) {
+    .hero-img-pos {
+      object-position: center 70%;
+    }
+  }
+
+  /* Admin-controlled heading size scale */
+  /* Compound selectors (.heading-lg h1) have specificity 0,1,1 vs Tailwind's */
+  /* single-class utilities (.text-5xl) at 0,1,0 — compound wins */
+  .heading-xs h1 { font-size: 1.5rem; }
+  .heading-xs h2 { font-size: 1.25rem; }
+  .heading-xs h3 { font-size: 1.125rem; }
+  .heading-sm h1 { font-size: 2rem; }
+  .heading-sm h2 { font-size: 1.5rem; }
+  .heading-sm h3 { font-size: 1.25rem; }
+  .heading-md h1 { font-size: 2.5rem; }
+  .heading-md h2 { font-size: 2rem; }
+  .heading-md h3 { font-size: 1.5rem; }
+  .heading-lg h1 { font-size: 3rem; }
+  .heading-lg h2 { font-size: 2.25rem; }
+  .heading-lg h3 { font-size: 1.875rem; }
+  .heading-xl h1 { font-size: 4rem; }
+  .heading-xl h2 { font-size: 3rem; }
+  .heading-xl h3 { font-size: 2.25rem; }
+
+  /* Admin-controlled body size scale */
+  .body-xs { font-size: 0.75rem; }
+  .body-sm { font-size: 0.875rem; }
+  .body-md { font-size: 1rem; }
+  .body-lg { font-size: 1.125rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
