@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('TsabolaHeader', () => {
   it('renders site name in ka', () => {
     render(<TsabolaHeader />)
-    expect(screen.getByText('ცაბოლა')).toBeInTheDocument()
+    expect(screen.getByText('ცაბო')).toBeInTheDocument()
   })
 
   it('renders KA and EN buttons', () => {

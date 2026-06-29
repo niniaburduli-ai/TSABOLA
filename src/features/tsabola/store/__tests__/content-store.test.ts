@@ -13,7 +13,7 @@ beforeEach(() => {
 
 describe('contentStore', () => {
   it('initializes with default content', () => {
-    expect(useContentStore.getState().content.site.name.ka).toBe('ცაბოლა')
+    expect(useContentStore.getState().content.site.name.ka).toBe('ცაბო')
   })
 
   it('updateSection updates a top-level key', () => {

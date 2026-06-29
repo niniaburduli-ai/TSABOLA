@@ -34,6 +34,6 @@ describe('useLang()', () => {
 
   it('t.site.name.ka is correct', () => {
     const { result } = renderHook(() => useLang())
-    expect(result.current.t.site.name.ka).toBe('ცაბოლა')
+    expect(result.current.t.site.name.ka).toBe('ცაბო')
   })
 })

@@ -12,23 +12,21 @@ beforeEach(() => {
 })
 
 describe('TsabolaWineCatalog', () => {
-  it('renders all 4 wines', () => {
+  it('renders all wines', () => {
     render(<TsabolaWineCatalog />)
-    expect(screen.getByText('რქაწითელი')).toBeInTheDocument()
-    expect(screen.getByText('საფერავი')).toBeInTheDocument()
-    expect(screen.getByText('მწვანე')).toBeInTheDocument()
-    expect(screen.getByText('კახური როზე')).toBeInTheDocument()
+    expect(screen.getByText('თეთრი ღვინო')).toBeInTheDocument()
+    expect(screen.getByText('წითელი ღვინო')).toBeInTheDocument()
   })
 
   it('renders prices', () => {
     render(<TsabolaWineCatalog />)
-    expect(screen.getByText('45₾')).toBeInTheDocument()
-    expect(screen.getByText('55₾')).toBeInTheDocument()
+    expect(screen.getByText('30₾')).toBeInTheDocument()
+    expect(screen.getByText('50₾')).toBeInTheDocument()
   })
 
   it('renders type badges in ka', () => {
     render(<TsabolaWineCatalog />)
-    expect(screen.getByText('ანბერი')).toBeInTheDocument()
+    expect(screen.getByText('თეთრი')).toBeInTheDocument()
     expect(screen.getByText('წითელი')).toBeInTheDocument()
   })
 })

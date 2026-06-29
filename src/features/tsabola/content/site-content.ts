@@ -2,14 +2,15 @@ import type { SiteContent, ThemeConfig, SectionVisibility } from '../types'
 
 export const DEFAULT_CONTENT: SiteContent = {
   site: {
-    name: { ka: 'ცაბოლა', en: 'TSABOLA' },
-    slogan: { ka: 'კახეთის სული ბოთლში', en: 'The Soul of Kakheti in Every Bottle' },
+    name: { ka: 'ცაბო', en: 'TSABO' },
+    slogan: { ka: 'ტრადიცია ქართლის გულიდან', en: 'Tradition from the Heart of Kartli' },
   },
   nav: {
     wines: { ka: 'ღვინოები', en: 'Wines' },
     gallery: { ka: 'გალერეა', en: 'Gallery' },
     about: { ka: 'ჩვენ შესახებ', en: 'About' },
     contact: { ka: 'კონტაქტი', en: 'Contact' },
+    news: { ka: 'სიახლეები', en: 'News' },
   },
   hero: {
     headline: { ka: 'კახეთის სულისკვეთება', en: 'The Spirit of Kakheti' },
@@ -18,88 +19,117 @@ export const DEFAULT_CONTENT: SiteContent = {
       en: 'A family winery tradition spanning three generations',
     },
     cta: { ka: 'ღვინოები აღმოაჩინე', en: 'Discover Our Wines' },
+    images: ['/TSABO WHITE.png', '/TSABO RED.png'],
   },
   wines: [
     {
-      id: 'rkatsiteli',
-      name: { ka: 'რქაწითელი', en: 'Rkatsiteli' },
-      type: { ka: 'ანბერი', en: 'Amber' },
-      typeBadge: { ka: 'ანბერი', en: 'Amber' },
-      price: '45₾',
-      description: {
-        ka: 'ქვევრში დავარგებული, ხაჭოზე ნამყოფი. კომშის და ყვავილის ნოტებით.',
-        en: 'Qvevri-aged on skins. Notes of quince and dried flowers.',
-      },
-      image: '',
-    },
-    {
-      id: 'saperavi',
-      name: { ka: 'საფერავი', en: 'Saperavi' },
-      type: { ka: 'წითელი', en: 'Red' },
-      typeBadge: { ka: 'წითელი', en: 'Red' },
-      price: '55₾',
-      description: {
-        ka: 'მუხის კასრში დავარგებული. მუქი კენკრა, შავი ალუბალი, ტყავი.',
-        en: 'Oak-aged full body. Dark berry, black cherry, leather.',
-      },
-      image: '',
-    },
-    {
-      id: 'mtsvane',
-      name: { ka: 'მწვანე', en: 'Mtsvane' },
+      id: 'white',
+      name: { ka: 'თეთრი ღვინო', en: 'White Wine' },
       type: { ka: 'თეთრი', en: 'White' },
       typeBadge: { ka: 'თეთრი', en: 'White' },
-      price: '40₾',
+      price: '30₾',
       description: {
         ka: 'სუფთა, ყვავილოვანი. ატმის, ჟასმინის ნოტებით.',
         en: 'Crisp and floral. Hints of white peach and jasmine.',
       },
-      image: '',
+      image: '/white wine.png',
+      details: {
+        ka: 'ღვინო: თეთრი მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი; შიდა ქართლი.',
+        en: 'Wine: White Dry | Grape: Chinebuli\nRegion: Zemo Khandaki; Shida Kartli.',
+      },
     },
     {
-      id: 'rose',
-      name: { ka: 'კახური როზე', en: 'Kakhuri Rosé' },
-      type: { ka: 'როზე', en: 'Rosé' },
-      typeBadge: { ka: 'როზე', en: 'Rosé' },
-      price: '48₾',
+      id: 'red',
+      name: { ka: 'წითელი ღვინო', en: 'Red Wine' },
+      type: { ka: 'წითელი', en: 'Red' },
+      typeBadge: { ka: 'წითელი', en: 'Red' },
+      price: '50₾',
       description: {
-        ka: 'ნახევრად მშრალი. ზაფხულის კენკრა, ნარინჯი, სიახლე.',
-        en: 'Semi-dry. Summer berries, orange zest, bright finish.',
+        ka: 'მუხის კასრში დავარგებული. მუქი კენკრა, შავი ალუბალი, ტყავი.',
+        en: 'Oak-aged full body. Dark berry, black cherry, leather.',
       },
-      image: '',
+      image: '/red wine.png',
+      details: {
+        ka: 'ღვინო: წითელი მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი; შიდა ქართლი.',
+        en: 'Wine: Red Dry | Grape: Danakharuli\nRegion: Zemo Khandaki; Shida Kartli.',
+      },
     },
   ],
+  news: {
+    title: { ka: 'სიახლეები', en: 'News' },
+    subtitle: { ka: 'განახლებები', en: 'Updates' },
+    items: [
+      {
+        id: 'news-1',
+        title: {
+          ka: '2024 ყვავება — ახალი მოსავალი',
+          en: '2024 Harvest — New Vintage',
+        },
+        date: 'January 2025',
+        body: {
+          ka: 'ჩვენი 2024 წლის მოსავალი მზადაა. ' +
+            'ახალი ბოთლები ხელმისაწვდომია.',
+          en: 'Our 2024 harvest vintage is ready. ' +
+            'New bottles are now available.',
+        },
+        image: '',
+      },
+      {
+        id: 'news-2',
+        title: {
+          ka: 'სეზონური ფასდაკლება',
+          en: 'Seasonal Discount',
+        },
+        date: 'December 2024',
+        body: {
+          ka: 'ყველა თეთრ ღვინოზე 15% ფასდაკლება. ' +
+            'შეთავაზება 31 დეკემბრამდე.',
+          en: '15% off all white wines. ' +
+            'Offer valid until December 31.',
+        },
+        image: '',
+      },
+    ],
+  },
   gallery: {
     title: { ka: 'გალერეა', en: 'Gallery' },
     subtitle: { ka: 'ვენახი, მარანი, ხელოვნება', en: 'Vineyard, Cellar, Craft' },
-    images: ['', '', '', '', '', ''],
+    images: ['/gallery white.png', '/gallery red.png', '/GALLERY RTVELI.png', '', '', ''],
   },
   about: {
-    title: { ka: 'ჩვენ შესახებ', en: 'Our Story' },
-    body: {
-      ka: 'ცაბოლა — ოჯახური სახელი, თაობების ერთგულება. კახეთის გულში, ' +
-        'სამი თაობის განმავლობაში, ჩვენ ვაგრძელებთ ქართული ღვინის ' +
-        'ტრადიციას ქვევრით, სიყვარულით და მიწის პატივისცემით.\n\n' +
-        'ჩვენი ყოველი ბოთლი — ეს არის ხელნაკეთი ამბავი. მინიმალური ' +
-        'ჩარევა, ბუნებრივი ვარდნა, ვენახიდან პირდაპირ მაგიდაზე.',
-      en: 'TSABOLA is a family name and a promise of terroir. Rooted in ' +
-        'the vineyards of Kakheti for three generations, we carry Georgian ' +
-        'wine culture forward — one qvevri, one harvest, one story at a ' +
-        'time.\n\nEach bottle is handcrafted with minimal intervention. ' +
-        'Nature-first. From our vineyard to your table.',
+    title: {
+      ka: '"ცაბო" — ტრადიცია ქართლის გულიდან',
+      en: '"Tsabo" — A Tradition from the Heart of Kartli',
     },
-    imageAlt: { ka: 'ოჯახური მარანი', en: 'Family winery' },
-    image: '',
+    body: {
+      ka: '2018 წლიდან შიდა ქართლის გულში, კასპის მადლიან მიწაზე, ' +
+        'სოფელ ზემო ხანდაკში ახალი, თუმცა უძველეს ფესვებზე ' +
+        'აღმოცენებული ამბავი იწერება. „ცაბო" ოჯახური სახელია, ' +
+        'რომელიც ღვინის უდიდეს სიყვარულს აერთიანებს. ჩვენ გვჯერა ' +
+        'მინიმალური ჩარევის: ღვინო თავად იწმინდება, თავად იბადება და ' +
+        'ვენახიდან პირდაპირ თქვენს მაგიდაზე ხვდება. გაუზიარეთ ' +
+        'ერთმანეთს ხელნაკეთი სიყვარული.',
+      en: 'Since 2018, in the heart of Shida Kartli, on the blessed land ' +
+        'of Kaspi, in the village of Zemo Khandaki, a new yet ' +
+        'ancient-rooted story is being written. "Tsabo" is a family name ' +
+        'that embodies a deep love for wine. We believe in minimal ' +
+        'intervention: the wine purifies itself, is born on its own, and ' +
+        'travels directly from the vineyard to your table. Share this ' +
+        'handcrafted love with one another.',
+    },
+    imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },
+    image: '/GALLERY RTVELI.png',
   },
   contact: {
     title: { ka: 'კონტაქტი', en: 'Contact' },
     subtitle: { ka: 'დაგვიკავშირდით', en: 'Get in touch' },
-    email: 'info@tsabola.ge',
-    phone: '+995 555 000 000',
-    address: { ka: 'კახეთი, საქართველო', en: 'Kakheti, Georgia' },
+    email: 'tsabowinery@gmail.com',
+    phone: '+995 599 615 438',
+    whatsapp: '+995599615438',
+    address: { ka: 'ზემო ხანდაკი, შიდა ქართლი, საქართველო', en: 'Zemo Khandaki, Shida Kartli, Georgia' },
   },
   footer: {
-    copy: { ka: '© 2024 ცაბოლა. ყველა უფლება დაცულია.', en: '© 2024 TSABOLA. All rights reserved.' },
+    copy: { ka: '© 2018 ცაბო. ყველა უფლება დაცულია.', en: '© 2018 TSABO. All rights reserved.' },
   },
 }
 
@@ -114,6 +144,7 @@ export const DEFAULT_THEME: ThemeConfig = {
 export const DEFAULT_VISIBILITY: SectionVisibility = {
   hero: true,
   wines: true,
+  news: true,
   gallery: true,
   about: true,
   contact: true,
