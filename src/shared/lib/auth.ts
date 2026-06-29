@@ -7,6 +7,7 @@ import { upsertOAuthUserService } from '@/features/auth/service/auth.service';
 import { hashPassword } from '@/shared/utils/password';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -64,14 +65,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       if (token.email) {
-        const dbUser = await userRepository.findByEmail(token.email as string);
-        if (dbUser) {
-          token.id = dbUser._id.toString();
-          token.name = dbUser.name;
-          token.avatar = dbUser.avatar ?? (token.avatar as string | null | undefined);
-          token.role = (dbUser.role as 'admin' | 'user') ?? 'user';
-        } else {
-          token.role = 'user';
+        try {
+          const dbUser = await userRepository.findByEmail(token.email as string);
+          if (dbUser) {
+            token.id = dbUser._id.toString();
+            token.name = dbUser.name;
+            token.avatar = dbUser.avatar ?? (token.avatar as string | null | undefined);
+            token.role = (dbUser.role as 'admin' | 'user') ?? 'user';
+          } else {
+            token.role = 'user';
+          }
+        } catch {
+          token.role = (token.role as 'admin' | 'user' | undefined) ?? 'user';
         }
       }
 

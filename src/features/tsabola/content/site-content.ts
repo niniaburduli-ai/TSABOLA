@@ -117,7 +117,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   gallery: {
     title: { ka: 'გალერეა', en: 'Gallery' },
     subtitle: { ka: 'ვენახი, მარანი, ხელოვნება', en: 'Vineyard, Cellar, Craft' },
-    images: ['/gallery white.png', '/gallery red.png', '/GALLERY RTVELI .png', '', '', ''],
+    images: ['/gallery white.png', '/gallery red.png', '/GALLERY RTVELI .png', '/gallery supra.png', '', ''],
   },
   about: {
     title: {

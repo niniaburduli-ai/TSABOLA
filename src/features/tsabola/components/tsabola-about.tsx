@@ -10,10 +10,10 @@ export function TsabolaAbout() {
     <section id="about" className="bg-cream py-24 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <p className="text-xs font-semibold tracking-widest uppercase text-wine/70 mb-6">
+          <p className="text-base font-bold tracking-widest uppercase text-wine/70 mb-6">
             {r(t.nav.about)}
           </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-8">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-charcoal mb-8">
             {r(t.about.title)}
           </h2>
           {paragraphs.map((p, i) => (
