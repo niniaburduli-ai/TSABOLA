@@ -37,6 +37,22 @@ export const DEFAULT_CONTENT: SiteContent = {
         ka: 'ღვინო: თეთრი მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი; შიდა ქართლი.',
         en: 'Wine: White Dry | Grape: Chinebuli\nRegion: Zemo Khandaki; Shida Kartli.',
       },
+      longDescription: {
+        ka: (
+          '„ცაბოს" თეთრი მშრალი ღვინო დამზადებულია ჩინებულის ' +
+          'ჯიშის რჩეული ყურძნისგან. ღვინო გამოირჩევა ღია ' +
+          'ჩალისფერი შეფერილობით, ნაზი არომატით, სასიამოვნო ' +
+          'სიხალისითა და ხანგრძლივი დაბოლოებით.'
+        ),
+        en: (
+          'Tsabo\'s White Dry wine is crafted from select Chinebuli ' +
+          'grapes. Pale straw color, delicate aroma, pleasant ' +
+          'freshness, and lingering finish.'
+        ),
+      },
+      serveTemp: '10–12°C',
+      alcohol: '13%',
+      volume: '750 მლ',
     },
     {
       id: 'red',
@@ -53,6 +69,24 @@ export const DEFAULT_CONTENT: SiteContent = {
         ka: 'ღვინო: წითელი მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი; შიდა ქართლი.',
         en: 'Wine: Red Dry | Grape: Danakharuli\nRegion: Zemo Khandaki; Shida Kartli.',
       },
+      longDescription: {
+        ka: (
+          '„ცაბოს" წითელი მშრალი ღვინო დამზადებულია დანახარულის ' +
+          'ჯიშის ყურძნისგან და მუხის კასრებში ვარდება. ღვინო ' +
+          'გამოირჩევა მუქი-ყავისფერი შეფერილობით, კენკრის, ' +
+          'ალუბლისა და ვანილის ნოტებით, ხანგრძლივი ტანინიანი ' +
+          'დაბოლოებით.'
+        ),
+        en: (
+          'Tsabo\'s Red Dry wine is crafted from select Danakharuli ' +
+          'grapes and aged in oak barrels. Deep dark-ruby colour, rich ' +
+          'notes of dark berry, black cherry, and vanilla, with a ' +
+          'smooth tannic finish.'
+        ),
+      },
+      serveTemp: '16–18°C',
+      alcohol: '13.5%',
+      volume: '750 მლ',
     },
   ],
   news: {
@@ -103,41 +137,17 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     body: {
       ka: (
-        '2018 წლიდან, შიდა ქართლის გულში, კასპის რაიონის სოფელ ' +
-        'ზემო ხანდაკში, „ცაბოს" ისტორია სიყვარულით, შრომითა და ' +
-        'ქართული მეღვინეობის ტრადიციების პატივისცემით იქმნება.\n\n' +
-        '„ცაბო" ოჯახური ბრენდია, რომელიც ხარისხიან ღვინოს ' +
-        'ბუნებრივი მიდგომით ქმნის. გვჯერა, რომ საუკეთესო შედეგი ' +
-        'მიიღწევა მაშინ, როდესაც ყურძნის ბუნებრივ თვისებებს პატივს ' +
-        'ვცემთ და წარმოების პროცესში მხოლოდ აუცილებელ ჩარევას ' +
-        'ვიყენებთ. სწორედ ამიტომ, ჩვენი ღვინო ინარჩუნებს ' +
-        'ჯიშისთვის დამახასიათებელ არომატს, გემოსა და ხასიათს.\n\n' +
-        'ჩვენი ვენახები ზემო ხანდაკის ნოყიერ მიწაზეა გაშენებული, ' +
-        'სადაც ქართლის უნიკალური კლიმატი და ტრადიცია ' +
-        'თითოეულ მოსავალს განსაკუთრებულ იდენტობას სძენს. ' +
-        'ყოველი ბოთლი ასახავს იმ შრომას, გამოცდილებასა და ' +
-        'სიყვარულს, რომელიც ვენახიდან იწყება და თქვენს ' +
-        'სუფრამდე აღწევს.\n\n' +
-        '„ცაბო" — ქართული ღვინო, შექმნილი სიყვარულით, ' +
-        'ქართლის გულიდან.'
+        '2018 წლიდან, შიდა ქართლის გულში, „ცაბოს" ისტორია ' +
+        'სიყვარულით და ქართული მეღვინეობის ტრადიციების ' +
+        'პატივისცემით იქმნება. ოჯახური ბრენდი, რომელიც ხარისხიან ' +
+        'ღვინოს ბუნებრივი მიდგომით ქმნის. „ცაბო" — ქართული ღვინო, ' +
+        'შექმნილი სიყვარულით, ქართლის გულიდან.'
       ),
       en: (
-        'Since 2018, in the heart of Shida Kartli, in the village of ' +
-        'Zemo Khandaki, Kaspi district, the story of "Tsabo" is being ' +
-        'written with love, dedication, and deep respect for the ' +
-        'traditions of Georgian winemaking.\n\n' +
-        '"Tsabo" is a family brand that creates quality wine through ' +
-        'a natural approach. We believe that the best results are ' +
-        'achieved when we respect the natural qualities of the grape ' +
-        'and use only the necessary intervention in the production ' +
-        'process. That is why our wine preserves the aroma, taste, and ' +
-        'character characteristic of each variety.\n\n' +
-        'Our vineyards are planted on the fertile land of Zemo ' +
-        'Khandaki, where the unique climate and tradition of Kartli ' +
-        'give each harvest a special identity. Every bottle reflects ' +
-        'the labor, experience, and love that begins in the vineyard ' +
-        'and reaches your table.\n\n' +
-        '"Tsabo" — Georgian wine, made with love, from the heart of Kartli.'
+        'Since 2018, Tsabo\'s story is written with love and respect ' +
+        'for Georgian winemaking traditions. A family brand creating ' +
+        'quality wine through natural approach. "Tsabo" — Georgian wine, ' +
+        'made with love, from the heart of Kartli.'
       ),
     },
     imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },

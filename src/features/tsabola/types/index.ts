@@ -1,6 +1,6 @@
 export type L = { ka: string; en: string }
 
-export interface WineItem {
+export type WineItem = {
   id: string
   name: L
   type: L
@@ -9,6 +9,10 @@ export interface WineItem {
   description: L
   image: string
   details?: L
+  longDescription?: L
+  serveTemp?: string
+  alcohol?: string
+  volume?: string
 }
 
 export type NewsItem = {
@@ -19,7 +23,7 @@ export type NewsItem = {
   image: string
 }
 
-export interface SiteContent {
+export type SiteContent = {
   site: { name: L; slogan: L }
   nav: { wines: L; gallery: L; about: L; contact: L; news: L }
   hero: { headline: L; subline: L; cta: L; images: string[] }
@@ -31,7 +35,7 @@ export interface SiteContent {
   footer: { copy: L }
 }
 
-export interface ThemeConfig {
+export type ThemeConfig = {
   colorWine: string
   colorCharcoal: string
   colorCream: string
@@ -39,7 +43,7 @@ export interface ThemeConfig {
   bodySize: 'sm' | 'md'
 }
 
-export interface SectionVisibility {
+export type SectionVisibility = {
   hero: boolean
   wines: boolean
   news: boolean
