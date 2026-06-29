@@ -1,10 +1,16 @@
 'use client'
 
+import { useState } from 'react'
+
 import { TsabolaWineCard } from './tsabola-wine-card'
+import { TsabolaWineLightbox } from './tsabola-wine-lightbox'
 import { useLang } from '../hooks/use-lang'
+
+import type { WineItem } from '../types'
 
 export function TsabolaWineCatalog() {
   const { t, lang, r } = useLang()
+  const [activeWine, setActiveWine] = useState<WineItem | null>(null)
 
   return (
     <section id="wines" className="bg-cream py-24 px-6">
@@ -21,10 +27,22 @@ export function TsabolaWineCatalog() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {t.wines.map((wine) => (
-            <TsabolaWineCard key={wine.id} item={wine} lang={lang} />
+            <TsabolaWineCard
+              key={wine.id}
+              item={wine}
+              lang={lang}
+              onOpen={() => setActiveWine(wine)}
+            />
           ))}
         </div>
       </div>
+
+      <TsabolaWineLightbox
+        wine={activeWine}
+        lang={lang}
+        open={activeWine !== null}
+        onClose={() => setActiveWine(null)}
+      />
     </section>
   )
 }

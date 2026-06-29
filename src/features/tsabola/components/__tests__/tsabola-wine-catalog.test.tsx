@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '../../content/site-content'
@@ -28,5 +28,31 @@ describe('TsabolaWineCatalog', () => {
     render(<TsabolaWineCatalog />)
     expect(screen.getByText('თეთრი')).toBeInTheDocument()
     expect(screen.getByText('წითელი')).toBeInTheDocument()
+  })
+
+  it('opens lightbox when wine image is clicked', () => {
+    render(<TsabolaWineCatalog />)
+    const buttons = screen.getAllByRole('button', { name: /თეთრი ღვინო/i })
+    fireEvent.click(buttons[0])
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText(/ჩინებულის ჯიშის/)).toBeInTheDocument()
+  })
+
+  it('closes lightbox when close button is clicked', () => {
+    render(<TsabolaWineCatalog />)
+    const imageButtons = screen.getAllByRole('button', { name: /თეთრი ღვინო/i })
+    fireEvent.click(imageButtons[0])
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: /close/i }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('closes lightbox on Escape key', () => {
+    render(<TsabolaWineCatalog />)
+    const imageButtons = screen.getAllByRole('button', { name: /თეთრი ღვინო/i })
+    fireEvent.click(imageButtons[0])
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    fireEvent.keyDown(window, { key: 'Escape' })
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 })

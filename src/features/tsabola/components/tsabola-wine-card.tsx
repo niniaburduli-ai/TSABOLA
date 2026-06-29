@@ -4,21 +4,29 @@ import { r } from '../hooks/use-lang'
 
 import type { WineItem } from '../types'
 
-interface Props {
+type Props = {
   item: WineItem
   lang: 'ka' | 'en'
+  onOpen?: () => void
 }
 
-export function TsabolaWineCard({ item, lang }: Props) {
+export function TsabolaWineCard({ item, lang, onOpen }: Props) {
   return (
     <article className="group flex flex-col bg-white border border-border-wine hover:border-wine/60 transition-colors duration-300">
       {/* Image */}
       {item.image ? (
-        <img src={item.image} alt={r(item.name, lang)} className="w-full aspect-[4/3] object-cover" />
+        <button
+          type="button"
+          aria-label={r(item.name, lang)}
+          onClick={onOpen}
+          className="w-full h-80 bg-cream/20 flex items-center justify-center p-4 cursor-pointer"
+        >
+          <img src={item.image} alt={r(item.name, lang)} className="h-full w-full object-contain" />
+        </button>
       ) : (
         <div
           data-placeholder="true"
-          className="w-full aspect-[4/3] bg-gradient-to-br from-wine/10 via-cream to-charcoal/10"
+          className="w-full h-80 bg-gradient-to-br from-wine/10 via-cream to-charcoal/10"
         />
       )}
 
@@ -27,7 +35,15 @@ export function TsabolaWineCard({ item, lang }: Props) {
           {r(item.typeBadge, lang)}
         </span>
         <h3 className="font-display text-2xl font-bold text-charcoal">{r(item.name, lang)}</h3>
-        <p className="text-sm text-charcoal/60 leading-relaxed flex-1">{r(item.description, lang)}</p>
+        {item.details && (
+          <div className="border-t border-wine/10 pt-3">
+            {r(item.details, lang).split('\n').map((line, i) => (
+              <p key={i} className="text-xs text-charcoal/50 leading-relaxed">
+                {line}
+              </p>
+            ))}
+          </div>
+        )}
         <p className="font-display text-xl font-bold text-wine mt-auto">{item.price}</p>
       </div>
     </article>
