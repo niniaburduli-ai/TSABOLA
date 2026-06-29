@@ -19,7 +19,10 @@ export const DEFAULT_CONTENT: SiteContent = {
       en: 'A family winery tradition spanning three generations',
     },
     cta: { ka: 'ღვინოები აღმოაჩინე', en: 'Discover Our Wines' },
-    images: ['/HERO RTVELI.png', '/HERO VENAXI.png'],
+    images: [
+      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
+      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
+    ],
   },
   wines: [
     {
@@ -32,7 +35,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         ka: 'ღია ჩალისფერი. ნაზი არომატი, სიხალისე, ჰარმონიული დაბოლოება.',
         en: 'Light straw. Delicate aroma, pleasant freshness, harmonious finish.',
       },
-      image: '/white wine.png',
+      image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764200/tsabola/wines/white-wine.png',
       details: {
         ka: 'ღვინო: მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
         en: 'Wine: Dry | Grape: Chinebuli\nRegion: Zemo Khandaki, Shida Kartli',
@@ -59,7 +62,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         ka: 'ღრმა ლალისფერი. ხავერდოვანი სტრუქტურა, მწიფე კენკრა, დაბალანსებული დაბოლოება.',
         en: 'Deep ruby. Velvety structure, ripe berry aromas, balanced finish.',
       },
-      image: '/red wine.png',
+      image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764216/tsabola/wines/red-wine.png',
       details: {
         ka: 'ღვინო: მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
         en: 'Wine: Dry | Grape: Danakharuli\nRegion: Zemo Khandaki, Shida Kartli',
@@ -117,7 +120,14 @@ export const DEFAULT_CONTENT: SiteContent = {
   gallery: {
     title: { ka: 'გალერეა', en: 'Gallery' },
     subtitle: { ka: 'ვენახი, მარანი, ხელოვნება', en: 'Vineyard, Cellar, Craft' },
-    images: ['/gallery white.png', '/gallery red.png', '/GALLERY RTVELI .png', '/gallery supra.png', '', ''],
+    images: [
+      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764255/tsabola/gallery/gallery-white.png',
+      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764272/tsabola/gallery/gallery-red.png',
+      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764309/tsabola/gallery/gallery-rtveli.png',
+      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764337/tsabola/gallery/gallery-supra.png',
+      '',
+      '',
+    ],
   },
   about: {
     title: {
@@ -152,7 +162,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         '"Tsabo" — a handcrafted wine, made with love, from the heart of Kartli.',
     },
     imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },
-    image: '/VAZI.png',
+    image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764363/tsabola/about/about-vazi.png',
   },
   contact: {
     title: { ka: 'კონტაქტი', en: 'Contact' },

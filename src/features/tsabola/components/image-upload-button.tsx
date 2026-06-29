@@ -2,13 +2,15 @@
 
 import { useRef, useState } from 'react'
 
-type UploadedImage = { id: string; url: string; publicId: string }
+const MAX_BYTES = 2 * 1024 * 1024
 
 type Props = {
-  onUploaded: (image: UploadedImage) => void
+  onUpload: (url: string) => void
+  folder?: string
+  disabled?: boolean
 }
 
-export function GalleryUpload({ onUploaded }: Props) {
+export function ImageUploadButton({ onUpload, folder = 'tsabola/content', disabled }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -16,45 +18,36 @@ export function GalleryUpload({ onUploaded }: Props) {
   async function handleFile(file: File) {
     setError(null)
 
-    if (file.size > 2 * 1024 * 1024) {
+    if (file.size > MAX_BYTES) {
       setError('File exceeds 2 MB limit')
       return
     }
 
     setUploading(true)
-
     try {
       const signRes = await fetch('/api/cloudinary/sign', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ folder: 'tsabola/gallery' }),
+        body: JSON.stringify({ folder }),
       })
       if (!signRes.ok) throw new Error('Failed to get upload signature')
-      const { signature, timestamp, cloudName, apiKey, folder } = await signRes.json()
+      const { signature, timestamp, cloudName, apiKey, folder: signedFolder } =
+        await signRes.json()
 
       const formData = new FormData()
       formData.append('file', file)
       formData.append('signature', signature)
       formData.append('timestamp', String(timestamp))
       formData.append('api_key', apiKey)
-      formData.append('folder', folder)
+      formData.append('folder', signedFolder)
 
       const uploadRes = await fetch(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
         { method: 'POST', body: formData }
       )
       if (!uploadRes.ok) throw new Error('Cloudinary upload failed')
-      const { secure_url, public_id } = await uploadRes.json()
-
-      const saveRes = await fetch('/api/gallery', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: secure_url, publicId: public_id }),
-      })
-      if (!saveRes.ok) throw new Error('Failed to save image')
-      const saved = await saveRes.json()
-
-      onUploaded({ id: saved._id, url: secure_url, publicId: public_id })
+      const { secure_url } = await uploadRes.json()
+      onUpload(secure_url)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed')
     } finally {
@@ -64,7 +57,7 @@ export function GalleryUpload({ onUploaded }: Props) {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-1">
       <input
         ref={inputRef}
         type="file"
@@ -77,23 +70,28 @@ export function GalleryUpload({ onUploaded }: Props) {
       />
       <button
         type="button"
-        disabled={uploading}
+        disabled={disabled || uploading}
         onClick={() => inputRef.current?.click()}
         className={
-          'flex items-center gap-2 px-4 py-2 bg-wine text-white text-sm font-medium ' +
-          'rounded hover:bg-wine/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+          'flex items-center gap-2 px-3 py-1.5 text-xs font-medium border rounded ' +
+          'border-wine/40 text-wine hover:bg-wine/5 ' +
+          'disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
         }
       >
         {uploading ? (
           <>
-            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <span
+              className={
+                'w-3 h-3 border border-wine/30 border-t-wine rounded-full animate-spin'
+              }
+            />
             Uploading…
           </>
         ) : (
-          '+ Upload Image'
+          'Upload image'
         )}
       </button>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )
 }

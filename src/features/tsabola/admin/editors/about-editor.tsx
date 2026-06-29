@@ -1,5 +1,6 @@
 'use client'
 
+import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
@@ -42,12 +43,16 @@ export function AboutEditor() {
         </Tabs>
         <p className="text-xs text-charcoal/40">Separate paragraphs with a blank line.</p>
       </div>
-      <div>
-        <Label className="text-sm text-charcoal/70">Image Path</Label>
+      <div className="space-y-1">
+        <Label className="text-sm text-charcoal/70">Image</Label>
         <Input
           value={about.image}
           onChange={(e) => updateSection('about', { ...about, image: e.target.value })}
           placeholder="/about/winery.jpg"
+        />
+        <ImageUploadButton
+          folder="tsabola/about"
+          onUpload={(url) => updateSection('about', { ...about, image: url })}
         />
       </div>
     </div>

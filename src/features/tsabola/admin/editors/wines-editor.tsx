@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import type { WineItem } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
@@ -117,12 +118,16 @@ export function WinesEditor() {
                     onChange={(e) => updateWine(i, { ...wine, price: e.target.value })}
                   />
                 </div>
-                <div>
-                  <Label className="text-sm text-charcoal/70">Image path</Label>
+                <div className="space-y-1">
+                  <Label className="text-sm text-charcoal/70">Image</Label>
                   <Input
                     value={wine.image}
                     onChange={(e) => updateWine(i, { ...wine, image: e.target.value })}
                     placeholder="/wines/name.jpg"
+                  />
+                  <ImageUploadButton
+                    folder="tsabola/wines"
+                    onUpload={(url) => updateWine(i, { ...wine, image: url })}
                   />
                 </div>
               </div>
