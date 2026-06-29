@@ -1,7 +1,14 @@
 #!/usr/bin/env sh
 
+export NODE_OPTIONS="--max-old-space-size=4096"
+
 echo "---CHECK LINT---"
-npm run lint
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(ts|tsx)$' | tr '\n' ' ')
+if [ -n "$STAGED" ]; then
+  npx eslint $STAGED
+else
+  echo "No staged .ts/.tsx files to lint"
+fi
 
 echo "---BUILD PROJECT---"
 npm run build
