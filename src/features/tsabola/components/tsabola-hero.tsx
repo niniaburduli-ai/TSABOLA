@@ -11,9 +11,10 @@ export function TsabolaHero() {
   const { t } = useLang()
   const [active, setActive] = useState(0)
 
-  const images = t.hero.images?.length >= 2
-    ? t.hero.images
-    : ['/TSABO WHITE.png', '/TSABO RED.png']
+  const images = (() => {
+    const filtered = (t.hero.images ?? []).filter(Boolean)
+    return filtered.length >= 1 ? filtered : ['/TSABO WHITE.png', '/TSABO RED.png']
+  })()
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -38,13 +39,13 @@ export function TsabolaHero() {
             fill
             priority={i === 0}
             sizes="100vw"
-            className="object-cover object-top"
+            className="object-cover hero-img-pos"
           />
         </div>
       ))}
 
       {/* Bottom vignette — dot indicators */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
       {/* Bottom content */}
       <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center pb-10 gap-4">

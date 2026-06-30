@@ -22,8 +22,6 @@ export function TsabolaGallery() {
       .catch(() => {})
   }, [])
 
-  const looped = [...images, ...images]
-
   function openImage(src: string) {
     const idx = images.indexOf(src)
     if (idx !== -1) setActiveIndex(idx)
@@ -43,12 +41,12 @@ export function TsabolaGallery() {
         </div>
       </div>
 
-      <div className="overflow-hidden">
-        <div className="flex animate-hero-scroll hero-carousel-dur-4">
-          {looped.map((src, i) => (
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-3 gap-2">
+          {images.map((src, i) => (
             <div
               key={i}
-              className="flex-shrink-0 relative h-72 w-72 sm:h-80 sm:w-80 mr-4 overflow-hidden cursor-zoom-in group"
+              className="relative aspect-square overflow-hidden cursor-zoom-in group"
               onClick={() => openImage(src)}
             >
               <img

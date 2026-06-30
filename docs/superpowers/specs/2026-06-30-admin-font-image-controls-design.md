@@ -109,11 +109,13 @@ useEffect(() => {
   root.style.setProperty('--cream', theme.colorCream)
   // new: font families
   root.style.setProperty('--font-heading', `var(${theme.headingFont ?? '--font-space-grotesk'})`)
-  root.style.setProperty('--font-sans', `var(${theme.bodyFont ?? '--font-sans'})`)
+  root.style.setProperty('--font-body', `var(${theme.bodyFont ?? '--font-sans'})`)
 }, [theme])
 ```
 
-Font family override works because `--font-heading` and `--font-sans` are defined in `globals.css @theme inline` as static values. Setting them as inline styles on `documentElement` overrides the stylesheet definition (inline styles beat stylesheet rules).
+Font family override works because `--font-heading` and `--font-body` are defined in `globals.css @theme inline` as static values. Setting them as inline styles on `documentElement` overrides the stylesheet definition (inline styles beat stylesheet rules).
+
+**Important — why `--font-body` not `--font-sans`:** Inter is loaded by next/font with `variable: '--font-sans'`. Calling `root.style.setProperty('--font-sans', 'var(--font-sans)')` (the default reset case) creates a circular CSS custom property reference, which the CSS spec marks as guaranteed-invalid. `--font-body` is an intermediary variable that avoids this: setting it to `var(--font-sans)` is never circular.
 
 Font sizes are applied via wrapper-div CSS class (see below) — not via `style.setProperty` — to keep the `useEffect` clean.
 
@@ -124,6 +126,20 @@ Apply dynamic class to the root wrapper div in `TsabolaPage`:
 ```
 
 ### `src/app/globals.css`
+
+Add to `@theme inline`:
+```css
+--font-body: var(--font-sans);  /* intermediary — avoids circular ref when overriding */
+```
+
+Change `@layer base`:
+```css
+/* Before */
+html { @apply font-sans; }
+
+/* After */
+html { font-family: var(--font-body); }
+```
 
 Add to `@layer utilities`:
 
