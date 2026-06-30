@@ -249,6 +249,21 @@
   .body-sm { font-size: 0.875rem; }
   .body-md { font-size: 1rem; }
   .body-lg { font-size: 1.125rem; }
+
+  /* Hero text glow-in */
+  @keyframes hero-glow-in {
+    from { opacity: 0; filter: blur(6px) brightness(2.5); }
+    to   { opacity: 1; filter: blur(0px) brightness(1); }
+  }
+  .animate-hero-glow {
+    animation: hero-glow-in 1s ease-out both;
+  }
+  .animate-hero-glow-mid {
+    animation: hero-glow-in 1.1s ease-out 0.35s both;
+  }
+  .animate-hero-glow-late {
+    animation: hero-glow-in 0.8s ease-out 0.9s both;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -261,8 +276,13 @@
   .hero-slide-fade,
   .animate-wine-float,
   .animate-modal-fade,
-  .animate-modal-slide {
+  .animate-modal-slide,
+  .animate-hero-glow,
+  .animate-hero-glow-mid,
+  .animate-hero-glow-late {
     animation: none;
     transition: none;
+    opacity: 1;
+    filter: none;
   }
 }

@@ -8,7 +8,7 @@ import { useLang } from '../hooks/use-lang'
 const SLIDE_DURATION = 6000
 
 export function TsabolaHero() {
-  const { t } = useLang()
+  const { t, r } = useLang()
   const [active, setActive] = useState(0)
 
   const images = (() => {
@@ -24,7 +24,7 @@ export function TsabolaHero() {
   }, [images.length])
 
   return (
-    <section id="hero" className="relative w-full h-screen overflow-hidden">
+    <section id="hero" className="relative w-full h-screen overflow-hidden bg-charcoal">
       {/* Image slides — crossfade */}
       {images.map((src, i) => (
         <div
@@ -44,44 +44,68 @@ export function TsabolaHero() {
         </div>
       ))}
 
-      {/* Bottom vignette — dot indicators */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+      {/* Bottom vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
 
-      {/* Bottom content */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center pb-10 gap-4">
-        {/* Slide progress indicators */}
-        <div className="flex items-center gap-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`rounded-full transition-all duration-500 ease-in-out ${
-                i === active
-                  ? 'w-7 h-1.5 bg-white'
-                  : 'w-1.5 h-1.5 bg-white/35 hover:bg-white/60'
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Scroll cue */}
+      {/* Text content — bottom center, compact */}
+      <div key={active} className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6">
+        <p className="animate-rise text-cream/50 text-sm tracking-widest uppercase mb-2 font-heading">
+          {r(t.site.name)}
+        </p>
+        <h1 className="animate-rise animate-rise-1 text-cream text-base sm:text-lg font-heading font-semibold leading-snug mb-1 whitespace-nowrap">
+          {r(t.hero.headline)}
+        </h1>
+        <p className="animate-rise animate-rise-2 text-cream/55 text-xs font-sans leading-relaxed mb-4 max-w-xs">
+          {r(t.hero.subline)}
+        </p>
         <a
           href="#wines"
-          className="flex flex-col items-center text-white/40 hover:text-white/70 transition-colors duration-300"
-          aria-label="Scroll to wines"
+          className={[
+            'animate-rise animate-rise-3 px-5 py-2 border border-cream/35',
+            'text-cream text-xs font-heading tracking-wide pointer-events-auto',
+            'hover:bg-cream hover:text-charcoal transition-colors duration-300',
+          ].join(' ')}
         >
-          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" className="animate-bounce">
-            <path
-              d="M7 0v18M1 12l6 6 6-6"
-              stroke="currentColor"
-              strokeWidth="1.1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          {r(t.hero.cta)}
         </a>
       </div>
+
+      {/* Slide indicators — right side, vertical stack */}
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-3">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className="group flex items-center justify-center px-2 py-1 pointer-events-auto"
+          >
+            <span
+              className={`block w-px transition-all duration-500 ease-in-out ${
+                i === active
+                  ? 'h-8 bg-white'
+                  : 'h-3 bg-white/35 group-hover:bg-white/60'
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+
+      {/* Scroll cue — bottom-right */}
+      <a
+        href="#wines"
+        className="absolute bottom-6 right-6 z-10 flex flex-col items-center text-white/40 hover:text-white/70 transition-colors duration-300"
+        aria-label="Scroll to wines"
+      >
+        <svg width="12" height="20" viewBox="0 0 14 22" fill="none" className="animate-bounce">
+          <path
+            d="M7 0v18M1 12l6 6 6-6"
+            stroke="currentColor"
+            strokeWidth="1.1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </a>
     </section>
   )
 }

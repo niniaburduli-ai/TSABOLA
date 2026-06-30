@@ -16,8 +16,8 @@ export function GalleryUpload({ onUploaded }: Props) {
   async function handleFile(file: File) {
     setError(null)
 
-    if (file.size > 5 * 1024 * 1024) {
-      setError('File exceeds 5 MB limit')
+    if (file.size > 10 * 1024 * 1024) {
+      setError('File exceeds 10 MB limit')
       return
     }
 

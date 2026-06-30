@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 
-const MAX_BYTES = 5 * 1024 * 1024
+const MAX_BYTES = 10 * 1024 * 1024
 
 type Props = {
   onUpload: (url: string) => void
@@ -19,7 +19,7 @@ export function ImageUploadButton({ onUpload, folder = 'tsabola/content', disabl
     setError(null)
 
     if (file.size > MAX_BYTES) {
-      setError('File exceeds 5 MB limit')
+      setError('File exceeds 10 MB limit')
       return
     }
 

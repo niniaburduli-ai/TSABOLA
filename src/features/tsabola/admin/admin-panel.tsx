@@ -15,6 +15,7 @@ import { WinesEditor } from './editors/wines-editor'
 import { ExportReset } from './export-reset'
 import { ThemeEditor } from './theme-editor'
 import { VisibilityEditor } from './visibility-editor'
+import { useSiteContentSync } from '../hooks/use-site-content-sync'
 
 const EDITOR_MAP: Record<string, React.ComponentType> = {
   site: SiteEditor,
@@ -32,6 +33,7 @@ const EDITOR_MAP: Record<string, React.ComponentType> = {
 }
 
 export function AdminPanel() {
+  useSiteContentSync()
   const [active, setActive] = useState('site')
   const Editor = EDITOR_MAP[active] ?? SiteEditor
 
