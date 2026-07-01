@@ -14,3 +14,8 @@ export type ApiErrorResponse = {
   error: string;
   details?: unknown;
 };
+
+export type TranslationMemory = {
+  sourceKa: string;
+  autoEn: string;
+};
