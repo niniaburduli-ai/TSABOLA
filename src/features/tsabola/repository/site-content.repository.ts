@@ -4,7 +4,12 @@ import {
 } from '@/features/tsabola/schema/site-content.schema';
 import { mongo } from '@/shared/lib/mongo';
 
-type UpsertPayload = { content: unknown; theme: unknown; visibility: unknown };
+type UpsertPayload = {
+  content: unknown;
+  theme: unknown;
+  visibility: unknown;
+  translationMemory: unknown;
+};
 
 export const siteContentRepository = {
   async findOne(): Promise<SiteContentDocument | null> {

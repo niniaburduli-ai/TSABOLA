@@ -39,7 +39,7 @@ export function GalleryEditor() {
   async function saveImage(image: GalleryImage) {
     setSaving(image._id)
     try {
-      await fetch(`/api/gallery/${image._id}`, {
+      const res = await fetch(`/api/gallery/${image._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -49,6 +49,15 @@ export function GalleryEditor() {
           description: image.description,
         }),
       })
+      const updated: GalleryImage = await res.json()
+      if (updated?._id) {
+        updateLocal(image._id, {
+          slug: updated.slug,
+          published: updated.published,
+          caption: updated.caption,
+          description: updated.description,
+        })
+      }
     } finally {
       setSaving(null)
     }

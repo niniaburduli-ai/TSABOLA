@@ -12,31 +12,32 @@ type StoredMemory = { sourceKa?: string; autoEn?: string } | undefined;
 export async function resolveBilingualField(
   current: BilingualValue,
   memory: StoredMemory
-): Promise<{ value: BilingualValue; memory: TranslationMemory }> {
+): Promise<{ value: BilingualValue; memory: TranslationMemory; pending: boolean }> {
   const baseline: TranslationMemory = {
     sourceKa: memory?.sourceKa ?? '',
     autoEn: memory?.autoEn ?? '',
   };
 
   if (!current.ka.trim()) {
-    return { value: current, memory: baseline };
+    return { value: current, memory: baseline, pending: false };
   }
 
-  if (current.en !== baseline.autoEn) {
-    return { value: current, memory: baseline };
+  if (baseline.autoEn && current.en !== baseline.autoEn) {
+    return { value: current, memory: baseline, pending: false };
   }
 
   if (current.ka === baseline.sourceKa) {
-    return { value: current, memory: baseline };
+    return { value: current, memory: baseline, pending: false };
   }
 
   const translated = await aiTranslator.translate(current.ka);
   if (!translated) {
-    return { value: current, memory: baseline };
+    return { value: current, memory: baseline, pending: true };
   }
 
   return {
     value: { ka: current.ka, en: translated },
     memory: { sourceKa: current.ka, autoEn: translated },
+    pending: false,
   };
 }

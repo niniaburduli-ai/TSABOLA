@@ -14,6 +14,14 @@ const GalleryImageSchema = new Schema(
       ka: { type: String, default: '' },
       en: { type: String, default: '' },
     },
+    captionTranslation: {
+      sourceKa: { type: String, default: '' },
+      autoEn: { type: String, default: '' },
+    },
+    descriptionTranslation: {
+      sourceKa: { type: String, default: '' },
+      autoEn: { type: String, default: '' },
+    },
   },
   { timestamps: true }
 );

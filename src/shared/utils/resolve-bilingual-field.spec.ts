@@ -15,7 +15,7 @@ describe('resolveBilingualField', () => {
 
   it('no-ops when ka is empty', async () => {
     const result = await resolveBilingualField({ ka: '', en: '' }, undefined);
-    expect(result).toEqual({ value: { ka: '', en: '' }, memory: { sourceKa: '', autoEn: '' } });
+    expect(result).toEqual({ value: { ka: '', en: '' }, memory: { sourceKa: '', autoEn: '' }, pending: false });
     expect(aiTranslator.translate).not.toHaveBeenCalled();
   });
 
@@ -25,6 +25,7 @@ describe('resolveBilingualField', () => {
     expect(result).toEqual({
       value: { ka: 'გამარჯობა', en: 'Hello' },
       memory: { sourceKa: 'გამარჯობა', autoEn: 'Hello' },
+      pending: false,
     });
   });
 
@@ -37,6 +38,7 @@ describe('resolveBilingualField', () => {
     expect(result).toEqual({
       value: { ka: 'ნახვამდის', en: 'Goodbye' },
       memory: { sourceKa: 'ნახვამდის', autoEn: 'Goodbye' },
+      pending: false,
     });
   });
 
@@ -48,6 +50,7 @@ describe('resolveBilingualField', () => {
     expect(result).toEqual({
       value: { ka: 'ნახვამდის', en: 'Manually written English' },
       memory: { sourceKa: 'გამარჯობა', autoEn: 'Hello' },
+      pending: false,
     });
     expect(aiTranslator.translate).not.toHaveBeenCalled();
   });
@@ -55,14 +58,27 @@ describe('resolveBilingualField', () => {
   it('is a no-op when nothing changed', async () => {
     const memory = { sourceKa: 'გამარჯობა', autoEn: 'Hello' };
     const result = await resolveBilingualField({ ka: 'გამარჯობა', en: 'Hello' }, memory);
-    expect(result).toEqual({ value: { ka: 'გამარჯობა', en: 'Hello' }, memory });
+    expect(result).toEqual({ value: { ka: 'გამარჯობა', en: 'Hello' }, memory, pending: false });
     expect(aiTranslator.translate).not.toHaveBeenCalled();
   });
 
-  it('keeps old value and memory unchanged so it retries next time when translation fails', async () => {
+  it('marks the field pending and keeps the old value when translation fails', async () => {
     vi.mocked(aiTranslator.translate).mockResolvedValueOnce(null);
     const memory = { sourceKa: 'ძველი', autoEn: 'Old' };
     const result = await resolveBilingualField({ ka: 'ახალი', en: 'Old' }, memory);
-    expect(result).toEqual({ value: { ka: 'ახალი', en: 'Old' }, memory });
+    expect(result).toEqual({ value: { ka: 'ახალი', en: 'Old' }, memory, pending: true });
+  });
+
+  it('translates stale seed content that predates any translation memory', async () => {
+    vi.mocked(aiTranslator.translate).mockResolvedValueOnce('New harvest');
+    const result = await resolveBilingualField(
+      { ka: 'ახალი მოსავალი', en: '2024 Harvest — New Vintage' },
+      undefined
+    );
+    expect(result).toEqual({
+      value: { ka: 'ახალი მოსავალი', en: 'New harvest' },
+      memory: { sourceKa: 'ახალი მოსავალი', autoEn: 'New harvest' },
+      pending: false,
+    });
   });
 });

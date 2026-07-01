@@ -5,11 +5,13 @@ import { useState } from 'react'
 
 import { useContentStore } from '../store/content-store'
 
+import type { SiteContent, ThemeConfig, SectionVisibility } from '../types'
+
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
 
 export function AdminHeader() {
   const [status, setStatus] = useState<SaveStatus>('idle')
-  const { content, theme, visibility } = useContentStore()
+  const { content, theme, visibility, setContent } = useContentStore()
 
   async function handleSave() {
     setStatus('saving')
@@ -20,6 +22,8 @@ export function AdminHeader() {
         body: JSON.stringify({ content, theme, visibility }),
       })
       if (res.ok) {
+        const saved: { content: SiteContent; theme: ThemeConfig; visibility: SectionVisibility } = await res.json()
+        if (saved?.content) setContent(saved.content)
         setStatus('saved')
         setTimeout(() => setStatus('idle'), 2000)
       } else {

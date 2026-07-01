@@ -6,6 +6,7 @@ const SiteContentDocSchema = new Schema(
     content: { type: Schema.Types.Mixed, required: true },
     theme: { type: Schema.Types.Mixed, required: true },
     visibility: { type: Schema.Types.Mixed, required: true },
+    translationMemory: { type: Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }
 );
