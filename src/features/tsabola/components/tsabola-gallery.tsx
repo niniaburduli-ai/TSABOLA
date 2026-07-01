@@ -80,7 +80,7 @@ export function TsabolaGallery() {
           <div className="absolute inset-y-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
 
           <div className="overflow-hidden">
-            <div className={`flex gap-2 w-max animate-gallery-scroll pause-on-hover ${durationClass}`}>
+            <div className={`flex gap-2 w-max animate-gallery-scroll ${durationClass}`}>
               {[...publishedImages, ...publishedImages].map((image, i) => (
                 <div key={`${image._id}-${i}`} className="flex-shrink-0 w-48 sm:w-56">
                   <TsabolaGalleryCard image={image} />
