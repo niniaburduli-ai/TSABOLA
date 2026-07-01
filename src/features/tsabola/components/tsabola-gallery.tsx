@@ -9,6 +9,8 @@ import { TsabolaGalleryCard } from './tsabola-gallery-card'
 import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
 
+const ALL_GALLERY_LABEL = { ka: 'სრული გალერეა', en: 'All Gallery' }
+
 type Props = {
   initialImages: GalleryImage[]
 }
@@ -53,7 +55,7 @@ export function TsabolaGallery({ initialImages }: Props) {
                 'hover:bg-wine hover:text-white transition-colors duration-300',
               ].join(' ')}
             >
-              All Gallery
+              {r(ALL_GALLERY_LABEL)}
             </Link>
           </div>
         )}

@@ -6,6 +6,9 @@ import { useRef } from 'react'
 import { TsabolaNewsCard } from './tsabola-news-card'
 import { useLang } from '../hooks/use-lang'
 
+const ALL_NEWS_LABEL = { ka: 'ყველა სიახლე', en: 'All News' }
+const NO_NEWS_LABEL = { ka: 'სიახლეები ჯერ არ არის.', en: 'No news yet.' }
+
 export function TsabolaNews() {
   const { t, r } = useLang()
   const items = t.news.items.filter((item) => item.published)
@@ -31,12 +34,12 @@ export function TsabolaNews() {
             href="/news"
             className="px-5 py-2 border border-wine text-wine text-sm font-heading tracking-wide hover:bg-wine hover:text-white transition-colors duration-300"
           >
-            All News
+            {r(ALL_NEWS_LABEL)}
           </Link>
         </div>
 
         {items.length === 0 ? (
-          <p className="text-center text-charcoal/50">No news yet.</p>
+          <p className="text-center text-charcoal/50">{r(NO_NEWS_LABEL)}</p>
         ) : (
           <div className="relative px-10">
             <div

@@ -1,16 +1,21 @@
 'use client'
 
 import { TsabolaNewsCard } from './tsabola-news-card'
+import { useLang } from '../hooks/use-lang'
 
 import type { NewsItem } from '../types'
+
+const NO_NEWS_LABEL = { ka: 'სიახლეები ჯერ არ არის.', en: 'No news yet.' }
 
 type Props = {
   items: NewsItem[]
 }
 
 export function TsabolaNewsGrid({ items }: Props) {
+  const { r } = useLang()
+
   if (items.length === 0) {
-    return <p className="text-center text-charcoal/50 py-24">No news yet.</p>
+    return <p className="text-center text-charcoal/50 py-24">{r(NO_NEWS_LABEL)}</p>
   }
 
   return (

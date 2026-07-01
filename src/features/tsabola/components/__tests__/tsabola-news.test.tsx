@@ -19,7 +19,7 @@ describe('TsabolaNews', () => {
 
   it('renders an All News link to the news page', () => {
     render(<TsabolaNews />)
-    expect(screen.getByRole('link', { name: 'All News' })).toHaveAttribute('href', '/news')
+    expect(screen.getByRole('link', { name: 'ყველა სიახლე' })).toHaveAttribute('href', '/news')
   })
 
   it('renders all news item titles', () => {
