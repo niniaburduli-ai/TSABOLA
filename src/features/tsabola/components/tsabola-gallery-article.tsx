@@ -2,8 +2,7 @@
 
 import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 
-import { r } from '../hooks/use-lang'
-import { useLanguageStore } from '../store/language-store'
+import { useLang } from '../hooks/use-lang'
 
 type Props = {
   image: GalleryImage
@@ -14,9 +13,9 @@ function formatDate(iso: string): string {
 }
 
 export function TsabolaGalleryArticle({ image }: Props) {
-  const { lang } = useLanguageStore()
-  const caption = r(image.caption, lang)
-  const description = r(image.description, lang)
+  const { r } = useLang()
+  const caption = r(image.caption)
+  const description = r(image.description)
 
   return (
     <article className="max-w-3xl mx-auto px-6 py-16">

@@ -4,16 +4,15 @@ import Link from 'next/link'
 
 import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 
-import { r } from '../hooks/use-lang'
-import { useLanguageStore } from '../store/language-store'
+import { useLang } from '../hooks/use-lang'
 
 type Props = {
   image: GalleryImage
 }
 
 export function TsabolaGalleryCard({ image }: Props) {
-  const { lang } = useLanguageStore()
-  const caption = r(image.caption, lang)
+  const { r } = useLang()
+  const caption = r(image.caption)
 
   return (
     <Link href={`/gallery/${image.slug}`} className="group relative block aspect-square overflow-hidden bg-charcoal/5">

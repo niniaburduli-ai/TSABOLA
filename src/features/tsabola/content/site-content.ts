@@ -94,7 +94,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           ka: '2024 ყვავება — ახალი მოსავალი',
           en: '2024 Harvest — New Vintage',
         },
-        date: 'January 2025',
+        date: { ka: 'იანვარი 2025', en: 'January 2025' },
         body: {
           ka: 'ჩვენი 2024 წლის მოსავალი მზადაა. ' +
             'ახალი ბოთლები ხელმისაწვდომია.',
@@ -111,7 +111,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           ka: 'სეზონური ფასდაკლება',
           en: 'Seasonal Discount',
         },
-        date: 'December 2024',
+        date: { ka: 'დეკემბერი 2024', en: 'December 2024' },
         body: {
           ka: 'ყველა თეთრ ღვინოზე 15% ფასდაკლება. ' +
             'შეთავაზება 31 დეკემბრამდე.',

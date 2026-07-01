@@ -48,7 +48,7 @@ export function TsabolaHero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
 
       {/* Text content — bottom center, compact */}
-      <div key={active} className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6">
+      <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6">
         <p className="animate-rise text-cream/50 text-sm tracking-widest uppercase mb-2 font-heading">
           {r(t.site.name)}
         </p>

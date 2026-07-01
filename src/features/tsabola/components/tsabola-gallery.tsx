@@ -9,10 +9,14 @@ import { TsabolaGalleryCard } from './tsabola-gallery-card'
 import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
 
-export function TsabolaGallery() {
+type Props = {
+  initialImages: GalleryImage[]
+}
+
+export function TsabolaGallery({ initialImages }: Props) {
   const { t, r } = useLang()
   const staticImages = t.gallery.images.filter(Boolean)
-  const [dbImages, setDbImages] = useState<GalleryImage[]>([])
+  const [dbImages, setDbImages] = useState<GalleryImage[]>(initialImages)
   const [activeIndex, setActiveIndex] = useState(-1)
 
   useEffect(() => {

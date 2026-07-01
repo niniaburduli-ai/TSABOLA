@@ -12,7 +12,9 @@ export function TsabolaNews() {
   const scrollerRef = useRef<HTMLDivElement>(null)
 
   const scrollByCards = (direction: number) => {
-    scrollerRef.current?.scrollBy({ left: direction * 320, behavior: 'smooth' })
+    const scroller = scrollerRef.current
+    if (!scroller) return
+    scroller.scrollBy({ left: direction * (scroller.clientWidth / 3), behavior: 'smooth' })
   }
 
   return (
@@ -36,26 +38,27 @@ export function TsabolaNews() {
         {items.length === 0 ? (
           <p className="text-center text-charcoal/50">No news yet.</p>
         ) : (
-          <div>
+          <div className="relative px-10">
             <div
               ref={scrollerRef}
-              className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2"
+              className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2 -mx-3"
             >
               {items.map((item) => (
-                <div key={item.id} className="snap-start flex-shrink-0 w-72 sm:w-80">
+                <div key={item.id} className="snap-start shrink-0 w-1/3 box-border px-3">
                   <TsabolaNewsCard item={item} />
                 </div>
               ))}
             </div>
 
-            {items.length > 1 && (
-              <div className="flex justify-center gap-3 mt-8">
+            {items.length > 3 && (
+              <>
                 <button
                   type="button"
                   onClick={() => scrollByCards(-1)}
                   aria-label="Scroll news left"
                   className={[
-                    'w-10 h-10 rounded-full border border-charcoal/20 text-charcoal',
+                    'absolute left-0 top-1/2 -translate-y-1/2 z-10',
+                    'w-10 h-10 rounded-full border border-charcoal/20 bg-white text-charcoal',
                     'flex items-center justify-center',
                     'hover:bg-wine hover:text-white hover:border-wine transition-colors duration-300',
                   ].join(' ')}
@@ -67,14 +70,15 @@ export function TsabolaNews() {
                   onClick={() => scrollByCards(1)}
                   aria-label="Scroll news right"
                   className={[
-                    'w-10 h-10 rounded-full border border-charcoal/20 text-charcoal',
+                    'absolute right-0 top-1/2 -translate-y-1/2 z-10',
+                    'w-10 h-10 rounded-full border border-charcoal/20 bg-white text-charcoal',
                     'flex items-center justify-center',
                     'hover:bg-wine hover:text-white hover:border-wine transition-colors duration-300',
                   ].join(' ')}
                 >
                   →
                 </button>
-              </div>
+              </>
             )}
           </div>
         )}

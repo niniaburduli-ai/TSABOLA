@@ -21,7 +21,7 @@ export type NewsItem = {
   slug: string
   published: boolean
   title: L
-  date: string
+  date: L
   body: L
   image: string
 }

@@ -28,10 +28,10 @@ describe('TsabolaNews', () => {
     expect(screen.getByText('სეზონური ფასდაკლება')).toBeInTheDocument()
   })
 
-  it('renders item dates', () => {
+  it('renders item dates in the active language', () => {
     render(<TsabolaNews />)
-    expect(screen.getByText('January 2025')).toBeInTheDocument()
-    expect(screen.getByText('December 2024')).toBeInTheDocument()
+    expect(screen.getByText('იანვარი 2025')).toBeInTheDocument()
+    expect(screen.getByText('დეკემბერი 2024')).toBeInTheDocument()
   })
 
   it('links each card to its news detail page by slug', () => {

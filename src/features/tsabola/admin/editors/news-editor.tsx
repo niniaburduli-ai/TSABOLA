@@ -12,12 +12,16 @@ import { slugify } from '@/shared/utils/slugify'
 
 import { BilingualField } from './_bilingual-field'
 
+function toBilingualDate(date: NewsItem['date']): NewsItem['date'] {
+  return typeof date === 'string' ? { ka: date, en: date } : date
+}
+
 const EMPTY_ITEM: NewsItem = {
   id: '',
   slug: '',
   published: true,
   title: { ka: '', en: '' },
-  date: '',
+  date: { ka: '', en: '' },
   body: { ka: '', en: '' },
   image: '',
 }
@@ -150,27 +154,23 @@ export function NewsEditor() {
                   </Label>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm text-charcoal/70">Date (e.g. January 2025)</Label>
+              <BilingualField
+                label="Date (e.g. January 2025)"
+                value={toBilingualDate(item.date)}
+                onChange={(v) => updateItem(i, { ...item, date: v })}
+              />
+              <div>
+                <Label className="text-sm text-charcoal/70">Image</Label>
+                <div className="flex gap-2">
                   <Input
-                    value={item.date}
-                    onChange={(e) => updateItem(i, { ...item, date: e.target.value })}
+                    value={item.image}
+                    onChange={(e) => updateItem(i, { ...item, image: e.target.value })}
+                    placeholder="https://... or /news/item.jpg"
                   />
-                </div>
-                <div>
-                  <Label className="text-sm text-charcoal/70">Image</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      value={item.image}
-                      onChange={(e) => updateItem(i, { ...item, image: e.target.value })}
-                      placeholder="https://... or /news/item.jpg"
-                    />
-                    <ImageUploadButton
-                      onUpload={(url) => updateItem(i, { ...item, image: url })}
-                      folder="tsabola/news"
-                    />
-                  </div>
+                  <ImageUploadButton
+                    onUpload={(url) => updateItem(i, { ...item, image: url })}
+                    folder="tsabola/news"
+                  />
                 </div>
               </div>
             </div>
