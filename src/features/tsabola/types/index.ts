@@ -6,6 +6,7 @@ export type WineItem = {
   type: L
   typeBadge: L
   price: string
+  discountPrice?: string
   description: L
   image: string
   details?: L
@@ -17,6 +18,8 @@ export type WineItem = {
 
 export type NewsItem = {
   id: string
+  slug: string
+  published: boolean
   title: L
   date: string
   body: L

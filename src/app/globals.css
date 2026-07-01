@@ -150,16 +150,14 @@
   .animate-hero-scroll {
     will-change: transform;
   }
-  .hero-carousel-dur-1 { animation-duration: 8s; }
-  .hero-carousel-dur-2 { animation-duration: 16s; }
-  .hero-carousel-dur-3 { animation-duration: 24s; }
-  .hero-carousel-dur-4 { animation-duration: 32s; }
-  .hero-carousel-dur-5 { animation-duration: 40s; }
-  .hero-carousel-dur-6 { animation-duration: 48s; }
-  .hero-carousel-dur-7 { animation-duration: 56s; }
-  .hero-carousel-dur-8 { animation-duration: 64s; }
-  .hero-carousel-dur-9 { animation-duration: 72s; }
-  .hero-carousel-dur-10 { animation-duration: 80s; }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
   @keyframes rise {
     from {
@@ -214,6 +212,27 @@
   .pause-on-hover:hover {
     animation-play-state: paused;
   }
+
+  @keyframes gallery-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-gallery-scroll {
+    animation-name: gallery-scroll;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+  .gallery-carousel-dur-1 { animation-duration: 8s; }
+  .gallery-carousel-dur-2 { animation-duration: 16s; }
+  .gallery-carousel-dur-3 { animation-duration: 24s; }
+  .gallery-carousel-dur-4 { animation-duration: 32s; }
+  .gallery-carousel-dur-5 { animation-duration: 40s; }
+  .gallery-carousel-dur-6 { animation-duration: 48s; }
+  .gallery-carousel-dur-7 { animation-duration: 56s; }
+  .gallery-carousel-dur-8 { animation-duration: 64s; }
+  .gallery-carousel-dur-9 { animation-duration: 72s; }
+  .gallery-carousel-dur-10 { animation-duration: 80s; }
 
   /* Hero image positioning — frames basket/table foreground */
   .hero-img-pos {
@@ -273,6 +292,7 @@
   .animate-rise-3,
   .animate-rise-4,
   .animate-hero-scroll,
+  .animate-gallery-scroll,
   .hero-slide-fade,
   .animate-wine-float,
   .animate-modal-fade,

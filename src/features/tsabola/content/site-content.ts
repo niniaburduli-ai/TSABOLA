@@ -88,6 +88,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     items: [
       {
         id: 'news-1',
+        slug: '2024-harvest-new-vintage',
+        published: true,
         title: {
           ka: '2024 ყვავება — ახალი მოსავალი',
           en: '2024 Harvest — New Vintage',
@@ -103,6 +105,8 @@ export const DEFAULT_CONTENT: SiteContent = {
       },
       {
         id: 'news-2',
+        slug: 'seasonal-discount',
+        published: true,
         title: {
           ka: 'სეზონური ფასდაკლება',
           en: 'Seasonal Discount',

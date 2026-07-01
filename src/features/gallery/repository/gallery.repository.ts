@@ -13,6 +13,15 @@ export const galleryRepository = {
     return doc;
   },
 
+  async updateById(
+    id: string,
+    data: Partial<GalleryImageDocument>
+  ): Promise<GalleryImageDocument | null> {
+    await mongo.connect();
+    return GalleryImageModel.findByIdAndUpdate(id, { $set: data }, { new: true })
+      .lean() as Promise<GalleryImageDocument | null>;
+  },
+
   async deleteById(id: string): Promise<void> {
     await mongo.connect();
     await GalleryImageModel.findByIdAndDelete(id);

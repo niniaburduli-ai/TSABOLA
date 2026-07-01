@@ -1,6 +1,7 @@
 'use client'
 
 import { r } from '../hooks/use-lang'
+import { getWineDiscount } from '../hooks/use-wine-discount'
 
 import type { WineItem } from '../types'
 
@@ -11,6 +12,8 @@ type Props = {
 }
 
 export function TsabolaWineCard({ item, lang, onOpen }: Props) {
+  const discount = getWineDiscount(item.price, item.discountPrice)
+
   return (
     <article className="group flex flex-col bg-white border border-border-wine hover:border-wine/60 transition-colors duration-300">
       {/* Image */}
@@ -54,7 +57,17 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
             ))}
           </div>
         )}
-        <p className="font-display text-xl font-bold text-wine mt-auto">{item.price}</p>
+        {discount ? (
+          <div className="flex flex-wrap items-center gap-2 mt-auto">
+            <span className="font-display text-base text-red-600 line-through">{item.price}</span>
+            <span className="font-display text-xl font-bold text-red-600">{item.discountPrice}</span>
+            <span className="inline-block px-2 py-0.5 text-xs font-semibold text-white bg-red-600 rounded">
+              {lang === 'ka' ? `ფასდაკლება -${discount.percent}%` : `Discount -${discount.percent}%`}
+            </span>
+          </div>
+        ) : (
+          <p className="font-display text-xl font-bold text-wine mt-auto">{item.price}</p>
+        )}
       </div>
     </article>
   )

@@ -8,11 +8,14 @@ import type { NewsItem } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
+import { slugify } from '@/shared/utils/slugify'
 
 import { BilingualField } from './_bilingual-field'
 
 const EMPTY_ITEM: NewsItem = {
   id: '',
+  slug: '',
+  published: true,
   title: { ka: '', en: '' },
   date: '',
   body: { ka: '', en: '' },
@@ -77,9 +80,12 @@ export function NewsEditor() {
           <div className="flex items-center justify-between">
             <button
               onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-              className="font-medium text-charcoal hover:text-wine text-left"
+              className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2"
             >
               {item.title.ka || item.title.en || `Item ${i + 1}`}
+              {item.published === false && (
+                <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">Draft</span>
+              )}
             </button>
             <div className="flex items-center gap-2">
               <button
@@ -117,6 +123,33 @@ export function NewsEditor() {
                 value={item.body}
                 onChange={(v) => updateItem(i, { ...item, body: v })}
               />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm text-charcoal/70">Slug (URL: /news/…)</Label>
+                  <Input
+                    value={item.slug}
+                    onChange={(e) => updateItem(i, { ...item, slug: slugify(e.target.value) })}
+                    onBlur={() => {
+                      if (!item.slug) {
+                        updateItem(i, { ...item, slug: slugify(item.title.en || item.title.ka) })
+                      }
+                    }}
+                    placeholder="auto-generated from title"
+                  />
+                </div>
+                <div className="flex items-end gap-2 pb-1">
+                  <input
+                    type="checkbox"
+                    id={`published-${item.id}`}
+                    checked={item.published !== false}
+                    onChange={(e) => updateItem(i, { ...item, published: e.target.checked })}
+                    className="h-4 w-4 accent-wine"
+                  />
+                  <Label htmlFor={`published-${item.id}`} className="text-sm text-charcoal/70">
+                    Published
+                  </Label>
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm text-charcoal/70">Date (e.g. January 2025)</Label>

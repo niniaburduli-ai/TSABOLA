@@ -11,10 +11,8 @@ import { TsabolaHero } from './tsabola-hero'
 import { TsabolaNews } from './tsabola-news'
 import { TsabolaWineCatalog } from './tsabola-wine-catalog'
 import { useLang } from '../hooks/use-lang'
-import { useSiteContentSync } from '../hooks/use-site-content-sync'
 
 export function TsabolaPage() {
-  useSiteContentSync()
   const { lang, theme, visibility } = useLang()
 
   // Sync html lang attribute
