@@ -168,6 +168,7 @@ export function WinesEditor() {
                   <ImageUploadButton
                     folder="tsabola/wines"
                     onUpload={(url) => updateWine(i, { ...wine, image: url })}
+                    aspectRatio={3 / 4}
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-4">

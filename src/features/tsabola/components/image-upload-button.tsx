@@ -2,18 +2,22 @@
 
 import { useRef, useState } from 'react'
 
+import { ImageCropperModal } from '@/shared/components/image-cropper-modal'
+
 const MAX_BYTES = 10 * 1024 * 1024
 
 type Props = {
   onUpload: (url: string) => void
   folder?: string
   disabled?: boolean
+  aspectRatio?: number
 }
 
-export function ImageUploadButton({ onUpload, folder = 'tsabola/content', disabled }: Props) {
+export function ImageUploadButton({ onUpload, folder = 'tsabola/content', disabled, aspectRatio }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [cropSrc, setCropSrc] = useState<string | null>(null)
 
   async function handleFile(file: File) {
     setError(null)
@@ -23,6 +27,27 @@ export function ImageUploadButton({ onUpload, folder = 'tsabola/content', disabl
       return
     }
 
+    if (aspectRatio) {
+      setCropSrc(URL.createObjectURL(file))
+      return
+    }
+
+    await uploadFile(file)
+  }
+
+  async function handleCropped(blob: Blob) {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    await uploadFile(new File([blob], 'crop.jpg', { type: blob.type }))
+  }
+
+  function handleCropCancel() {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    if (inputRef.current) inputRef.current.value = ''
+  }
+
+  async function uploadFile(file: File) {
     setUploading(true)
     try {
       const signRes = await fetch('/api/cloudinary/sign', {
@@ -92,6 +117,14 @@ export function ImageUploadButton({ onUpload, folder = 'tsabola/content', disabl
         )}
       </button>
       {error && <p className="text-xs text-red-500">{error}</p>}
+      {cropSrc && aspectRatio && (
+        <ImageCropperModal
+          imageSrc={cropSrc}
+          aspect={aspectRatio}
+          onCancel={handleCropCancel}
+          onCropped={handleCropped}
+        />
+      )}
     </div>
   )
 }

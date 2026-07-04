@@ -30,7 +30,12 @@ export async function resolveBilingualField(
     return { value: current, memory: baseline, pending: false };
   }
 
-  const translated = await aiTranslator.translate(current.ka);
+  let translated: string | null = null;
+  try {
+    translated = await aiTranslator.translate(current.ka);
+  } catch {
+    translated = null;
+  }
   if (!translated) {
     return { value: current, memory: baseline, pending: true };
   }

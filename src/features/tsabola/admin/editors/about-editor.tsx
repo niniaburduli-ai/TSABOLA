@@ -53,6 +53,7 @@ export function AboutEditor() {
         <ImageUploadButton
           folder="tsabola/about"
           onUpload={(url) => updateSection('about', { ...about, image: url })}
+          aspectRatio={3 / 4}
         />
       </div>
     </div>

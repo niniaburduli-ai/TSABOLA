@@ -92,7 +92,12 @@ export async function processTranslationQueue(): Promise<ProcessQueueResult> {
   const result: ProcessQueueResult = { processed: due.length, succeeded: 0, rescheduled: 0, dropped: 0 };
 
   for (const item of due) {
-    const translated = await aiTranslator.translate(item.sourceKa);
+    let translated: string | null = null;
+    try {
+      translated = await aiTranslator.translate(item.sourceKa);
+    } catch {
+      translated = null;
+    }
 
     if (!translated) {
       await translationQueueRepository.reschedule(

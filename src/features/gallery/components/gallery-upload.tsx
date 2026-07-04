@@ -2,6 +2,10 @@
 
 import { useRef, useState } from 'react'
 
+import { ImageCropperModal } from '@/shared/components/image-cropper-modal'
+
+const GALLERY_ASPECT = 1
+
 type UploadedImage = { id: string; url: string; publicId: string }
 
 type Props = {
@@ -12,6 +16,7 @@ export function GalleryUpload({ onUploaded }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [cropSrc, setCropSrc] = useState<string | null>(null)
 
   async function handleFile(file: File) {
     setError(null)
@@ -21,6 +26,22 @@ export function GalleryUpload({ onUploaded }: Props) {
       return
     }
 
+    setCropSrc(URL.createObjectURL(file))
+  }
+
+  async function handleCropped(blob: Blob) {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    await uploadFile(new File([blob], 'crop.jpg', { type: blob.type }))
+  }
+
+  function handleCropCancel() {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    if (inputRef.current) inputRef.current.value = ''
+  }
+
+  async function uploadFile(file: File) {
     setUploading(true)
 
     try {
@@ -94,6 +115,14 @@ export function GalleryUpload({ onUploaded }: Props) {
         )}
       </button>
       {error && <p className="text-sm text-red-500">{error}</p>}
+      {cropSrc && (
+        <ImageCropperModal
+          imageSrc={cropSrc}
+          aspect={GALLERY_ASPECT}
+          onCancel={handleCropCancel}
+          onCropped={handleCropped}
+        />
+      )}
     </div>
   )
 }

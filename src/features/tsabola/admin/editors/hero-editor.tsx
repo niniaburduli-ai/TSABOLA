@@ -61,6 +61,7 @@ export function HeroEditor() {
             <ImageUploadButton
               folder="tsabola/hero"
               onUpload={(url) => updateImage(i, url)}
+              aspectRatio={16 / 9}
             />
           </div>
         ))}

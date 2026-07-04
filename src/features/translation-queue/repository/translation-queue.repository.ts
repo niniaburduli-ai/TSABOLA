@@ -12,6 +12,14 @@ export const translationQueueRepository = {
     sourceKa: string;
   }): Promise<void> {
     await mongo.connect();
+    const existing = await TranslationQueueModel.findOne({
+      feature: data.feature,
+      targetId: data.targetId,
+      path: data.path,
+    }).lean();
+
+    if (existing && (existing as { sourceKa: string }).sourceKa === data.sourceKa) return;
+
     await TranslationQueueModel.findOneAndUpdate(
       { feature: data.feature, targetId: data.targetId, path: data.path },
       { $set: { sourceKa: data.sourceKa, attempts: 0, nextAttemptAt: new Date() } },

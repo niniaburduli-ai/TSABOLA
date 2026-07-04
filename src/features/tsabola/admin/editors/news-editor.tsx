@@ -170,6 +170,7 @@ export function NewsEditor() {
                   <ImageUploadButton
                     onUpload={(url) => updateItem(i, { ...item, image: url })}
                     folder="tsabola/news"
+                    aspectRatio={16 / 9}
                   />
                 </div>
               </div>
