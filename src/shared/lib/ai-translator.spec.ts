@@ -134,4 +134,40 @@ describe('AiTranslator', () => {
 
     expect(result).toBeNull();
   });
+
+  describe('translateOnce', () => {
+    it('returns translated text on success from the primary model', async () => {
+      mockFetch.mockResolvedValueOnce(makeResponse({ choices: [{ message: { content: 'Hello world' } }] }));
+      const result = await translator.translateOnce('გამარჯობა მსოფლიო');
+      expect(result).toBe('Hello world');
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('falls back to the fallback model once, without retrying or sleeping', async () => {
+      mockFetch
+        .mockResolvedValueOnce(makeResponse({}, 429))
+        .mockResolvedValueOnce(makeResponse({ choices: [{ message: { content: 'Fallback text' } }] }));
+
+      const result = await translator.translateOnce('text');
+
+      expect(result).toBe('Fallback text');
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
+    it('returns null after a single failed attempt per model, with no backoff rounds', async () => {
+      mockFetch.mockResolvedValue(makeResponse({}, 429));
+
+      const result = await translator.translateOnce('text');
+
+      expect(result).toBeNull();
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
+    it('returns null when API key is missing, without calling fetch', async () => {
+      vi.stubEnv('OPENROUTER_API_KEY', '');
+      const result = await translator.translateOnce('text');
+      expect(result).toBeNull();
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+  });
 });

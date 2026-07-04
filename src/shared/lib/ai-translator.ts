@@ -79,6 +79,25 @@ class AiTranslator {
 
     return null;
   }
+
+  // Single pass, no retry rounds or backoff sleeps — for use on request paths
+  // (e.g. admin save) where blocking for the full retry/backoff budget of
+  // `translate()` would hang the request. Failed attempts fall back to the
+  // background translation queue, which uses `translate()`'s full retry policy.
+  async translateOnce(text: string): Promise<string | null> {
+    const trimmed = text.trim();
+    if (!trimmed) return null;
+
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    if (!apiKey) return null;
+
+    for (const model of MODELS) {
+      const result = await this.callModel(model, apiKey, trimmed);
+      if (result.text) return result.text;
+    }
+
+    return null;
+  }
 }
 
 export const aiTranslator = new AiTranslator();

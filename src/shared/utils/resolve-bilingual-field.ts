@@ -32,7 +32,7 @@ export async function resolveBilingualField(
 
   let translated: string | null = null;
   try {
-    translated = await aiTranslator.translate(current.ka);
+    translated = await aiTranslator.translateOnce(current.ka);
   } catch {
     translated = null;
   }
