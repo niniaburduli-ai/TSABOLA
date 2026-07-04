@@ -60,20 +60,20 @@ export function NewsEditor() {
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-2xl font-bold text-charcoal">News</h2>
+        <h2 className="font-display text-2xl font-bold text-charcoal">სიახლეები</h2>
         <Button size="sm" onClick={addItem} className="bg-wine hover:bg-wine/90 text-white">
-          + Add Item
+          + სიახლის დამატება
         </Button>
       </div>
 
       <div className="space-y-4">
         <BilingualField
-          label="Section Title"
+          label="სექციის სათაური"
           value={news.title}
           onChange={(v) => updateSection('news', { ...news, title: v })}
         />
         <BilingualField
-          label="Section Subtitle"
+          label="სექციის ქვესათაური"
           value={news.subtitle}
           onChange={(v) => updateSection('news', { ...news, subtitle: v })}
         />
@@ -86,9 +86,9 @@ export function NewsEditor() {
               onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
               className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2"
             >
-              {item.title.ka || item.title.en || `Item ${i + 1}`}
+              {item.title.ka || item.title.en || `სიახლე ${i + 1}`}
               {item.published === false && (
-                <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">Draft</span>
+                <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">დრაფტი</span>
               )}
             </button>
             <div className="flex items-center gap-2">
@@ -110,7 +110,7 @@ export function NewsEditor() {
                 onClick={() => deleteItem(i)}
                 className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50"
               >
-                Delete
+                წაშლა
               </button>
             </div>
           </div>
@@ -118,18 +118,18 @@ export function NewsEditor() {
           {expandedId === item.id && (
             <div className="space-y-4 pt-2 border-t border-border-wine">
               <BilingualField
-                label="Title"
+                label="სათაური"
                 value={item.title}
                 onChange={(v) => updateItem(i, { ...item, title: v })}
               />
               <BilingualField
-                label="Body"
+                label="ტექსტი"
                 value={item.body}
                 onChange={(v) => updateItem(i, { ...item, body: v })}
               />
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-sm text-charcoal/70">Slug (URL: /news/…)</Label>
+                  <Label className="text-sm text-charcoal/70">სლაგი (URL: /news/…)</Label>
                   <Input
                     value={item.slug}
                     onChange={(e) => updateItem(i, { ...item, slug: slugify(e.target.value) })}
@@ -138,7 +138,7 @@ export function NewsEditor() {
                         updateItem(i, { ...item, slug: slugify(item.title.en || item.title.ka) })
                       }
                     }}
-                    placeholder="auto-generated from title"
+                    placeholder="ავტომატურად გენერირდება სათაურიდან"
                   />
                 </div>
                 <div className="flex items-end gap-2 pb-1">
@@ -150,22 +150,22 @@ export function NewsEditor() {
                     className="h-4 w-4 accent-wine"
                   />
                   <Label htmlFor={`published-${item.id}`} className="text-sm text-charcoal/70">
-                    Published
+                    გამოქვეყნებული
                   </Label>
                 </div>
               </div>
               <BilingualField
-                label="Date (e.g. January 2025)"
+                label="თარიღი (მაგ: იანვარი 2025)"
                 value={toBilingualDate(item.date)}
                 onChange={(v) => updateItem(i, { ...item, date: v })}
               />
               <div>
-                <Label className="text-sm text-charcoal/70">Image</Label>
+                <Label className="text-sm text-charcoal/70">სურათი</Label>
                 <div className="flex gap-2">
                   <Input
                     value={item.image}
                     onChange={(e) => updateItem(i, { ...item, image: e.target.value })}
-                    placeholder="https://... or /news/item.jpg"
+                    placeholder="https://... ან /news/item.jpg"
                   />
                   <ImageUploadButton
                     onUpload={(url) => updateItem(i, { ...item, image: url })}

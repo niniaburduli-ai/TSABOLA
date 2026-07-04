@@ -5,12 +5,12 @@ import { Label } from '@/shared/components/ui/label'
 import { Switch } from '@/shared/components/ui/switch'
 
 const SECTIONS = [
-  { key: 'hero', label: 'Hero' },
-  { key: 'wines', label: 'Wine Catalog' },
-  { key: 'news', label: 'News' },
-  { key: 'gallery', label: 'Gallery' },
-  { key: 'about', label: 'About' },
-  { key: 'contact', label: 'Contact' },
+  { key: 'hero', label: 'მთავარი ბანერი' },
+  { key: 'wines', label: 'ღვინის კატალოგი' },
+  { key: 'news', label: 'სიახლეები' },
+  { key: 'gallery', label: 'გალერეა' },
+  { key: 'about', label: 'ჩვენ შესახებ' },
+  { key: 'contact', label: 'კონტაქტი' },
 ] as const
 
 export function VisibilityEditor() {
@@ -18,8 +18,8 @@ export function VisibilityEditor() {
 
   return (
     <div className="max-w-sm space-y-6">
-      <h2 className="font-display text-2xl font-bold text-charcoal">Section Visibility</h2>
-      <p className="text-sm text-charcoal/50">Header and Footer are always visible.</p>
+      <h2 className="font-display text-2xl font-bold text-charcoal">სექციების ხილვადობა</h2>
+      <p className="text-sm text-charcoal/50">ჰედერი და ფუტერი ყოველთვის ხილულია.</p>
 
       <div className="space-y-4">
         {SECTIONS.map(({ key, label }) => (

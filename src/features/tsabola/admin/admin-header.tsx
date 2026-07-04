@@ -35,10 +35,10 @@ export function AdminHeader() {
   }
 
   const label =
-    status === 'saving' ? 'Saving...' :
-      status === 'saved'  ? 'Saved ✓' :
-        status === 'error'  ? 'Error ✗' :
-          'Save to DB'
+    status === 'saving' ? 'ინახება...' :
+      status === 'saved'  ? 'შენახულია ✓' :
+        status === 'error'  ? 'შეცდომა ✗' :
+          'მონაცემთა ბაზაში შენახვა'
 
   const btnClass =
     status === 'saved'  ? 'bg-green-600 text-white' :
@@ -47,7 +47,7 @@ export function AdminHeader() {
 
   return (
     <div className="bg-amber-50 border-b border-amber-200 px-6 py-2 text-xs text-amber-800 font-medium flex items-center justify-between">
-      <span>⚠ Local development — no authentication</span>
+      <span>⚠ ლოკალური გარემო — ავტორიზაციის გარეშე</span>
       <div className="flex items-center gap-4">
         <button
           onClick={handleSave}
@@ -57,7 +57,7 @@ export function AdminHeader() {
           {label}
         </button>
         <Link href="/" className="underline hover:text-amber-900">
-          ← Back to site
+          ← საიტზე დაბრუნება
         </Link>
       </div>
     </div>

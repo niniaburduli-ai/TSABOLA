@@ -8,9 +8,9 @@ export function FooterEditor() {
 
   return (
     <div className="max-w-xl space-y-8">
-      <h2 className="font-display text-2xl font-bold text-charcoal">Footer</h2>
+      <h2 className="font-display text-2xl font-bold text-charcoal">ფუტერი</h2>
       <BilingualField
-        label="Copyright Text"
+        label="საავტორო უფლებების ტექსტი"
         value={content.footer.copy}
         onChange={(val) => updateSection('footer', { copy: val })}
       />

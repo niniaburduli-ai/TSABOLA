@@ -32,24 +32,24 @@ export function HeroEditor() {
 
   return (
     <div className="max-w-xl space-y-8">
-      <h2 className="font-display text-2xl font-bold text-charcoal">Hero</h2>
-      <BilingualField label="Headline" value={hero.headline} onChange={update('headline')} />
-      <BilingualField label="Subline" value={hero.subline} onChange={update('subline')} />
-      <BilingualField label="CTA Button" value={hero.cta} onChange={update('cta')} />
+      <h2 className="font-display text-2xl font-bold text-charcoal">მთავარი ბანერი</h2>
+      <BilingualField label="სათაური" value={hero.headline} onChange={update('headline')} />
+      <BilingualField label="ქვესათაური" value={hero.subline} onChange={update('subline')} />
+      <BilingualField label="CTA ღილაკი" value={hero.cta} onChange={update('cta')} />
 
       <div className="space-y-4">
-        <Label className="text-sm font-medium text-charcoal/70">Hero Images</Label>
+        <Label className="text-sm font-medium text-charcoal/70">მთავარი სურათები</Label>
         {hero.images.map((src, i) => (
           <div key={i} className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-xs text-charcoal/50">Image {i + 1}</Label>
+              <Label className="text-xs text-charcoal/50">სურათი {i + 1}</Label>
               {hero.images.length > 1 && (
                 <button
                   type="button"
                   onClick={() => removeImage(i)}
                   className="text-xs text-red-400 hover:text-red-600 transition-colors"
                 >
-                  Remove
+                  წაშლა
                 </button>
               )}
             </div>
@@ -72,7 +72,7 @@ export function HeroEditor() {
           onClick={addImage}
           className="w-full"
         >
-          + Add Image
+          + სურათის დამატება
         </Button>
       </div>
     </div>

@@ -15,14 +15,14 @@ export function AboutEditor() {
 
   return (
     <div className="max-w-xl space-y-8">
-      <h2 className="font-display text-2xl font-bold text-charcoal">About</h2>
+      <h2 className="font-display text-2xl font-bold text-charcoal">ჩვენ შესახებ</h2>
       <BilingualField
-        label="Title"
+        label="სათაური"
         value={about.title}
         onChange={(v) => updateSection('about', { ...about, title: v })}
       />
       <div className="space-y-2">
-        <Label className="text-sm font-medium text-charcoal/70">Body Text</Label>
+        <Label className="text-sm font-medium text-charcoal/70">ტექსტი</Label>
         <Tabs defaultValue="ka">
           <TabsList className="h-8">
             <TabsTrigger value="ka" className="text-xs">KA</TabsTrigger>
@@ -41,10 +41,10 @@ export function AboutEditor() {
             </TabsContent>
           ))}
         </Tabs>
-        <p className="text-xs text-charcoal/40">Separate paragraphs with a blank line.</p>
+        <p className="text-xs text-charcoal/40">პარაგრაფები გამოყავით ცარიელი ხაზით.</p>
       </div>
       <div className="space-y-1">
-        <Label className="text-sm text-charcoal/70">Image</Label>
+        <Label className="text-sm text-charcoal/70">სურათი</Label>
         <Input
           value={about.image}
           onChange={(e) => updateSection('about', { ...about, image: e.target.value })}

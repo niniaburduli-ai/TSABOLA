@@ -72,20 +72,20 @@ export function GalleryEditor() {
 
   return (
     <div className="max-w-2xl space-y-8">
-      <h2 className="font-display text-2xl font-bold text-charcoal">Gallery</h2>
+      <h2 className="font-display text-2xl font-bold text-charcoal">გალერეა</h2>
       <BilingualField
-        label="Title"
+        label="სათაური"
         value={gallery.title}
         onChange={(v) => updateSection('gallery', { ...gallery, title: v })}
       />
       <BilingualField
-        label="Subtitle"
+        label="ქვესათაური"
         value={gallery.subtitle}
         onChange={(v) => updateSection('gallery', { ...gallery, subtitle: v })}
       />
 
       <div className="space-y-4">
-        <Label className="text-sm font-medium text-charcoal/70">Upload to Gallery</Label>
+        <Label className="text-sm font-medium text-charcoal/70">ატვირთვა გალერეაში</Label>
         <GalleryUpload
           onUploaded={(img) =>
             setDbImages((prev) => [
@@ -114,9 +114,9 @@ export function GalleryEditor() {
                     onClick={() => setExpandedId(expandedId === image._id ? null : image._id)}
                     className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2 flex-1"
                   >
-                    {image.caption.ka || image.caption.en || image.slug || 'Untitled image'}
+                    {image.caption.ka || image.caption.en || image.slug || 'უსახელო სურათი'}
                     {image.published === false && (
-                      <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">Draft</span>
+                      <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">დრაფტი</span>
                     )}
                   </button>
                   <button
@@ -124,25 +124,25 @@ export function GalleryEditor() {
                     disabled={deleting === image._id}
                     className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50"
                   >
-                    {deleting === image._id ? '…' : 'Delete'}
+                    {deleting === image._id ? '…' : 'წაშლა'}
                   </button>
                 </div>
 
                 {expandedId === image._id && (
                   <div className="space-y-4 pt-2 border-t border-border-wine">
                     <BilingualField
-                      label="Caption"
+                      label="წარწერა"
                       value={image.caption}
                       onChange={(v) => updateLocal(image._id, { caption: v })}
                     />
                     <BilingualField
-                      label="Description"
+                      label="აღწერა"
                       value={image.description}
                       onChange={(v) => updateLocal(image._id, { description: v })}
                     />
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label className="text-sm text-charcoal/70">Slug (URL: /gallery/…)</Label>
+                        <Label className="text-sm text-charcoal/70">სლაგი (URL: /gallery/…)</Label>
                         <Input
                           value={image.slug}
                           onChange={(e) => updateLocal(image._id, { slug: slugify(e.target.value) })}
@@ -151,7 +151,7 @@ export function GalleryEditor() {
                               updateLocal(image._id, { slug: slugify(image.caption.en || image.caption.ka) })
                             }
                           }}
-                          placeholder="auto-generated from caption"
+                          placeholder="ავტომატურად გენერირდება წარწერიდან"
                         />
                       </div>
                       <div className="flex items-end gap-2 pb-1">
@@ -163,7 +163,7 @@ export function GalleryEditor() {
                           className="h-4 w-4 accent-wine"
                         />
                         <Label htmlFor={`published-${image._id}`} className="text-sm text-charcoal/70">
-                          Published
+                          გამოქვეყნებული
                         </Label>
                       </div>
                     </div>
@@ -172,7 +172,7 @@ export function GalleryEditor() {
                       disabled={saving === image._id}
                       className="px-4 py-2 bg-wine text-white text-sm font-medium rounded hover:bg-wine/90 disabled:opacity-50"
                     >
-                      {saving === image._id ? 'Saving…' : 'Save'}
+                      {saving === image._id ? 'ინახება…' : 'შენახვა'}
                     </button>
                   </div>
                 )}
@@ -183,7 +183,7 @@ export function GalleryEditor() {
       </div>
 
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-charcoal/70">Static Image Paths</Label>
+        <Label className="text-sm font-medium text-charcoal/70">სტატიკური სურათების მისამართები</Label>
         {gallery.images.map((src, i) => (
           <Input
             key={i}

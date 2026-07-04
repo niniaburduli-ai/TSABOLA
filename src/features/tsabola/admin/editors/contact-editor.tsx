@@ -12,31 +12,31 @@ export function ContactEditor() {
 
   return (
     <div className="max-w-xl space-y-8">
-      <h2 className="font-display text-2xl font-bold text-charcoal">Contact</h2>
+      <h2 className="font-display text-2xl font-bold text-charcoal">კონტაქტი</h2>
       <BilingualField
-        label="Section Title"
+        label="სექციის სათაური"
         value={contact.title}
         onChange={(v) => updateSection('contact', { ...contact, title: v })}
       />
       <BilingualField
-        label="Subtitle"
+        label="ქვესათაური"
         value={contact.subtitle}
         onChange={(v) => updateSection('contact', { ...contact, subtitle: v })}
       />
       <BilingualField
-        label="Address"
+        label="მისამართი"
         value={contact.address}
         onChange={(v) => updateSection('contact', { ...contact, address: v })}
       />
       <div>
-        <Label className="text-sm text-charcoal/70">Email</Label>
+        <Label className="text-sm text-charcoal/70">ელ. ფოსტა</Label>
         <Input
           value={contact.email}
           onChange={(e) => updateSection('contact', { ...contact, email: e.target.value })}
         />
       </div>
       <div>
-        <Label className="text-sm text-charcoal/70">Phone</Label>
+        <Label className="text-sm text-charcoal/70">ტელეფონი</Label>
         <Input
           value={contact.phone}
           onChange={(e) => updateSection('contact', { ...contact, phone: e.target.value })}

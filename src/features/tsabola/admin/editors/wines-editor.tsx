@@ -61,9 +61,9 @@ export function WinesEditor() {
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-2xl font-bold text-charcoal">Wines</h2>
+        <h2 className="font-display text-2xl font-bold text-charcoal">ღვინოები</h2>
         <Button size="sm" onClick={addWine} className="bg-wine hover:bg-wine/90 text-white">
-          + Add Wine
+          + ღვინის დამატება
         </Button>
       </div>
 
@@ -77,7 +77,7 @@ export function WinesEditor() {
                 onClick={() => setExpandedId(expandedId === wine.id ? null : wine.id)}
                 className="font-medium text-charcoal hover:text-wine text-left"
               >
-                {wine.name.ka || wine.name.en || `Wine ${i + 1}`}
+                {wine.name.ka || wine.name.en || `ღვინო ${i + 1}`}
               </button>
               <div className="flex items-center gap-2">
                 <button
@@ -98,7 +98,7 @@ export function WinesEditor() {
                   onClick={() => deleteWine(i)}
                   className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50"
                 >
-                Delete
+                წაშლა
                 </button>
               </div>
             </div>
@@ -106,60 +106,60 @@ export function WinesEditor() {
             {expandedId === wine.id && (
               <div className="space-y-4 pt-2 border-t border-border-wine">
                 <BilingualField
-                  label="Name"
+                  label="სახელი"
                   value={wine.name}
                   onChange={(v) => updateWine(i, { ...wine, name: v, typeBadge: wine.typeBadge })}
                 />
                 <BilingualField
-                  label="Type"
+                  label="ტიპი"
                   value={wine.type}
                   onChange={(v) => updateWine(i, { ...wine, type: v, typeBadge: v })}
                 />
                 <BilingualField
-                  label="Description"
+                  label="აღწერა"
                   value={wine.description}
                   onChange={(v) => updateWine(i, { ...wine, description: v })}
                 />
                 <BilingualField
-                  label="Short Description"
-                  hint="Shown on the wine card, under the name. One attribute per line, e.g. Wine: Dry | Grape: Chinebuli"
+                  label="მოკლე აღწერა"
+                  hint="ჩანს ღვინის ბარათზე, სახელის ქვემოთ. თითო მახასიათებელი თითო ხაზზე, მაგ: ღვინო: მშრალი | ყურძენი: ჩინებული"
                   multiline
                   value={wine.details ?? { ka: '', en: '' }}
                   onChange={(v) => updateWine(i, { ...wine, details: v })}
                 />
                 <BilingualField
-                  label="Full Description"
-                  hint="Shown in the wine detail popup"
+                  label="სრული აღწერა"
+                  hint="ჩანს ღვინის დეტალების ფანჯარაში"
                   multiline
                   value={wine.longDescription ?? { ka: '', en: '' }}
                   onChange={(v) => updateWine(i, { ...wine, longDescription: v })}
                 />
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-sm text-charcoal/70">Price (e.g. 45₾)</Label>
+                    <Label className="text-sm text-charcoal/70">ფასი (მაგ: 45₾)</Label>
                     <Input
                       value={wine.price}
                       onChange={(e) => updateWine(i, { ...wine, price: e.target.value })}
                     />
                   </div>
                   <div>
-                    <Label className="text-sm text-charcoal/70">Discount Price (optional)</Label>
+                    <Label className="text-sm text-charcoal/70">ფასდაკლებული ფასი (არასავალდებულო)</Label>
                     <Input
                       value={wine.discountPrice ?? ''}
                       onChange={(e) => updateWine(i, { ...wine, discountPrice: e.target.value })}
-                      placeholder="e.g. 40₾"
+                      placeholder="მაგ: 40₾"
                     />
                     {wine.discountPrice && (
                       <p className="text-xs text-red-600 mt-1">
                         {discount
-                          ? `Discount -${discount.percent}% will be shown on the website`
-                          : 'Discount price must be a valid amount lower than the regular price'}
+                          ? `ფასდაკლება -${discount.percent}% გამოჩნდება საიტზე`
+                          : 'ფასდაკლებული ფასი უნდა იყოს ვალიდური თანხა, ჩვეულებრივ ფასზე ნაკლები'}
                       </p>
                     )}
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-sm text-charcoal/70">Image</Label>
+                  <Label className="text-sm text-charcoal/70">სურათი</Label>
                   <Input
                     value={wine.image}
                     onChange={(e) => updateWine(i, { ...wine, image: e.target.value })}
@@ -173,7 +173,7 @@ export function WinesEditor() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <Label className="text-sm text-charcoal/70">Serve Temp</Label>
+                    <Label className="text-sm text-charcoal/70">მირთმევის ტემპერატურა</Label>
                     <Input
                       value={wine.serveTemp ?? ''}
                       onChange={(e) => updateWine(i, { ...wine, serveTemp: e.target.value })}
@@ -181,7 +181,7 @@ export function WinesEditor() {
                     />
                   </div>
                   <div>
-                    <Label className="text-sm text-charcoal/70">Alcohol</Label>
+                    <Label className="text-sm text-charcoal/70">ალკოჰოლი</Label>
                     <Input
                       value={wine.alcohol ?? ''}
                       onChange={(e) => updateWine(i, { ...wine, alcohol: e.target.value })}
@@ -189,7 +189,7 @@ export function WinesEditor() {
                     />
                   </div>
                   <div>
-                    <Label className="text-sm text-charcoal/70">Volume</Label>
+                    <Label className="text-sm text-charcoal/70">მოცულობა</Label>
                     <Input
                       value={wine.volume ?? ''}
                       onChange={(e) => updateWine(i, { ...wine, volume: e.target.value })}

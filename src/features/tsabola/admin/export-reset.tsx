@@ -32,49 +32,50 @@ export function ExportReset() {
 
   return (
     <div className="max-w-sm space-y-8">
-      <h2 className="font-display text-2xl font-bold text-charcoal">Actions</h2>
+      <h2 className="font-display text-2xl font-bold text-charcoal">მოქმედებები</h2>
 
       <div className="space-y-4">
         <div className="p-4 border border-border-wine rounded">
-          <p className="text-sm font-medium text-charcoal mb-2">Export Content</p>
+          <p className="text-sm font-medium text-charcoal mb-2">კონტენტის ექსპორტი</p>
           <p className="text-xs text-charcoal/50 mb-4">
-            Downloads current content, theme, and visibility as JSON. Use to back up or import into a future CMS.
+            ჩამოტვირთეთ მიმდინარე კონტენტი, თემა და ხილვადობა JSON ფორმატში. გამოიყენეთ სარეზერვო ასლისთვის ან
+            მომავალ CMS-ში იმპორტისთვის.
           </p>
           <Button
             onClick={handleExport}
             variant="outline"
             className="border-wine text-wine hover:bg-wine/5"
           >
-            Download tsabola-content.json
+            ჩამოტვირთვა tsabola-content.json
           </Button>
         </div>
 
         <div className="p-4 border border-red-200 rounded">
-          <p className="text-sm font-medium text-charcoal mb-2">Reset to Defaults</p>
+          <p className="text-sm font-medium text-charcoal mb-2">ნაგულისხმევზე დაბრუნება</p>
           <p className="text-xs text-charcoal/50 mb-4">
-            Restores all content, theme, and visibility to their original defaults. This cannot be undone.
+            აღადგენს მთელ კონტენტს, თემასა და ხილვადობას საწყის მდგომარეობაში. ამის გაუქმება შეუძლებელია.
           </p>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="outline" className="border-red-300 text-red-600 hover:bg-red-50">
-                Reset to Defaults
+                ნაგულისხმევზე დაბრუნება
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Reset all content?</AlertDialogTitle>
+                <AlertDialogTitle>გსურთ მთელი კონტენტის გადატვირთვა?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This will restore all content, theme, and section visibility to their defaults. All your
-                  edits will be lost. This cannot be undone.
+                  ეს აღადგენს მთელ კონტენტს, თემასა და სექციების ხილვადობას საწყის მდგომარეობაში. თქვენი ყველა
+                  ცვლილება დაიკარგება. ამის გაუქმება შეუძლებელია.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>გაუქმება</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={resetToDefaults}
                   className="bg-red-600 hover:bg-red-700 text-white"
                 >
-                  Reset
+                  გადატვირთვა
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
