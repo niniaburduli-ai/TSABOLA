@@ -34,3 +34,41 @@ export async function getCroppedImageBlob(
     );
   });
 }
+
+export async function padImageToAspect(
+  imageSrc: string,
+  aspect: number,
+  background: string | null
+): Promise<Blob> {
+  const image = await loadImage(imageSrc);
+  const { naturalWidth: width, naturalHeight: height } = image;
+  const currentAspect = width / height;
+
+  const canvasWidth = currentAspect > aspect ? width : Math.round(height * aspect);
+  const canvasHeight = currentAspect > aspect ? Math.round(width / aspect) : height;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('CANVAS_CONTEXT_UNAVAILABLE');
+
+  if (background) {
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  }
+
+  const dx = Math.round((canvasWidth - width) / 2);
+  const dy = Math.round((canvasHeight - height) / 2);
+  ctx.drawImage(image, dx, dy, width, height);
+
+  const mimeType = background ? 'image/jpeg' : 'image/png';
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error('CANVAS_TO_BLOB_FAILED'))),
+      mimeType,
+      0.92
+    );
+  });
+}

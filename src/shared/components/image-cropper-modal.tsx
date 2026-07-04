@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react'
 import Cropper, { type Area } from 'react-easy-crop'
 
-import { getCroppedImageBlob } from '@/shared/utils/crop-image'
+import { getCroppedImageBlob, padImageToAspect } from '@/shared/utils/crop-image'
 
 type Props = {
   imageSrc: string
@@ -31,7 +31,20 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
       const blob = await getCroppedImageBlob(imageSrc, croppedAreaPixels)
       onCropped(blob)
     } catch {
-      setError('Crop failed, try again')
+      setError('მოჭრა ვერ მოხერხდა, სცადეთ ხელახლა')
+    } finally {
+      setProcessing(false)
+    }
+  }
+
+  async function handleFitWhole(background: string | null) {
+    setProcessing(true)
+    setError(null)
+    try {
+      const blob = await padImageToAspect(imageSrc, aspect, background)
+      onCropped(blob)
+    } catch {
+      setError('მორგება ვერ მოხერხდა, სცადეთ ხელახლა')
     } finally {
       setProcessing(false)
     }
@@ -53,7 +66,7 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs text-charcoal/60">Zoom</span>
+          <span className="text-xs text-charcoal/60">მასშტაბი</span>
           <input
             type="range"
             min={1}
@@ -67,6 +80,30 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
 
         {error && <p className="text-xs text-red-500">{error}</p>}
 
+        <div className="flex flex-col gap-2 pt-2 border-t border-charcoal/10">
+          <p className="text-xs text-charcoal/60">
+            არ გსურთ სურათის მოჭრა? სრული სურათი მოარგეთ padding-ის დამატებით:
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => handleFitWhole('#ffffff')}
+              disabled={processing}
+              className="px-3 py-1.5 text-xs font-medium border border-charcoal/20 text-charcoal rounded hover:bg-charcoal/5 disabled:opacity-50"
+            >
+              სრული სურათი (თეთრი ფონი)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleFitWhole(null)}
+              disabled={processing}
+              className="px-3 py-1.5 text-xs font-medium border border-charcoal/20 text-charcoal rounded hover:bg-charcoal/5 disabled:opacity-50"
+            >
+              სრული სურათი (გამჭვირვალე ფონი)
+            </button>
+          </div>
+        </div>
+
         <div className="flex justify-end gap-2">
           <button
             type="button"
@@ -74,7 +111,7 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
             disabled={processing}
             className="px-3 py-1.5 text-xs font-medium border border-charcoal/20 text-charcoal rounded hover:bg-charcoal/5 disabled:opacity-50"
           >
-            Cancel
+            გაუქმება
           </button>
           <button
             type="button"
@@ -82,7 +119,7 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
             disabled={processing || !croppedAreaPixels}
             className="px-3 py-1.5 text-xs font-medium bg-wine text-white rounded hover:bg-wine/90 disabled:opacity-50"
           >
-            {processing ? 'Saving…' : 'Save crop'}
+            {processing ? 'ინახება…' : 'შენახვა'}
           </button>
         </div>
       </div>
