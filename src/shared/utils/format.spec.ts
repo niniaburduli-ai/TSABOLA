@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { formatDate, truncate, capitalize } from './format';
+import { formatDate, truncate, capitalize, formatWinePrice } from './format';
 
 describe('formatDate', () => {
   it('formats a date object', () => {
@@ -39,5 +39,27 @@ describe('capitalize', () => {
 
   it('handles empty string', () => {
     expect(capitalize('')).toBe('');
+  });
+});
+
+describe('formatWinePrice', () => {
+  it('keeps the lari sign as-is', () => {
+    expect(formatWinePrice('30₾')).toBe('30₾');
+  });
+
+  it('replaces "GEL" with the lari sign', () => {
+    expect(formatWinePrice('30 GEL')).toBe('30₾');
+  });
+
+  it('replaces Georgian "ლარი" with the lari sign', () => {
+    expect(formatWinePrice('30 ლარი')).toBe('30₾');
+  });
+
+  it('replaces "lari" case-insensitively with the lari sign', () => {
+    expect(formatWinePrice('30 Lari')).toBe('30₾');
+  });
+
+  it('returns the original string if nothing but currency text remains', () => {
+    expect(formatWinePrice('GEL')).toBe('GEL');
   });
 });
