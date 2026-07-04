@@ -17,7 +17,9 @@ export function TsabolaNews() {
   const scrollByCards = (direction: number) => {
     const scroller = scrollerRef.current
     if (!scroller) return
-    scroller.scrollBy({ left: direction * (scroller.clientWidth / 3), behavior: 'smooth' })
+    const card = scroller.firstElementChild as HTMLElement | null
+    const step = card ? card.offsetWidth : scroller.clientWidth
+    scroller.scrollBy({ left: direction * step, behavior: 'smooth' })
   }
 
   return (
@@ -47,13 +49,13 @@ export function TsabolaNews() {
               className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2 -mx-3"
             >
               {items.map((item) => (
-                <div key={item.id} className="snap-start shrink-0 w-1/3 box-border px-3">
+                <div key={item.id} className="snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 box-border px-3">
                   <TsabolaNewsCard item={item} />
                 </div>
               ))}
             </div>
 
-            {items.length > 3 && (
+            {items.length > 1 && (
               <>
                 <button
                   type="button"
