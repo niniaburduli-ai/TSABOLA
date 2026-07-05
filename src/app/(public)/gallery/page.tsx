@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'Vineyard, cellar, and craft — photos from Tsabo winery.',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function GalleryPage() {
   const result = await listPublishedGalleryImages()
   const images = 'error' in result.data ? [] : result.data

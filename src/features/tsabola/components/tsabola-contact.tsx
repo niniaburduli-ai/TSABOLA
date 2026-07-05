@@ -1,6 +1,7 @@
 'use client'
 
 import { Mail, Phone, MapPin } from 'lucide-react'
+import Image from 'next/image'
 
 import { useLang } from '../hooks/use-lang'
 
@@ -24,8 +25,17 @@ export function TsabolaContact() {
   const { t, r } = useLang()
 
   return (
-    <section id="contact" className="bg-white py-24 px-6">
-      <div className="max-w-xl mx-auto text-center">
+    <section id="contact" className="relative w-full py-24 px-6 overflow-hidden">
+      <Image
+        src="https://res.cloudinary.com/dm8ksdiiq/image/upload/v1783260886/tsabola/contact/map.png"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-cream/55" />
+
+      <div className="relative z-10 max-w-xl mx-auto text-center">
         <p className="text-xs font-semibold tracking-widest uppercase text-wine/70 mb-3">
           {r(t.contact.subtitle)}
         </p>

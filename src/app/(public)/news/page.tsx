@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'Latest news and updates from Tsabo winery.',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function NewsPage() {
   const result = await getPublishedNewsService()
   const items = 'error' in result.data ? [] : result.data

@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-import Cropper, { type Area } from 'react-easy-crop'
+import { useRef, useState } from 'react'
+import ReactCrop, { type Crop, type PixelCrop } from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 
-import { getCroppedImageBlob, padImageToAspect } from '@/shared/utils/crop-image'
+import { getCroppedImageBlob, padImageToAspect, type PixelCrop as CropRect } from '@/shared/utils/crop-image'
 
 type Props = {
   imageSrc: string
@@ -13,22 +14,35 @@ type Props = {
 }
 
 export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Props) {
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+  const imgRef = useRef<HTMLImageElement>(null)
+  const [crop, setCrop] = useState<Crop>({ unit: '%', x: 0, y: 0, width: 100, height: 100 })
+  const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null)
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleCropComplete = useCallback((_area: Area, areaPixels: Area) => {
-    setCroppedAreaPixels(areaPixels)
-  }, [])
+  function handleImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+    const { width, height } = e.currentTarget
+    setCompletedCrop({ unit: 'px', x: 0, y: 0, width, height })
+  }
+
+  function toNaturalCropRect(pixelCrop: PixelCrop): CropRect {
+    const image = imgRef.current
+    const scaleX = image ? image.naturalWidth / image.width : 1
+    const scaleY = image ? image.naturalHeight / image.height : 1
+    return {
+      x: Math.round(pixelCrop.x * scaleX),
+      y: Math.round(pixelCrop.y * scaleY),
+      width: Math.round(pixelCrop.width * scaleX),
+      height: Math.round(pixelCrop.height * scaleY),
+    }
+  }
 
   async function handleSave() {
-    if (!croppedAreaPixels) return
+    if (!completedCrop) return
     setProcessing(true)
     setError(null)
     try {
-      const blob = await getCroppedImageBlob(imageSrc, croppedAreaPixels)
+      const blob = await getCroppedImageBlob(imageSrc, toNaturalCropRect(completedCrop))
       onCropped(blob)
     } catch {
       setError('მოჭრა ვერ მოხერხდა, სცადეთ ხელახლა')
@@ -53,29 +67,21 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoal/60 p-4">
       <div className="w-full max-w-lg bg-white rounded shadow-lg flex flex-col gap-4 p-4">
-        <div className="relative w-full h-96 bg-charcoal/5 rounded overflow-hidden">
-          <Cropper
-            image={imageSrc}
+        <div className="flex items-center justify-center bg-charcoal/5 rounded overflow-hidden max-h-96">
+          <ReactCrop
             crop={crop}
-            zoom={zoom}
-            aspect={aspect}
-            onCropChange={setCrop}
-            onZoomChange={setZoom}
-            onCropComplete={handleCropComplete}
-          />
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-charcoal/60">მასშტაბი</span>
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.1}
-            value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
-            className="flex-1 accent-wine"
-          />
+            onChange={(_pixelCrop, percentCrop) => setCrop(percentCrop)}
+            onComplete={(pixelCrop) => setCompletedCrop(pixelCrop)}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={imgRef}
+              src={imageSrc}
+              alt=""
+              onLoad={handleImageLoad}
+              className="max-h-96 w-auto"
+            />
+          </ReactCrop>
         </div>
 
         {error && <p className="text-xs text-red-500">{error}</p>}
@@ -116,7 +122,7 @@ export function ImageCropperModal({ imageSrc, aspect, onCancel, onCropped }: Pro
           <button
             type="button"
             onClick={handleSave}
-            disabled={processing || !croppedAreaPixels}
+            disabled={processing || !completedCrop}
             className="px-3 py-1.5 text-xs font-medium bg-wine text-white rounded hover:bg-wine/90 disabled:opacity-50"
           >
             {processing ? 'ინახება…' : 'შენახვა'}

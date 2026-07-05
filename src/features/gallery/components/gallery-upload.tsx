@@ -14,6 +14,7 @@ type Props = {
 
 export function GalleryUpload({ onUploaded }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const cropModeRef = useRef(false)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [cropSrc, setCropSrc] = useState<string | null>(null)
@@ -26,7 +27,12 @@ export function GalleryUpload({ onUploaded }: Props) {
       return
     }
 
-    setCropSrc(URL.createObjectURL(file))
+    if (cropModeRef.current) {
+      setCropSrc(URL.createObjectURL(file))
+      return
+    }
+
+    await uploadFile(file)
   }
 
   async function handleCropped(blob: Blob) {
@@ -96,24 +102,43 @@ export function GalleryUpload({ onUploaded }: Props) {
           if (file) handleFile(file)
         }}
       />
-      <button
-        type="button"
-        disabled={uploading}
-        onClick={() => inputRef.current?.click()}
-        className={
-          'flex items-center gap-2 px-4 py-2 bg-wine text-white text-sm font-medium ' +
-          'rounded hover:bg-wine/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
-        }
-      >
-        {uploading ? (
-          <>
-            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            Uploading…
-          </>
-        ) : (
-          '+ Upload Image'
-        )}
-      </button>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          disabled={uploading}
+          onClick={() => {
+            cropModeRef.current = false
+            inputRef.current?.click()
+          }}
+          className={
+            'flex items-center gap-2 px-4 py-2 bg-wine text-white text-sm font-medium ' +
+            'rounded hover:bg-wine/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+          }
+        >
+          {uploading ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              Uploading…
+            </>
+          ) : (
+            '+ Upload Image'
+          )}
+        </button>
+        <button
+          type="button"
+          disabled={uploading}
+          onClick={() => {
+            cropModeRef.current = true
+            inputRef.current?.click()
+          }}
+          className={
+            'px-4 py-2 border border-wine/40 text-wine text-sm font-medium ' +
+            'rounded hover:bg-wine/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+          }
+        >
+          + Upload & Crop
+        </button>
+      </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
       {cropSrc && (
         <ImageCropperModal

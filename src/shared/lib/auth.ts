@@ -8,6 +8,12 @@ import { hashPassword } from '@/shared/utils/password';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
+  cookies: {
+    sessionToken: {
+      name: 'tsabola.session-token',
+      options: { httpOnly: true, sameSite: 'lax', path: '/' },
+    },
+  },
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,

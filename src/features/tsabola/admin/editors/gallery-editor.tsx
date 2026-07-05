@@ -7,9 +7,9 @@ import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
-import { slugify } from '@/shared/utils/slugify'
 
 import { BilingualField } from './_bilingual-field'
+import { GalleryImageRow } from './_gallery-image-row'
 
 export function GalleryEditor() {
   const { content, updateSection } = useContentStore()
@@ -18,6 +18,7 @@ export function GalleryEditor() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [saving, setSaving] = useState<string | null>(null)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/gallery')
@@ -38,6 +39,7 @@ export function GalleryEditor() {
 
   async function saveImage(image: GalleryImage) {
     setSaving(image._id)
+    setSaveError(null)
     try {
       const res = await fetch(`/api/gallery/${image._id}`, {
         method: 'PATCH',
@@ -47,17 +49,23 @@ export function GalleryEditor() {
           published: image.published,
           caption: image.caption,
           description: image.description,
+          date: image.date,
         }),
       })
       const updated: GalleryImage = await res.json()
-      if (updated?._id) {
-        updateLocal(image._id, {
-          slug: updated.slug,
-          published: updated.published,
-          caption: updated.caption,
-          description: updated.description,
-        })
+      if (!res.ok || !updated?._id) {
+        setSaveError('შენახვა ვერ მოხერხდა')
+        return
       }
+      updateLocal(image._id, {
+        slug: updated.slug,
+        published: updated.published,
+        caption: updated.caption,
+        description: updated.description,
+        date: updated.date,
+      })
+    } catch {
+      setSaveError('შენახვა ვერ მოხერხდა')
     } finally {
       setSaving(null)
     }
@@ -97,6 +105,7 @@ export function GalleryEditor() {
                 published: true,
                 caption: { ka: '', en: '' },
                 description: { ka: '', en: '' },
+                date: new Date().toISOString(),
                 createdAt: new Date().toISOString(),
               },
               ...prev,
@@ -107,76 +116,18 @@ export function GalleryEditor() {
         {dbImages.length > 0 && (
           <div className="space-y-4 mt-4">
             {dbImages.map((image) => (
-              <div key={image._id} className="border border-border-wine rounded p-4 space-y-4">
-                <div className="flex items-center gap-4">
-                  <img src={image.url} alt="" className="w-16 h-16 object-cover rounded flex-shrink-0" />
-                  <button
-                    onClick={() => setExpandedId(expandedId === image._id ? null : image._id)}
-                    className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2 flex-1"
-                  >
-                    {image.caption.ka || image.caption.en || image.slug || 'უსახელო სურათი'}
-                    {image.published === false && (
-                      <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">დრაფტი</span>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => deleteImage(image._id)}
-                    disabled={deleting === image._id}
-                    className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50"
-                  >
-                    {deleting === image._id ? '…' : 'წაშლა'}
-                  </button>
-                </div>
-
-                {expandedId === image._id && (
-                  <div className="space-y-4 pt-2 border-t border-border-wine">
-                    <BilingualField
-                      label="წარწერა"
-                      value={image.caption}
-                      onChange={(v) => updateLocal(image._id, { caption: v })}
-                    />
-                    <BilingualField
-                      label="აღწერა"
-                      value={image.description}
-                      onChange={(v) => updateLocal(image._id, { description: v })}
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label className="text-sm text-charcoal/70">სლაგი (URL: /gallery/…)</Label>
-                        <Input
-                          value={image.slug}
-                          onChange={(e) => updateLocal(image._id, { slug: slugify(e.target.value) })}
-                          onBlur={() => {
-                            if (!image.slug) {
-                              updateLocal(image._id, { slug: slugify(image.caption.en || image.caption.ka) })
-                            }
-                          }}
-                          placeholder="ავტომატურად გენერირდება წარწერიდან"
-                        />
-                      </div>
-                      <div className="flex items-end gap-2 pb-1">
-                        <input
-                          type="checkbox"
-                          id={`published-${image._id}`}
-                          checked={image.published !== false}
-                          onChange={(e) => updateLocal(image._id, { published: e.target.checked })}
-                          className="h-4 w-4 accent-wine"
-                        />
-                        <Label htmlFor={`published-${image._id}`} className="text-sm text-charcoal/70">
-                          გამოქვეყნებული
-                        </Label>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => saveImage(image)}
-                      disabled={saving === image._id}
-                      className="px-4 py-2 bg-wine text-white text-sm font-medium rounded hover:bg-wine/90 disabled:opacity-50"
-                    >
-                      {saving === image._id ? 'ინახება…' : 'შენახვა'}
-                    </button>
-                  </div>
-                )}
-              </div>
+              <GalleryImageRow
+                key={image._id}
+                image={image}
+                expanded={expandedId === image._id}
+                saving={saving === image._id}
+                deleting={deleting === image._id}
+                error={expandedId === image._id ? saveError : null}
+                onToggle={() => setExpandedId(expandedId === image._id ? null : image._id)}
+                onChange={(patch) => updateLocal(image._id, patch)}
+                onSave={() => saveImage(image)}
+                onDelete={() => deleteImage(image._id)}
+              />
             ))}
           </div>
         )}

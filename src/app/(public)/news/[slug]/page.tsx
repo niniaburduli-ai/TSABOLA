@@ -5,6 +5,8 @@ import { getNewsItemBySlugService } from '@/features/tsabola/service/news.servic
 
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 type Props = {
   params: Promise<{ slug: string }>
 }

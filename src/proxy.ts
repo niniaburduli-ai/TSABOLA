@@ -6,8 +6,8 @@ export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const sessionToken =
-    req.cookies.get('authjs.session-token')?.value ??
-    req.cookies.get('__Secure-authjs.session-token')?.value;
+    req.cookies.get('tsabola.session-token')?.value ??
+    req.cookies.get('__Secure-tsabola.session-token')?.value;
 
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route));
   if (isAuthRoute && sessionToken) {

@@ -34,7 +34,7 @@ Understanding how a mutation flows through the stack (requires reading multiple 
 3. **Service** (`src/features/<feature>/service/`) receives validated data, returns `ServiceResult<T>` — never throws
 4. **Repository** (`src/features/<feature>/repository/`) calls `await mongo.connect()`, runs raw Mongoose query, returns typed document
 
-Route groups: `(public)` for unauthenticated pages, `(protected)` for authenticated pages. `src/proxy.ts` is the Next.js middleware — it inspects `authjs.session-token` cookie only (no DB/Node imports).
+Route groups: `(public)` for unauthenticated pages, `(protected)` for authenticated pages. `src/proxy.ts` is the Next.js middleware — it inspects `tsabola.session-token` cookie only (no DB/Node imports).
 
 Password hashing uses SHA-256 via Node.js `crypto` (not bcrypt). Auth config lives in `src/shared/lib/auth.ts`; session properties (`id`, `role`, `avatar`) are cast inline — no `next-auth.d.ts`.
 
@@ -125,7 +125,7 @@ export const UserModel = mongoose.models.User || mongoose.model('User', UserSche
 
 ## 5. Route Protection
 
-Route protection uses `src/proxy.ts` (not `middleware.ts`). It runs in the Edge Runtime and must NOT import any Node.js modules (`crypto`, `mongoose`, etc.) or the auth config. It only inspects the session cookie (`authjs.session-token` / `__Secure-authjs.session-token`) and redirects unauthenticated requests to `/`.
+Route protection uses `src/proxy.ts` (not `middleware.ts`). It runs in the Edge Runtime and must NOT import any Node.js modules (`crypto`, `mongoose`, etc.) or the auth config. It only inspects the session cookie (`tsabola.session-token` / `__Secure-tsabola.session-token`) and redirects unauthenticated requests to `/`.
 
 ## 6. API Route Rules
 

@@ -19,6 +19,7 @@ function toGalleryImage(image: GalleryImageDocument): GalleryImage {
     published: image.published ?? true,
     caption: { ka: caption.ka ?? '', en: caption.en ?? '' },
     description: { ka: image.description?.ka ?? '', en: image.description?.en ?? '' },
+    date: new Date(image.date ?? image.createdAt ?? Date.now()).toISOString(),
     createdAt: new Date(image.createdAt ?? Date.now()).toISOString(),
   };
 }
@@ -60,7 +61,9 @@ export async function updateGalleryImage(
   const existing = await galleryRepository.findById(id);
   if (!existing) return { data: { error: 'NOT_FOUND' }, status: 404 };
 
-  const updates: Partial<GalleryImageDocument> = { ...data };
+  const { date, ...rest } = data;
+  const updates: Partial<GalleryImageDocument> = { ...rest };
+  if (date) updates.date = new Date(date);
 
   if (data.caption) {
     const resolved = await resolveBilingualField(data.caption, existing.captionTranslation ?? undefined);

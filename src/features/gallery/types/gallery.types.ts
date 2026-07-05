@@ -6,5 +6,6 @@ export type GalleryImage = {
   published: boolean
   caption: { ka: string; en: string }
   description: { ka: string; en: string }
+  date: string
   createdAt: string
 }

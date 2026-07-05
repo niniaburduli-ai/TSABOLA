@@ -4,8 +4,9 @@ const GalleryImageSchema = new Schema(
   {
     url: { type: String, required: true },
     publicId: { type: String, required: true },
-    slug: { type: String, required: true, default: '' },
+    slug: { type: String, default: '' },
     published: { type: Boolean, required: true, default: true },
+    date: { type: Date, default: null },
     caption: {
       ka: { type: String, default: '' },
       en: { type: String, default: '' },

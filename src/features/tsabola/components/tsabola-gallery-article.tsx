@@ -19,7 +19,7 @@ export function TsabolaGalleryArticle({ image }: Props) {
 
   return (
     <article className="max-w-3xl mx-auto px-6 py-16">
-      <p className="text-xs uppercase tracking-widest text-wine/70 mb-3">{formatDate(image.createdAt)}</p>
+      <p className="text-xs uppercase tracking-widest text-wine/70 mb-3">{formatDate(image.date)}</p>
       {caption && (
         <h1 className="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-8">{caption}</h1>
       )}
