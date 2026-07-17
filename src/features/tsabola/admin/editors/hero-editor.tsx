@@ -1,12 +1,20 @@
 'use client'
 
 import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
+import type { HeroImage, HeroImagePosition } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
 
 import { BilingualField } from './_bilingual-field'
 import { useContentStore } from '../../store/content-store'
+
+const POSITION_LABEL: Record<HeroImagePosition, string> = {
+  top: 'ზედა',
+  center: 'ცენტრი',
+  bottom: 'ქვედა',
+}
 
 export function HeroEditor() {
   const { content, updateSection } = useContentStore()
@@ -15,14 +23,14 @@ export function HeroEditor() {
   const update = (key: keyof typeof hero) => (val: typeof hero[typeof key]) =>
     updateSection('hero', { ...hero, [key]: val })
 
-  const updateImage = (index: number, url: string) => {
-    const images = [...hero.images]
-    images[index] = url
+  const patchImage = (index: number, patch: Partial<HeroImage>) => {
+    const images = hero.images.map((image, i) => (i === index ? { ...image, ...patch } : image))
     updateSection('hero', { ...hero, images })
   }
 
   const addImage = () => {
-    updateSection('hero', { ...hero, images: [...hero.images, ''] })
+    const image: HeroImage = { src: '', positionMobile: 'center', positionDesktop: 'center' }
+    updateSection('hero', { ...hero, images: [...hero.images, image] })
   }
 
   const removeImage = (index: number) => {
@@ -39,8 +47,8 @@ export function HeroEditor() {
 
       <div className="space-y-4">
         <Label className="text-sm font-medium text-charcoal/70">მთავარი სურათები</Label>
-        {hero.images.map((src, i) => (
-          <div key={i} className="space-y-1">
+        {hero.images.map((image, i) => (
+          <div key={i} className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-xs text-charcoal/50">სურათი {i + 1}</Label>
               {hero.images.length > 1 && (
@@ -54,15 +62,49 @@ export function HeroEditor() {
               )}
             </div>
             <Input
-              value={src}
-              onChange={(e) => updateImage(i, e.target.value)}
+              value={image.src}
+              onChange={(e) => patchImage(i, { src: e.target.value })}
               placeholder="/hero/image.jpg"
             />
             <ImageUploadButton
               folder="tsabola/hero"
-              onUpload={(url) => updateImage(i, url)}
+              onUpload={(url) => patchImage(i, { src: url })}
               aspectRatio={16 / 9}
             />
+            <div className="flex gap-3">
+              <div className="flex-1 space-y-1">
+                <Label className="text-xs text-charcoal/50">მობილურზე</Label>
+                <Select
+                  value={image.positionMobile}
+                  onValueChange={(v) => patchImage(i, { positionMobile: v as HeroImagePosition })}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="top">{POSITION_LABEL.top}</SelectItem>
+                    <SelectItem value="center">{POSITION_LABEL.center}</SelectItem>
+                    <SelectItem value="bottom">{POSITION_LABEL.bottom}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex-1 space-y-1">
+                <Label className="text-xs text-charcoal/50">დესქტოპზე</Label>
+                <Select
+                  value={image.positionDesktop}
+                  onValueChange={(v) => patchImage(i, { positionDesktop: v as HeroImagePosition })}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="top">{POSITION_LABEL.top}</SelectItem>
+                    <SelectItem value="center">{POSITION_LABEL.center}</SelectItem>
+                    <SelectItem value="bottom">{POSITION_LABEL.bottom}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
         ))}
         <Button
