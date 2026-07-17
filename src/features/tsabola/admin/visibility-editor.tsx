@@ -3,15 +3,7 @@
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import { Label } from '@/shared/components/ui/label'
 import { Switch } from '@/shared/components/ui/switch'
-
-const SECTIONS = [
-  { key: 'hero', label: 'მთავარი ბანერი' },
-  { key: 'wines', label: 'ღვინის კატალოგი' },
-  { key: 'news', label: 'სიახლეები' },
-  { key: 'gallery', label: 'გალერეა' },
-  { key: 'about', label: 'ჩვენ შესახებ' },
-  { key: 'contact', label: 'კონტაქტი' },
-] as const
+import { SITE_SECTIONS } from '@/shared/const/site-section.const'
 
 export function VisibilityEditor() {
   const { visibility, setVisibility } = useContentStore()
@@ -22,7 +14,7 @@ export function VisibilityEditor() {
       <p className="text-sm text-charcoal/50">ჰედერი და ფუტერი ყოველთვის ხილულია.</p>
 
       <div className="space-y-4">
-        {SECTIONS.map(({ key, label }) => (
+        {SITE_SECTIONS.map(({ key, label }) => (
           <div key={key} className="flex items-center justify-between py-2 border-b border-border-wine">
             <Label className="text-sm font-medium text-charcoal">{label}</Label>
             <Switch

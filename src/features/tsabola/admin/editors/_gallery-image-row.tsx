@@ -6,6 +6,7 @@ import { Label } from '@/shared/components/ui/label'
 import { slugify } from '@/shared/utils/slugify'
 
 import { BilingualField } from './_bilingual-field'
+import { ImageSizeSelect } from './_image-size-select'
 
 type Props = {
   image: GalleryImage
@@ -88,6 +89,7 @@ export function GalleryImageRow({
                 გამოქვეყნებული
               </Label>
             </div>
+            <ImageSizeSelect value={image.imageSize} onChange={(imageSize) => onChange({ imageSize })} />
           </div>
           <div className="flex items-center gap-3">
             <button

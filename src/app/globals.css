@@ -56,7 +56,9 @@
 }
 
 @utility h-hero {
-  height: 88vh;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: 88vh;
 }
 
 :root {
@@ -128,6 +130,33 @@
   --sidebar-ring: oklch(0.62 0.21 271);
 }
 
+/* Admin stays light regardless of the visitor-facing site's night mode toggle. */
+.dark .force-light-theme {
+  color-scheme: light;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.555 0.243 271);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.555 0.243 271);
+  --color-wine: #722F37;
+  --color-charcoal: #1a1a1a;
+  --color-cream: #faf8f5;
+  --color-border-wine: #e8e0d8;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -187,6 +216,12 @@
   }
   .animate-rise-4 {
     animation-delay: 0.27s;
+  }
+
+  /* CSS-only (not JS mouseenter/leave) so the color flip stays in sync with the
+     native :hover paint even under touch/trackpad "stuck hover" states. */
+  .hero-cta:hover {
+    color: var(--color-charcoal) !important;
   }
 
   @keyframes wine-float {

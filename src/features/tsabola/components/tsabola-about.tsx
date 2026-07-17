@@ -1,25 +1,32 @@
 'use client'
 
+import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
+
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 
 export function TsabolaAbout() {
   const { t, r } = useLang()
+  const eyebrowRef = useTextStyle<HTMLParagraphElement>('about', 'eyebrow')
+  const headingRef = useTextStyle<HTMLHeadingElement>('about', 'heading')
+  const bodyRef = useTextStyle<HTMLParagraphElement>('about', 'body')
   const paragraphs = r(t.about.body).split('\n\n').filter(Boolean)
 
   return (
-    <section id="about" className="bg-cream py-24 px-6">
+    <section id="about" className="bg-cream dark:bg-charcoal py-16 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <p className="text-base font-bold tracking-widest uppercase text-wine/70 mb-6">
+          <p ref={eyebrowRef} className="text-base font-bold tracking-widest uppercase text-wine mb-6">
             {r(t.nav.about)}
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-charcoal mb-8">
+          <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">
             {r(t.about.title)}
           </h2>
           {paragraphs.map((p, i) => (
             <p
               key={i}
-              className={`text-charcoal/70 leading-relaxed mb-4 ${i === 0 ? 'border-l-2 border-wine pl-4' : ''}`}
+              ref={bodyRef}
+              className={`text-charcoal/70 dark:text-cream/70 leading-relaxed mb-4 ${i === 0 ? 'border-l-2 border-wine pl-4' : ''}`}
             >
               {p}
             </p>
@@ -31,7 +38,7 @@ export function TsabolaAbout() {
             <img
               src={t.about.image}
               alt={r(t.about.imageAlt)}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover ${IMAGE_SIZE_SCALE_CLASS[t.about.imageSize]}`}
             />
           ) : (
             <div

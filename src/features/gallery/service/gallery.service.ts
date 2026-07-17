@@ -17,6 +17,7 @@ function toGalleryImage(image: GalleryImageDocument): GalleryImage {
     publicId: image.publicId,
     slug: image.slug || fallbackSlug,
     published: image.published ?? true,
+    imageSize: image.imageSize ?? 'md',
     caption: { ka: caption.ka ?? '', en: caption.en ?? '' },
     description: { ka: image.description?.ka ?? '', en: image.description?.en ?? '' },
     date: new Date(image.date ?? image.createdAt ?? Date.now()).toISOString(),

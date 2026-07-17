@@ -6,6 +6,7 @@ const GalleryImageSchema = new Schema(
     publicId: { type: String, required: true },
     slug: { type: String, default: '' },
     published: { type: Boolean, required: true, default: true },
+    imageSize: { type: String, enum: ['sm', 'md', 'lg'], default: 'md' },
     date: { type: Date, default: null },
     caption: {
       ka: { type: String, default: '' },

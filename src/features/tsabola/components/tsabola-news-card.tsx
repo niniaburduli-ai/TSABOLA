@@ -16,7 +16,10 @@ export function TsabolaNewsCard({ item }: Props) {
   return (
     <Link
       href={`/news/${item.slug}`}
-      className="block border border-charcoal/10 rounded overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className={[
+        'block border border-charcoal/10 dark:border-cream/10 rounded overflow-hidden',
+        'bg-white dark:bg-charcoal transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg',
+      ].join(' ')}
     >
       <div className="aspect-video overflow-hidden">
         {item.image ? (
@@ -26,9 +29,9 @@ export function TsabolaNewsCard({ item }: Props) {
         )}
       </div>
       <div className="p-5 space-y-2">
-        <p className="text-xs uppercase tracking-widest text-wine/70">{r(item.date)}</p>
-        <h3 className="font-display font-bold text-charcoal">{r(item.title)}</h3>
-        <p className="text-sm text-charcoal/70 line-clamp-2">{r(item.body)}</p>
+        <p className="text-xs uppercase tracking-widest text-wine">{r(item.date)}</p>
+        <h3 className="font-display font-bold text-charcoal dark:text-cream">{r(item.title)}</h3>
+        <p className="text-sm text-charcoal/70 dark:text-cream/70 line-clamp-2">{r(item.body)}</p>
       </div>
     </Link>
   )

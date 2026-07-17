@@ -19,3 +19,5 @@ export type TranslationMemory = {
   sourceKa: string;
   autoEn: string;
 };
+
+export type ImageSize = 'sm' | 'md' | 'lg';

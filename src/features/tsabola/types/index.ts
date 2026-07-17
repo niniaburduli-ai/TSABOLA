@@ -1,3 +1,7 @@
+import type { ImageSize } from '@/shared/types/common'
+
+export type { ImageSize }
+
 export type L = { ka: string; en: string }
 
 export type WineItem = {
@@ -9,6 +13,7 @@ export type WineItem = {
   discountPrice?: string
   description: L
   image: string
+  imageSize: ImageSize
   details?: L
   longDescription?: L
   serveTemp?: string
@@ -32,28 +37,19 @@ export type HeroImage = {
   src: string
   positionMobile: HeroImagePosition
   positionDesktop: HeroImagePosition
+  size: ImageSize
 }
 
 export type SiteContent = {
   site: { name: L; slogan: L }
   nav: { wines: L; gallery: L; about: L; contact: L; news: L }
   hero: { headline: L; subline: L; cta: L; images: HeroImage[] }
-  wines: WineItem[]
+  wines: { title: L; subtitle: L; items: WineItem[] }
   news: { title: L; subtitle: L; items: NewsItem[] }
   gallery: { title: L; subtitle: L; images: string[] }
-  about: { title: L; body: L; imageAlt: L; image: string }
+  about: { title: L; body: L; imageAlt: L; image: string; imageSize: ImageSize }
   contact: { title: L; subtitle: L; email: string; phone: string; whatsapp: string; address: L }
   footer: { copy: L }
-}
-
-export type ThemeConfig = {
-  colorWine: string
-  colorCharcoal: string
-  colorCream: string
-  headingSize: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  bodySize: 'xs' | 'sm' | 'md' | 'lg'
-  headingFont: string
-  bodyFont: string
 }
 
 export type SectionVisibility = {
@@ -63,4 +59,30 @@ export type SectionVisibility = {
   gallery: boolean
   about: boolean
   contact: boolean
+}
+
+export type SectionKey = keyof SectionVisibility
+
+export type HeadingSizeScale = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+// One independently-styleable line of text within a section (e.g. hero's headline vs its slogan).
+export type TextElementStyle = {
+  color: string
+  font: string
+  size: HeadingSizeScale
+}
+
+export type SectionStyle = {
+  elements: Record<string, TextElementStyle>
+}
+
+export type ThemeConfig = {
+  colorWine: string
+  colorCharcoal: string
+  colorCream: string
+  headingSize: HeadingSizeScale
+  bodySize: 'xs' | 'sm' | 'md' | 'lg'
+  headingFont: string
+  bodyFont: string
+  sections: Record<SectionKey, SectionStyle>
 }

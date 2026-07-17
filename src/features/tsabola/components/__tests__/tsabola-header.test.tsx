@@ -17,15 +17,15 @@ describe('TsabolaHeader', () => {
     expect(screen.getByText('ცაბო')).toBeInTheDocument()
   })
 
-  it('renders KA and EN buttons', () => {
+  it('renders KA and EN flag buttons', () => {
     render(<TsabolaHeader />)
-    expect(screen.getByRole('button', { name: 'KA' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'EN' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'ქართული' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'English' })).toBeInTheDocument()
   })
 
-  it('clicking EN switches language', () => {
+  it('clicking English flag switches language', () => {
     render(<TsabolaHeader />)
-    fireEvent.click(screen.getByRole('button', { name: 'EN' }))
+    fireEvent.click(screen.getByRole('button', { name: 'English' }))
     expect(useLanguageStore.getState().lang).toBe('en')
   })
 

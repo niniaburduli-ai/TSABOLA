@@ -5,12 +5,15 @@ import { useRef } from 'react'
 
 import { TsabolaNewsCard } from './tsabola-news-card'
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 
 const ALL_NEWS_LABEL = { ka: 'ყველა სიახლე', en: 'All News' }
 const NO_NEWS_LABEL = { ka: 'სიახლეები ჯერ არ არის.', en: 'No news yet.' }
 
 export function TsabolaNews() {
   const { t, r } = useLang()
+  const eyebrowRef = useTextStyle<HTMLParagraphElement>('news', 'eyebrow')
+  const headingRef = useTextStyle<HTMLHeadingElement>('news', 'heading')
   const items = t.news.items.filter((item) => item.published)
   const scrollerRef = useRef<HTMLDivElement>(null)
 
@@ -23,11 +26,15 @@ export function TsabolaNews() {
   }
 
   return (
-    <section id="news" className="bg-white py-24">
+    <section id="news" className="bg-white dark:bg-charcoal py-16">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-wine/70 mb-3">{r(t.news.subtitle)}</p>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-charcoal">{r(t.news.title)}</h2>
+          <p ref={eyebrowRef} className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">
+            {r(t.news.subtitle)}
+          </p>
+          <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream">
+            {r(t.news.title)}
+          </h2>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />
         </div>
 
@@ -41,7 +48,7 @@ export function TsabolaNews() {
         </div>
 
         {items.length === 0 ? (
-          <p className="text-center text-charcoal/50">{r(NO_NEWS_LABEL)}</p>
+          <p className="text-center text-charcoal/50 dark:text-cream/50">{r(NO_NEWS_LABEL)}</p>
         ) : (
           <div className="relative px-10">
             <div
@@ -63,7 +70,7 @@ export function TsabolaNews() {
                   aria-label="Scroll news left"
                   className={[
                     'absolute left-0 top-1/2 -translate-y-1/2 z-10',
-                    'w-10 h-10 rounded-full border border-charcoal/20 bg-white text-charcoal',
+                    'w-10 h-10 rounded-full border border-charcoal/20 dark:border-cream/20 bg-white dark:bg-charcoal text-charcoal dark:text-cream',
                     'flex items-center justify-center',
                     'hover:bg-wine hover:text-white hover:border-wine transition-colors duration-300',
                   ].join(' ')}
@@ -76,7 +83,7 @@ export function TsabolaNews() {
                   aria-label="Scroll news right"
                   className={[
                     'absolute right-0 top-1/2 -translate-y-1/2 z-10',
-                    'w-10 h-10 rounded-full border border-charcoal/20 bg-white text-charcoal',
+                    'w-10 h-10 rounded-full border border-charcoal/20 dark:border-cream/20 bg-white dark:bg-charcoal text-charcoal dark:text-cream',
                     'flex items-center justify-center',
                     'hover:bg-wine hover:text-white hover:border-wine transition-colors duration-300',
                   ].join(' ')}

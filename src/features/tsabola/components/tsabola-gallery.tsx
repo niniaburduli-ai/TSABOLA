@@ -8,6 +8,7 @@ import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 import { TsabolaGalleryCard } from './tsabola-gallery-card'
 import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 
 const ALL_GALLERY_LABEL = { ka: 'სრული გალერეა', en: 'All Gallery' }
 
@@ -17,6 +18,8 @@ type Props = {
 
 export function TsabolaGallery({ initialImages }: Props) {
   const { t, r } = useLang()
+  const eyebrowRef = useTextStyle<HTMLParagraphElement>('gallery', 'eyebrow')
+  const headingRef = useTextStyle<HTMLHeadingElement>('gallery', 'heading')
   const staticImages = t.gallery.images.filter(Boolean)
   const [dbImages, setDbImages] = useState<GalleryImage[]>(initialImages)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -38,11 +41,15 @@ export function TsabolaGallery({ initialImages }: Props) {
   function next() { setActiveIndex((i) => (i + 1) % staticImages.length) }
 
   return (
-    <section id="gallery" className="bg-white py-24 overflow-hidden">
+    <section id="gallery" className="bg-white dark:bg-charcoal py-16 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-wine/70 mb-3">{r(t.gallery.subtitle)}</p>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-charcoal">{r(t.gallery.title)}</h2>
+          <p ref={eyebrowRef} className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">
+            {r(t.gallery.subtitle)}
+          </p>
+          <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream">
+            {r(t.gallery.title)}
+          </h2>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />
         </div>
 
@@ -82,8 +89,8 @@ export function TsabolaGallery({ initialImages }: Props) {
 
       {publishedImages.length > 0 && (
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-white dark:from-charcoal to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-white dark:from-charcoal to-transparent pointer-events-none" />
 
           <div className="overflow-hidden">
             <div className={`flex gap-2 w-max animate-gallery-scroll ${durationClass}`}>

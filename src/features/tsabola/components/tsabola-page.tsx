@@ -63,12 +63,13 @@ function TsabolaPageBody({ initialGalleryImages }: { initialGalleryImages: Galle
     document.documentElement.lang = lang
   }, [lang])
 
-  // Apply theme CSS vars
+  // Apply theme CSS vars — must match the real Tailwind theme tokens (--color-wine etc.)
+  // for the JS-set inline override to actually beat the compiled default.
   useEffect(() => {
     const root = document.documentElement
-    root.style.setProperty('--wine', theme.colorWine)
-    root.style.setProperty('--charcoal', theme.colorCharcoal)
-    root.style.setProperty('--cream', theme.colorCream)
+    root.style.setProperty('--color-wine', theme.colorWine)
+    root.style.setProperty('--color-charcoal', theme.colorCharcoal)
+    root.style.setProperty('--color-cream', theme.colorCream)
     root.style.setProperty('--font-heading', `var(${theme.headingFont ?? '--font-space-grotesk'})`)
     root.style.setProperty('--font-body', `var(${theme.bodyFont ?? '--font-sans'})`)
   }, [theme])

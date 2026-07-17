@@ -13,6 +13,7 @@ import { NewsEditor } from './editors/news-editor'
 import { SiteEditor } from './editors/site-editor'
 import { WinesEditor } from './editors/wines-editor'
 import { ExportReset } from './export-reset'
+import { SectionStyleEditor } from './section-style-editor'
 import { ThemeEditor } from './theme-editor'
 import { VisibilityEditor } from './visibility-editor'
 import { useSiteContentSync } from '../hooks/use-site-content-sync'
@@ -27,6 +28,7 @@ const EDITOR_MAP: Record<string, React.ComponentType> = {
   contact: ContactEditor,
   footer: FooterEditor,
   theme: ThemeEditor,
+  sectionStyle: SectionStyleEditor,
   visibility: VisibilityEditor,
   export: ExportReset,
   reset: ExportReset,
@@ -38,7 +40,7 @@ export function AdminPanel() {
   const Editor = EDITOR_MAP[active] ?? SiteEditor
 
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="force-light-theme flex flex-col h-screen bg-white">
       <AdminHeader />
       <div className="flex flex-1 overflow-hidden">
         <AdminSidebar active={active} onSelect={setActive} />

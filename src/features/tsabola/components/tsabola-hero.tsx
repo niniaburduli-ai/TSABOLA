@@ -3,16 +3,20 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
+import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
+
 import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
+import { useSequentialTypewriter } from '../hooks/use-typewriter'
 
 import type { HeroImage, HeroImagePosition } from '../types'
 
 const SLIDE_DURATION = 6000
 
 const FALLBACK_IMAGES: HeroImage[] = [
-  { src: '/TSABO WHITE.png', positionMobile: 'center', positionDesktop: 'center' },
-  { src: '/TSABO RED.png', positionMobile: 'center', positionDesktop: 'center' },
+  { src: '/TSABO WHITE.png', positionMobile: 'center', positionDesktop: 'center', size: 'md' },
+  { src: '/TSABO RED.png', positionMobile: 'center', positionDesktop: 'center', size: 'md' },
 ]
 
 const MOBILE_POSITION_CLASS: Record<HeroImagePosition, string> = {
@@ -29,8 +33,16 @@ const DESKTOP_POSITION_CLASS: Record<HeroImagePosition, string> = {
 
 export function TsabolaHero() {
   const { t, r } = useLang()
+  const siteNameRef = useTextStyle<HTMLParagraphElement>('hero', 'siteName')
+  const sloganRef = useTextStyle<HTMLParagraphElement>('hero', 'slogan')
+  const headlineRef = useTextStyle<HTMLHeadingElement>('hero', 'headline')
+  const sublineRef = useTextStyle<HTMLParagraphElement>('hero', 'subline')
+  const ctaRef = useTextStyle<HTMLAnchorElement>('hero', 'cta')
+  const siteName = r(t.site.name)
+  const headline = r(t.hero.headline)
   const [active, setActive] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [siteNameTyped, headlineTyped] = useSequentialTypewriter([siteName, headline], active)
 
   const images: HeroImage[] = (() => {
     const filtered = (t.hero.images ?? []).filter((image): image is HeroImage => Boolean(image?.src))
@@ -61,7 +73,12 @@ export function TsabolaHero() {
             fill
             priority={i === 0}
             sizes="100vw"
-            className={`object-cover ${MOBILE_POSITION_CLASS[image.positionMobile]} ${DESKTOP_POSITION_CLASS[image.positionDesktop]}`}
+            className={[
+              'object-cover',
+              MOBILE_POSITION_CLASS[image.positionMobile],
+              DESKTOP_POSITION_CLASS[image.positionDesktop],
+              IMAGE_SIZE_SCALE_CLASS[image.size],
+            ].join(' ')}
           />
         </div>
       ))}
@@ -78,28 +95,54 @@ export function TsabolaHero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
 
       {/* Text content — bottom center, compact */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6">
-        <p className="animate-rise text-cream/50 text-sm tracking-widest uppercase mb-2 font-heading">
-          {r(t.site.name)}
+      <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6 pointer-events-none">
+        <p
+          ref={siteNameRef}
+          aria-label={siteName}
+          className="animate-rise text-cream text-2xl sm:text-3xl tracking-widest uppercase mb-1 font-heading font-bold"
+        >
+          <span aria-hidden="true">
+            {siteNameTyped.display}
+            <span
+              className={[
+                'inline-block w-px h-6 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
+                siteNameTyped.typing ? 'animate-pulse' : 'opacity-0',
+              ].join(' ')}
+            />
+          </span>
+        </p>
+        <p ref={sloganRef} className="animate-rise text-cream/60 text-base tracking-wide uppercase mb-3 font-sans">
+          {r(t.site.slogan)}
         </p>
         <h1
+          ref={headlineRef}
+          aria-label={headline}
           className={[
-            'animate-rise animate-rise-1 text-cream text-base sm:text-lg',
-            'font-heading font-semibold leading-snug mb-1',
-            'max-w-xs text-balance sm:max-w-none sm:whitespace-nowrap',
+            'animate-rise animate-rise-1 text-cream text-2xl sm:text-3xl',
+            'font-heading font-bold leading-snug mb-1',
+            'max-w-2xl text-balance',
           ].join(' ')}
         >
-          {r(t.hero.headline)}
+          <span aria-hidden="true">
+            {headlineTyped.display}
+            <span
+              className={[
+                'inline-block w-px h-6 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
+                headlineTyped.typing ? 'animate-pulse' : 'opacity-0',
+              ].join(' ')}
+            />
+          </span>
         </h1>
-        <p className="animate-rise animate-rise-2 text-cream/55 text-xs font-sans leading-relaxed mb-4 max-w-xs">
+        <p ref={sublineRef} className="animate-rise animate-rise-2 text-cream/55 text-base font-sans leading-relaxed mb-4 max-w-xs">
           {r(t.hero.subline)}
         </p>
         <a
+          ref={ctaRef}
           href="#wines"
           className={[
-            'animate-rise animate-rise-3 px-5 py-2 border border-cream/35',
-            'text-cream text-xs font-heading tracking-wide pointer-events-auto',
-            'hover:bg-cream hover:text-charcoal transition-colors duration-300',
+            'hero-cta animate-rise animate-rise-3 px-5 py-2 border border-cream/35',
+            'text-cream text-base font-heading tracking-wide pointer-events-auto',
+            'hover:bg-cream transition-colors duration-300',
           ].join(' ')}
         >
           {r(t.hero.cta)}

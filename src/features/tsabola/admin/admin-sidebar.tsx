@@ -6,7 +6,7 @@ interface Props {
 }
 
 const CONTENT_SECTIONS = ['site', 'hero', 'wines', 'news', 'gallery', 'about', 'contact', 'footer'] as const
-const APPEARANCE_SECTIONS = ['theme', 'visibility'] as const
+const APPEARANCE_SECTIONS = ['theme', 'sectionStyle', 'visibility'] as const
 
 const SECTION_LABELS: Record<string, string> = {
   site: 'საიტი',
@@ -18,6 +18,7 @@ const SECTION_LABELS: Record<string, string> = {
   contact: 'კონტაქტი',
   footer: 'ფუტერი',
   theme: 'თემა',
+  sectionStyle: 'სექციების სტილი',
   visibility: 'ხილვადობა',
 }
 

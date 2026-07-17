@@ -40,12 +40,20 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div className="relative bg-charcoal text-cream w-full max-w-3xl max-h-screen overflow-y-auto shadow-2xl animate-modal-slide">
+      <div
+        className={[
+          'relative bg-cream dark:bg-charcoal text-charcoal dark:text-cream w-full max-w-3xl',
+          'max-h-screen overflow-y-auto shadow-2xl animate-modal-slide',
+        ].join(' ')}
+      >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center text-cream/60 hover:text-cream transition-colors"
+          className={[
+            'absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center',
+            'text-charcoal/40 dark:text-cream/40 hover:text-charcoal dark:hover:text-cream transition-colors',
+          ].join(' ')}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -53,7 +61,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
         </button>
 
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-2/5 min-h-64 flex items-center justify-center p-8 bg-charcoal/60">
+          <div className="md:w-2/5 min-h-64 flex items-center justify-center p-8 bg-white dark:bg-charcoal/60">
             {wine.image ? (
               <img
                 src={wine.image}
@@ -66,11 +74,11 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
           </div>
 
           <div className="md:w-3/5 p-8 flex flex-col gap-4">
-            <span className="inline-block self-start px-2.5 py-0.5 text-xs font-semibold tracking-widest uppercase border border-wine/40 text-wine">
+            <span className="inline-block self-start px-3 py-1 text-sm font-semibold tracking-widest uppercase border border-wine/40 text-wine">
               {r(wine.typeBadge, lang)}
             </span>
 
-            <h2 className="font-display text-3xl font-bold text-cream">
+            <h2 className="font-display text-3xl font-bold text-charcoal dark:text-cream">
               {r(wine.name, lang)}
             </h2>
 
@@ -79,7 +87,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
             {wine.details && (
               <div className="flex flex-col gap-1">
                 {r(wine.details, lang).split('\n').map((line, i) => (
-                  <p key={i} className="text-xs text-cream/60 tracking-wide">
+                  <p key={i} className="text-xs text-charcoal/60 dark:text-cream/60 tracking-wide">
                     {line}
                   </p>
                 ))}
@@ -87,35 +95,35 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
             )}
 
             {wine.longDescription && (
-              <p className="text-sm text-cream/80 leading-relaxed italic">
+              <p className="text-sm text-charcoal/70 dark:text-cream/70 leading-relaxed italic">
                 {r(wine.longDescription, lang)}
               </p>
             )}
 
             {(wine.serveTemp || wine.alcohol || wine.volume) && (
-              <div className="flex flex-wrap gap-6 mt-auto pt-4 border-t border-cream/10">
+              <div className="flex flex-wrap gap-6 mt-auto pt-4 border-t border-charcoal/10 dark:border-cream/10">
                 {wine.serveTemp && (
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-xs text-cream/40 tracking-widest uppercase">
+                    <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'მიირთვით' : 'Serve'}
                     </span>
-                    <span className="text-sm font-semibold text-cream">{wine.serveTemp}</span>
+                    <span className="text-sm font-semibold text-charcoal dark:text-cream">{wine.serveTemp}</span>
                   </div>
                 )}
                 {wine.alcohol && (
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-xs text-cream/40 tracking-widest uppercase">
+                    <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'ალკ' : 'Alc'}
                     </span>
-                    <span className="text-sm font-semibold text-cream">{wine.alcohol}</span>
+                    <span className="text-sm font-semibold text-charcoal dark:text-cream">{wine.alcohol}</span>
                   </div>
                 )}
                 {wine.volume && (
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-xs text-cream/40 tracking-widest uppercase">
+                    <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'მოცულობა' : 'Volume'}
                     </span>
-                    <span className="text-sm font-semibold text-cream">{wine.volume}</span>
+                    <span className="text-sm font-semibold text-charcoal dark:text-cream">{wine.volume}</span>
                   </div>
                 )}
               </div>

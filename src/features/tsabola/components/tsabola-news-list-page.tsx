@@ -26,8 +26,8 @@ export function TsabolaNewsListPage({ items }: Props) {
           ← {r(BACK_TO_MAIN_LABEL)}
         </Link>
         <div className="text-center mb-16">
-          <p className="text-xs font-semibold tracking-widest uppercase text-wine/70 mb-3">{r(t.news.subtitle)}</p>
-          <h1 className="font-display text-4xl sm:text-5xl font-bold text-charcoal">{r(t.news.title)}</h1>
+          <p className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">{r(t.news.subtitle)}</p>
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream">{r(t.news.title)}</h1>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />
         </div>
         <TsabolaNewsGrid items={items} />

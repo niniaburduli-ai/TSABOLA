@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import type { GalleryImage } from '@/features/gallery/types/gallery.types'
+import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
 
 import { useLang } from '../hooks/use-lang'
 
@@ -19,7 +20,7 @@ export function TsabolaGalleryCard({ image }: Props) {
       <img
         src={image.url}
         alt={caption}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${IMAGE_SIZE_SCALE_CLASS[image.imageSize]}`}
       />
       <div className="absolute inset-0 bg-wine/0 group-hover:bg-wine/20 transition-colors duration-300" />
       {caption && (

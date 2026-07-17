@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui
 import { Textarea } from '@/shared/components/ui/textarea'
 
 import { BilingualField } from './_bilingual-field'
+import { ImageSizeSelect } from './_image-size-select'
 
 export function AboutEditor() {
   const { content, updateSection } = useContentStore()
@@ -54,6 +55,10 @@ export function AboutEditor() {
           folder="tsabola/about"
           onUpload={(url) => updateSection('about', { ...about, image: url })}
           aspectRatio={3 / 4}
+        />
+        <ImageSizeSelect
+          value={about.imageSize}
+          onChange={(imageSize) => updateSection('about', { ...about, imageSize })}
         />
       </div>
     </div>

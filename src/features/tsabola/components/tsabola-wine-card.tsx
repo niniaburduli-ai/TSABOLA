@@ -1,5 +1,6 @@
 'use client'
 
+import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
 import { formatWinePrice } from '@/shared/utils/format'
 
 import { r } from '../hooks/use-lang'
@@ -17,7 +18,12 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
   const discount = getWineDiscount(item.price, item.discountPrice)
 
   return (
-    <article className="group flex flex-col bg-white border border-border-wine hover:border-wine/60 transition-colors duration-300">
+    <article
+      className={[
+        'group flex flex-col sm:flex-row bg-white dark:bg-charcoal border border-border-wine dark:border-cream/10',
+        'hover:border-wine/60 transition-colors duration-300',
+      ].join(' ')}
+    >
       {/* Image */}
       {item.image ? (
         <button
@@ -25,43 +31,43 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
           onClick={() => onOpen(item)}
           aria-label={r(item.name, lang)}
           className={
-            'w-full h-80 bg-cream/20 flex items-center justify-center p-4 ' +
+            'w-full h-80 sm:h-auto sm:w-2/5 sm:order-2 sm:self-stretch bg-cream/20 block ' +
             'overflow-hidden cursor-pointer focus:outline-none ' +
             'focus-visible:ring-2 focus-visible:ring-wine/50'
           }
         >
-          <div className="h-full w-full flex items-center justify-center group-hover:animate-wine-float">
+          <div className="h-full w-full group-hover:animate-wine-float">
             <img
               src={item.image}
               alt={r(item.name, lang)}
-              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+              className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${IMAGE_SIZE_SCALE_CLASS[item.imageSize]}`}
             />
           </div>
         </button>
       ) : (
         <div
           data-placeholder="true"
-          className="w-full h-80 bg-gradient-to-br from-wine/10 via-cream to-charcoal/10"
+          className="w-full h-80 sm:h-auto sm:w-2/5 sm:order-2 sm:self-stretch bg-gradient-to-br from-wine/10 via-cream to-charcoal/10"
         />
       )}
 
-      <div className="p-6 flex flex-col gap-3 flex-1">
-        <span className="inline-block self-start px-2.5 py-0.5 text-xs font-semibold tracking-widest uppercase border border-wine/40 text-wine">
+      <div className="p-6 flex flex-col justify-center gap-3 flex-1 sm:order-1 sm:w-3/5">
+        <span className="inline-block self-start px-3 py-1 text-sm font-semibold tracking-widest uppercase border border-wine/40 text-wine">
           {r(item.typeBadge, lang)}
         </span>
-        <h3 className="font-display text-2xl font-bold text-charcoal">{r(item.name, lang)}</h3>
+        <h3 className="font-display text-2xl font-bold text-charcoal dark:text-cream">{r(item.name, lang)}</h3>
         {item.details && (
           <div className="border-t border-wine/10 pt-3">
             {r(item.details, lang).split('\n').map((line, i) => (
-              <p key={i} className="text-xs text-charcoal/50 leading-relaxed">
+              <p key={i} className="text-xs text-charcoal/50 dark:text-cream/50 leading-relaxed">
                 {line}
               </p>
             ))}
           </div>
         )}
         {discount ? (
-          <div className="flex flex-wrap items-center gap-2 mt-auto">
-            <span className="font-display text-base text-charcoal line-through">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-display text-base text-charcoal dark:text-cream line-through">
               {formatWinePrice(item.price)}
             </span>
             <span className="font-display text-xl font-bold text-red-600">
@@ -72,7 +78,7 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
             </span>
           </div>
         ) : (
-          <p className="font-display text-xl font-bold text-wine mt-auto">
+          <p className="font-display text-xl font-bold text-wine">
             {formatWinePrice(item.price)}
           </p>
         )}

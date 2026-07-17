@@ -47,6 +47,7 @@ export function GalleryEditor() {
         body: JSON.stringify({
           slug: image.slug,
           published: image.published,
+          imageSize: image.imageSize,
           caption: image.caption,
           description: image.description,
           date: image.date,
@@ -60,6 +61,7 @@ export function GalleryEditor() {
       updateLocal(image._id, {
         slug: updated.slug,
         published: updated.published,
+        imageSize: updated.imageSize,
         caption: updated.caption,
         description: updated.description,
         date: updated.date,
@@ -103,6 +105,7 @@ export function GalleryEditor() {
                 publicId: img.publicId,
                 slug: '',
                 published: true,
+                imageSize: 'md',
                 caption: { ka: '', en: '' },
                 description: { ka: '', en: '' },
                 date: new Date().toISOString(),

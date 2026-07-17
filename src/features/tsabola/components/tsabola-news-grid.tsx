@@ -15,7 +15,7 @@ export function TsabolaNewsGrid({ items }: Props) {
   const { r } = useLang()
 
   if (items.length === 0) {
-    return <p className="text-center text-charcoal/50 py-24">{r(NO_NEWS_LABEL)}</p>
+    return <p className="text-center text-charcoal/50 dark:text-cream/50 py-24">{r(NO_NEWS_LABEL)}</p>
   }
 
   return (

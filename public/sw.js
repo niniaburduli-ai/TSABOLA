@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'tsabola-v1';
+const CACHE_VERSION = 'tsabola-v2';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const PAGES_CACHE = `${CACHE_VERSION}-pages`;
 const OFFLINE_URL = '/offline';

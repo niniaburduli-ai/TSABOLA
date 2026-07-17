@@ -84,13 +84,13 @@ describe('getSiteContent', () => {
     const result = await getSiteContent();
 
     expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
-      { src: '/a.jpg', positionMobile: 'top', positionDesktop: 'top' },
-      { src: '/b.jpg', positionMobile: 'top', positionDesktop: 'top' },
+      { src: '/a.jpg', positionMobile: 'top', positionDesktop: 'top', size: 'md' },
+      { src: '/b.jpg', positionMobile: 'top', positionDesktop: 'top', size: 'md' },
     ]);
   });
 
   it('leaves already-migrated hero image objects untouched', async () => {
-    const images = [{ src: '/a.jpg', positionMobile: 'center', positionDesktop: 'bottom' }];
+    const images = [{ src: '/a.jpg', positionMobile: 'center', positionDesktop: 'bottom', size: 'lg' }];
     vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
       content: { ...baseContent, hero: { ...baseContent.hero, images } },
       theme: {},
@@ -100,5 +100,20 @@ describe('getSiteContent', () => {
     const result = await getSiteContent();
 
     expect((result.data as { content: SiteContent }).content.hero.images).toEqual(images);
+  });
+
+  it('defaults size to md when migrating a hero image object missing it', async () => {
+    const images = [{ src: '/a.jpg', positionMobile: 'center', positionDesktop: 'bottom' }];
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, hero: { ...baseContent.hero, images } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
+      { src: '/a.jpg', positionMobile: 'center', positionDesktop: 'bottom', size: 'md' },
+    ]);
   });
 });

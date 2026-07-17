@@ -8,6 +8,7 @@ import { Label } from '@/shared/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
 
 import { BilingualField } from './_bilingual-field'
+import { ImageSizeSelect } from './_image-size-select'
 import { useContentStore } from '../../store/content-store'
 
 const POSITION_LABEL: Record<HeroImagePosition, string> = {
@@ -29,7 +30,7 @@ export function HeroEditor() {
   }
 
   const addImage = () => {
-    const image: HeroImage = { src: '', positionMobile: 'center', positionDesktop: 'center' }
+    const image: HeroImage = { src: '', positionMobile: 'center', positionDesktop: 'center', size: 'md' }
     updateSection('hero', { ...hero, images: [...hero.images, image] })
   }
 
@@ -104,6 +105,7 @@ export function HeroEditor() {
                   </SelectContent>
                 </Select>
               </div>
+              <ImageSizeSelect value={image.size} onChange={(size) => patchImage(i, { size })} />
             </div>
           </div>
         ))}

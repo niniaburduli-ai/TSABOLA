@@ -1,99 +1,102 @@
+import { buildDefaultSectionStyles } from '@/shared/const/site-section-elements.const'
+
 import type { SiteContent, ThemeConfig, SectionVisibility } from '../types'
 
 export const DEFAULT_CONTENT: SiteContent = {
-  site: {
-    name: { ka: 'ცაბო', en: 'TSABO' },
-    slogan: { ka: 'ტრადიცია ქართლის გულიდან', en: 'Tradition from the Heart of Kartli' },
-  },
+  site: { name: { ka: 'ცაბო', en: 'TSABO' }, slogan: { ka: 'ტრადიცია ქართლის გულიდან', en: 'Tradition from the Heart of Kartli' } },
   nav: {
-    wines: { ka: 'ღვინოები', en: 'Wines' },
-    gallery: { ka: 'გალერეა', en: 'Gallery' },
-    about: { ka: 'ჩვენ შესახებ', en: 'About' },
-    contact: { ka: 'კონტაქტი', en: 'Contact' },
+    wines: { ka: 'ღვინოები', en: 'Wines' }, gallery: { ka: 'გალერეა', en: 'Gallery' },
+    about: { ka: 'ჩვენ შესახებ', en: 'About' }, contact: { ka: 'კონტაქტი', en: 'Contact' },
     news: { ka: 'სიახლეები', en: 'News' },
   },
   hero: {
     headline: { ka: 'კახეთის სულისკვეთება', en: 'The Spirit of Kakheti' },
-    subline: {
-      ka: 'ოჯახური მარნის ტრადიცია სამი თაობის განმავლობაში',
-      en: 'A family winery tradition spanning three generations',
-    },
+    subline: { ka: 'საოჯახო მარნის ცოცხალი ისტორია', en: 'The living history of a family winery' },
     cta: { ka: 'ღვინოები აღმოაჩინე', en: 'Discover Our Wines' },
     images: [
-      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png', positionMobile: 'top', positionDesktop: 'center' },
-      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png', positionMobile: 'top', positionDesktop: 'center' },
-      { src: '', positionMobile: 'center', positionDesktop: 'center' },
+      {
+        src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
+        positionMobile: 'top', positionDesktop: 'center', size: 'md',
+      },
+      {
+        src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
+        positionMobile: 'top', positionDesktop: 'center', size: 'md',
+      },
+      { src: '', positionMobile: 'center', positionDesktop: 'center', size: 'md' },
     ],
   },
-  wines: [
-    {
-      id: 'white',
-      name: { ka: 'თეთრი მშრალი', en: 'White Dry' },
-      type: { ka: 'თეთრი', en: 'White' },
-      typeBadge: { ka: 'თეთრი', en: 'White' },
-      price: '30₾',
-      description: {
-        ka: 'ღია ჩალისფერი. ნაზი არომატი, სიხალისე, ჰარმონიული დაბოლოება.',
-        en: 'Light straw. Delicate aroma, pleasant freshness, harmonious finish.',
-      },
-      image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764200/tsabola/wines/white-wine.png',
-      details: {
-        ka: 'ღვინო: მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
-        en: 'Wine: Dry | Grape: Chinebuli\nRegion: Zemo Khandaki, Shida Kartli',
-      },
-      longDescription: {
-        ka: '„ცაბოს" თეთრი მშრალი ღვინო დამზადებულია შიდა ქართლის, სოფელ ზემო ხანდაკში ' +
+  wines: {
+    title: { ka: 'ღვინოები', en: 'Wines' },
+    subtitle: { ka: 'კატალოგი', en: 'Catalog' },
+    items: [
+      {
+        id: 'white',
+        name: { ka: 'თეთრი მშრალი', en: 'White Dry' },
+        type: { ka: 'თეთრი', en: 'White' },
+        typeBadge: { ka: 'თეთრი', en: 'White' },
+        price: '30₾',
+        description: {
+          ka: 'ღია ჩალისფერი. ნაზი არომატი, სიხალისე, ჰარმონიული დაბოლოება.',
+          en: 'Light straw. Delicate aroma, pleasant freshness, harmonious finish.',
+        },
+        image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764200/tsabola/wines/white-wine.png',
+        imageSize: 'md',
+        details: {
+          ka: 'ღვინო: მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
+          en: 'Wine: Dry | Grape: Chinebuli\nRegion: Zemo Khandaki, Shida Kartli',
+        },
+        longDescription: {
+          ka: '„ცაბოს" თეთრი მშრალი ღვინო დამზადებულია შიდა ქართლის, სოფელ ზემო ხანდაკში ' +
           'მოწეული ჩინებულის ჯიშის რჩეული ყურძნისგან. ღვინო გამოირჩევა ღია ჩალისფერი ' +
           'შეფერილობით, ნაზი არომატით, სასიამოვნო სიხალისითა და ჰარმონიული, ხანგრძლივი დაბოლოებით.',
-        en: 'Tsabo\'s White Dry wine is made from selected Chinebuli variety grapes grown in ' +
+          en: 'Tsabo\'s White Dry wine is made from selected Chinebuli variety grapes grown in ' +
           'the village of Zemo Khandaki, Shida Kartli. The wine stands out for its light straw ' +
           'color, delicate aroma, pleasant freshness, and a harmonious, lingering finish.',
+        },
+        serveTemp: '10–12°C',
+        alcohol: '13.5%',
+        volume: '750 მლ',
       },
-      serveTemp: '10–12°C',
-      alcohol: '13.5%',
-      volume: '750 მლ',
-    },
-    {
-      id: 'red',
-      name: { ka: 'წითელი მშრალი', en: 'Red Dry' },
-      type: { ka: 'წითელი', en: 'Red' },
-      typeBadge: { ka: 'წითელი', en: 'Red' },
-      price: '50₾',
-      description: {
-        ka: 'ღრმა ლალისფერი. ხავერდოვანი სტრუქტურა, მწიფე კენკრა, დაბალანსებული დაბოლოება.',
-        en: 'Deep ruby. Velvety structure, ripe berry aromas, balanced finish.',
-      },
-      image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764216/tsabola/wines/red-wine.png',
-      details: {
-        ka: 'ღვინო: მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
-        en: 'Wine: Dry | Grape: Danakharuli\nRegion: Zemo Khandaki, Shida Kartli',
-      },
-      longDescription: {
-        ka: '„ცაბოს" წითელი მშრალი ღვინო დამზადებულია შიდა ქართლის, სოფელ ზემო ხანდაკში ' +
+      {
+        id: 'red',
+        name: { ka: 'წითელი მშრალი', en: 'Red Dry' },
+        type: { ka: 'წითელი', en: 'Red' },
+        typeBadge: { ka: 'წითელი', en: 'Red' },
+        price: '50₾',
+        description: {
+          ka: 'ღრმა ლალისფერი. ხავერდოვანი სტრუქტურა, მწიფე კენკრა, დაბალანსებული დაბოლოება.',
+          en: 'Deep ruby. Velvety structure, ripe berry aromas, balanced finish.',
+        },
+        image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764216/tsabola/wines/red-wine.png',
+        imageSize: 'md',
+        details: {
+          ka: 'ღვინო: მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
+          en: 'Wine: Dry | Grape: Danakharuli\nRegion: Zemo Khandaki, Shida Kartli',
+        },
+        longDescription: {
+          ka: '„ცაბოს" წითელი მშრალი ღვინო დამზადებულია შიდა ქართლის, სოფელ ზემო ხანდაკში ' +
           'მოწეული დანახარულის ჯიშის რჩეული ყურძნისგან. ღვინო გამოირჩევა ღრმა ლალისფერი ' +
           'შეფერილობით, მწიფე მტევნის ნაზი არომატებით, ხავერდოვანი სტრუქტურით და ' +
           'დაბალანსებული, ხანგრძლივი დაბოლოებით.',
-        en: 'Tsabo\'s Red Dry wine is made from selected Danakharuli variety grapes grown in ' +
+          en: 'Tsabo\'s Red Dry wine is made from selected Danakharuli variety grapes grown in ' +
           'the village of Zemo Khandaki, Shida Kartli. The wine stands out for its deep ruby ' +
           'color, delicate aromas of ripe clusters, velvety structure, and a balanced, lingering finish.',
+        },
+        serveTemp: '16–18°C',
+        alcohol: '12.5%',
+        volume: '750 მლ',
       },
-      serveTemp: '16–18°C',
-      alcohol: '12.5%',
-      volume: '750 მლ',
-    },
-  ],
+    ],
+  },
   news: {
-    title: { ka: 'სიახლეები', en: 'News' },
-    subtitle: { ka: 'განახლებები', en: 'Updates' },
+    title: { ka: 'ჩვენი ამბები', en: 'Our Stories' },
+    subtitle: { ka: 'ჩვენი ამბები', en: 'Our Stories' },
     items: [
       {
         id: 'news-1',
         slug: '2024-harvest-new-vintage',
         published: true,
-        title: {
-          ka: '2024 ყვავება — ახალი მოსავალი',
-          en: '2024 Harvest — New Vintage',
-        },
+        title: { ka: '2024 ყვავება — ახალი მოსავალი', en: '2024 Harvest — New Vintage' },
         date: { ka: 'იანვარი 2025', en: 'January 2025' },
         body: {
           ka: 'ჩვენი 2024 წლის მოსავალი მზადაა. ' +
@@ -107,10 +110,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         id: 'news-2',
         slug: 'seasonal-discount',
         published: true,
-        title: {
-          ka: 'სეზონური ფასდაკლება',
-          en: 'Seasonal Discount',
-        },
+        title: { ka: 'სეზონური ფასდაკლება', en: 'Seasonal Discount' },
         date: { ka: 'დეკემბერი 2024', en: 'December 2024' },
         body: {
           ka: 'ყველა თეთრ ღვინოზე 15% ფასდაკლება. ' +
@@ -135,10 +135,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     ],
   },
   about: {
-    title: {
-      ka: '„ცაბო" — ტრადიცია ქართლის გულიდან',
-      en: '"Tsabo" — A Tradition from the Heart of Kartli',
-    },
+    title: { ka: '„ცაბო" — ტრადიცია ქართლის გულიდან', en: '"Tsabo" — A Tradition from the Heart of Kartli' },
     body: {
       ka:
         '2018 წლიდან, შიდა ქართლის გულში, კასპის რაიონის სოფელ ზემო ხანდაკში, ' +
@@ -168,6 +165,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },
     image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764363/tsabola/about/about-vazi.png',
+    imageSize: 'md',
   },
   contact: {
     title: { ka: 'კონტაქტი', en: 'Contact' },
@@ -190,6 +188,7 @@ export const DEFAULT_THEME: ThemeConfig = {
   bodySize: 'md',
   headingFont: '--font-space-grotesk',
   bodyFont: '--font-sans',
+  sections: buildDefaultSectionStyles(),
 }
 
 export const DEFAULT_VISIBILITY: SectionVisibility = {

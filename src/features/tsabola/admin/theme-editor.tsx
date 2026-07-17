@@ -3,22 +3,7 @@
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import { Label } from '@/shared/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
-
-const HEADING_FONTS = [
-  { label: 'Space Grotesk', value: '--font-space-grotesk' },
-  { label: 'Playfair Display', value: '--font-display' },
-  { label: 'Cormorant Garamond', value: '--font-cormorant' },
-  { label: 'Lora', value: '--font-lora' },
-  { label: 'Poppins', value: '--font-poppins' },
-  { label: 'Raleway', value: '--font-raleway' },
-]
-
-const BODY_FONTS = [
-  { label: 'Inter', value: '--font-sans' },
-  { label: 'Poppins', value: '--font-poppins' },
-  { label: 'Lora', value: '--font-lora' },
-  { label: 'Space Grotesk', value: '--font-space-grotesk' },
-]
+import { BODY_FONT_OPTIONS, HEADING_FONT_OPTIONS } from '@/shared/const/heading-font.const'
 
 export function ThemeEditor() {
   const { theme, setTheme } = useContentStore()
@@ -62,7 +47,7 @@ export function ThemeEditor() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {HEADING_FONTS.map((f) => (
+              {HEADING_FONT_OPTIONS.map((f) => (
                 <SelectItem key={f.value} value={f.value}>{f.label}</SelectItem>
               ))}
             </SelectContent>
@@ -79,7 +64,7 @@ export function ThemeEditor() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {BODY_FONTS.map((f) => (
+              {BODY_FONT_OPTIONS.map((f) => (
                 <SelectItem key={f.value} value={f.value}>{f.label}</SelectItem>
               ))}
             </SelectContent>

@@ -15,7 +15,7 @@ export function TsabolaGalleryGrid({ images }: Props) {
   const { r } = useLang()
 
   if (images.length === 0) {
-    return <p className="text-center text-charcoal/50 py-24">{r(NO_GALLERY_LABEL)}</p>
+    return <p className="text-center text-charcoal/50 dark:text-cream/50 py-24">{r(NO_GALLERY_LABEL)}</p>
   }
 
   return (

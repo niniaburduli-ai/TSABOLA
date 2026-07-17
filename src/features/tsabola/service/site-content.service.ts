@@ -1,7 +1,8 @@
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
 import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '@/features/tsabola/content/site-content';
 import { siteContentRepository } from '@/features/tsabola/repository/site-content.repository';
-import type { HeroImage, NewsItem, SiteContent } from '@/features/tsabola/types';
+import type { HeroImage, NewsItem, SectionKey, SiteContent, ThemeConfig, WineItem } from '@/features/tsabola/types';
+import { SITE_SECTION_KEYS } from '@/shared/const/site-section.const';
 import { ServiceResult, TranslationMemory } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
 import { slugify } from '@/shared/utils/slugify';
@@ -17,13 +18,26 @@ function normalizeNewsItem(item: NewsItem): NewsItem {
 
 function normalizeHeroImage(image: unknown): HeroImage {
   if (typeof image === 'string') {
-    return { src: image, positionMobile: 'top', positionDesktop: 'top' };
+    return { src: image, positionMobile: 'top', positionDesktop: 'top', size: 'md' };
   }
   const partial = image as Partial<HeroImage>;
   return {
     src: partial.src ?? '',
     positionMobile: partial.positionMobile ?? 'top',
     positionDesktop: partial.positionDesktop ?? 'top',
+    size: partial.size ?? 'md',
+  };
+}
+
+function normalizeWinesSection(wines: unknown): SiteContent['wines'] {
+  if (Array.isArray(wines)) {
+    return { title: { ka: 'ღვინოები', en: 'Wines' }, subtitle: { ka: 'კატალოგი', en: 'Catalog' }, items: wines as WineItem[] };
+  }
+  const partial = (wines ?? {}) as Partial<SiteContent['wines']>;
+  return {
+    title: partial.title ?? { ka: 'ღვინოები', en: 'Wines' },
+    subtitle: partial.subtitle ?? { ka: 'კატალოგი', en: 'Catalog' },
+    items: partial.items ?? [],
   };
 }
 
@@ -31,8 +45,25 @@ function normalizeContent(content: SiteContent): SiteContent {
   return {
     ...content,
     hero: { ...content.hero, images: content.hero.images.map(normalizeHeroImage) },
+    wines: normalizeWinesSection(content.wines),
     news: { ...content.news, items: content.news.items.map(normalizeNewsItem) },
   };
+}
+
+function normalizeTheme(theme: unknown): ThemeConfig {
+  const partial = (theme ?? {}) as Partial<ThemeConfig>;
+  const sections = SITE_SECTION_KEYS.reduce((acc, key) => {
+    const defaults = DEFAULT_THEME.sections[key].elements;
+    const saved = partial.sections?.[key]?.elements ?? {};
+    const elements = Object.keys(defaults).reduce((els, elKey) => {
+      els[elKey] = { ...defaults[elKey], ...saved[elKey] };
+      return els;
+    }, {} as ThemeConfig['sections'][SectionKey]['elements']);
+    acc[key] = { elements };
+    return acc;
+  }, {} as ThemeConfig['sections']);
+
+  return { ...DEFAULT_THEME, ...partial, sections };
 }
 
 function isBilingualValue(node: unknown): node is { ka: string; en: string } {
@@ -104,7 +135,7 @@ export async function getSiteContent(): Promise<ServiceResult<SiteContentPayload
   return {
     data: {
       content: normalizeContent(doc.content as SiteContent),
-      theme: doc.theme,
+      theme: normalizeTheme(doc.theme),
       visibility: doc.visibility,
     },
     status: 200,

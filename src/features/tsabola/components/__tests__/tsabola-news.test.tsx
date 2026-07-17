@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('TsabolaNews', () => {
   it('renders section title', () => {
     render(<TsabolaNews />)
-    expect(screen.getByText('სიახლეები')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'ჩვენი ამბები' })).toBeInTheDocument()
   })
 
   it('renders an All News link to the news page', () => {

@@ -7,9 +7,9 @@ import { useLanguageStore } from '../../store/language-store'
 import { TsabolaHero } from '../tsabola-hero'
 
 const HERO_IMAGES = [
-  { src: '/hero/one.jpg', positionMobile: 'top' as const, positionDesktop: 'center' as const },
-  { src: '/hero/two.jpg', positionMobile: 'bottom' as const, positionDesktop: 'top' as const },
-  { src: '', positionMobile: 'center' as const, positionDesktop: 'center' as const },
+  { src: '/hero/one.jpg', positionMobile: 'top' as const, positionDesktop: 'center' as const, size: 'md' as const },
+  { src: '/hero/two.jpg', positionMobile: 'bottom' as const, positionDesktop: 'top' as const, size: 'lg' as const },
+  { src: '', positionMobile: 'center' as const, positionDesktop: 'center' as const, size: 'md' as const },
 ]
 
 beforeEach(() => {
@@ -36,11 +36,18 @@ describe('TsabolaHero', () => {
     expect(images[1].className).toContain('sm:object-top')
   })
 
-  it('wraps the headline on mobile instead of clipping it', () => {
+  it("applies each image's size scale class", () => {
+    const { container } = render(<TsabolaHero />)
+    const images = container.querySelectorAll('img')
+    expect(images[0].className).toContain('scale-100')
+    expect(images[1].className).toContain('scale-110')
+  })
+
+  it('wraps the headline instead of clipping it', () => {
     render(<TsabolaHero />)
     const headline = screen.getByRole('heading', { level: 1 })
     expect(headline.className.split(' ')).not.toContain('whitespace-nowrap')
-    expect(headline.className).toContain('sm:whitespace-nowrap')
+    expect(headline.className).toContain('text-balance')
   })
 
   it('opens the lightbox when the hero image is clicked', () => {
