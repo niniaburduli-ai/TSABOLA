@@ -1,7 +1,7 @@
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
 import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '@/features/tsabola/content/site-content';
 import { siteContentRepository } from '@/features/tsabola/repository/site-content.repository';
-import type { NewsItem, SiteContent } from '@/features/tsabola/types';
+import type { HeroImage, NewsItem, SiteContent } from '@/features/tsabola/types';
 import { ServiceResult, TranslationMemory } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
 import { slugify } from '@/shared/utils/slugify';
@@ -15,8 +15,19 @@ function normalizeNewsItem(item: NewsItem): NewsItem {
   return { ...item, slug: item.slug || fallbackSlug, published: item.published ?? true };
 }
 
+function normalizeHeroImage(image: unknown): HeroImage {
+  if (typeof image === 'string') {
+    return { src: image, positionMobile: 'top', positionDesktop: 'top' };
+  }
+  return image as HeroImage;
+}
+
 function normalizeContent(content: SiteContent): SiteContent {
-  return { ...content, news: { ...content.news, items: content.news.items.map(normalizeNewsItem) } };
+  return {
+    ...content,
+    hero: { ...content.hero, images: content.hero.images.map(normalizeHeroImage) },
+    news: { ...content.news, items: content.news.items.map(normalizeNewsItem) },
+  };
 }
 
 function isBilingualValue(node: unknown): node is { ka: string; en: string } {

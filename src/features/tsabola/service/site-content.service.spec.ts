@@ -15,9 +15,11 @@ vi.mock('@/shared/utils/resolve-bilingual-field', () => ({
 
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
 import { siteContentRepository } from '@/features/tsabola/repository/site-content.repository';
+import type { SiteContentDocument } from '@/features/tsabola/schema/site-content.schema';
+import type { SiteContent } from '@/features/tsabola/types';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
 
-import { saveSiteContent } from './site-content.service';
+import { getSiteContent, saveSiteContent } from './site-content.service';
 
 describe('saveSiteContent', () => {
   beforeEach(() => {
@@ -59,5 +61,44 @@ describe('saveSiteContent', () => {
     });
 
     expect(enqueueTranslation).not.toHaveBeenCalled();
+  });
+});
+
+describe('getSiteContent', () => {
+  beforeEach(() => {
+    vi.mocked(siteContentRepository.findOne).mockReset();
+  });
+
+  const baseContent = {
+    hero: { headline: { ka: '', en: '' }, subline: { ka: '', en: '' }, cta: { ka: '', en: '' }, images: [] as unknown[] },
+    news: { title: { ka: '', en: '' }, subtitle: { ka: '', en: '' }, items: [] },
+  };
+
+  it('migrates legacy string hero images to objects defaulting to top/top', async () => {
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, hero: { ...baseContent.hero, images: ['/a.jpg', '/b.jpg'] } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
+      { src: '/a.jpg', positionMobile: 'top', positionDesktop: 'top' },
+      { src: '/b.jpg', positionMobile: 'top', positionDesktop: 'top' },
+    ]);
+  });
+
+  it('leaves already-migrated hero image objects untouched', async () => {
+    const images = [{ src: '/a.jpg', positionMobile: 'center', positionDesktop: 'bottom' }];
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, hero: { ...baseContent.hero, images } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    expect((result.data as { content: SiteContent }).content.hero.images).toEqual(images);
   });
 });
