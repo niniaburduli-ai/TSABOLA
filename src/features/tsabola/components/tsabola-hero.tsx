@@ -1,32 +1,54 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
 
+import type { HeroImage, HeroImagePosition } from '../types'
+
 const SLIDE_DURATION = 6000
+
+const FALLBACK_IMAGES: HeroImage[] = [
+  { src: '/TSABO WHITE.png', positionMobile: 'center', positionDesktop: 'center' },
+  { src: '/TSABO RED.png', positionMobile: 'center', positionDesktop: 'center' },
+]
+
+const MOBILE_POSITION_CLASS: Record<HeroImagePosition, string> = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}
+
+const DESKTOP_POSITION_CLASS: Record<HeroImagePosition, string> = {
+  top: 'sm:object-top',
+  center: 'sm:object-center',
+  bottom: 'sm:object-bottom',
+}
 
 export function TsabolaHero() {
   const { t, r } = useLang()
   const [active, setActive] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
-  const images = (() => {
-    const filtered = (t.hero.images ?? []).filter(Boolean)
-    return filtered.length >= 1 ? filtered : ['/TSABO WHITE.png', '/TSABO RED.png']
+  const images: HeroImage[] = (() => {
+    const filtered = (t.hero.images ?? []).filter((image): image is HeroImage => Boolean(image?.src))
+    return filtered.length >= 1 ? filtered : FALLBACK_IMAGES
   })()
 
   useEffect(() => {
+    if (lightboxOpen) return
     const id = setInterval(() => {
       setActive(prev => (prev + 1) % images.length)
     }, SLIDE_DURATION)
     return () => clearInterval(id)
-  }, [images.length])
+  }, [images.length, lightboxOpen])
 
   return (
     <section id="hero" className="relative w-full h-80 sm:h-hero overflow-hidden bg-charcoal">
       {/* Image slides — crossfade */}
-      {images.map((src, i) => (
+      {images.map((image, i) => (
         <div
           key={i}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
@@ -34,15 +56,23 @@ export function TsabolaHero() {
           }`}
         >
           <Image
-            src={src}
+            src={image.src}
             alt=""
             fill
             priority={i === 0}
             sizes="100vw"
-            className="object-cover hero-img-pos"
+            className={`object-cover ${MOBILE_POSITION_CLASS[image.positionMobile]} ${DESKTOP_POSITION_CLASS[image.positionDesktop]}`}
           />
         </div>
       ))}
+
+      {/* Click-to-expand overlay for the currently visible slide */}
+      <button
+        type="button"
+        onClick={() => setLightboxOpen(true)}
+        aria-label="ფოტოს სრულად ნახვა"
+        className="absolute inset-0 cursor-zoom-in"
+      />
 
       {/* Bottom vignette */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
@@ -52,7 +82,13 @@ export function TsabolaHero() {
         <p className="animate-rise text-cream/50 text-sm tracking-widest uppercase mb-2 font-heading">
           {r(t.site.name)}
         </p>
-        <h1 className="animate-rise animate-rise-1 text-cream text-base sm:text-lg font-heading font-semibold leading-snug mb-1 whitespace-nowrap">
+        <h1
+          className={[
+            'animate-rise animate-rise-1 text-cream text-base sm:text-lg',
+            'font-heading font-semibold leading-snug mb-1',
+            'max-w-xs text-balance sm:max-w-none sm:whitespace-nowrap',
+          ].join(' ')}
+        >
           {r(t.hero.headline)}
         </h1>
         <p className="animate-rise animate-rise-2 text-cream/55 text-xs font-sans leading-relaxed mb-4 max-w-xs">
@@ -106,6 +142,16 @@ export function TsabolaHero() {
           />
         </svg>
       </a>
+
+      {lightboxOpen && (
+        <TsabolaLightbox
+          images={images.map(image => image.src)}
+          index={active}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={() => setActive(prev => (prev - 1 + images.length) % images.length)}
+          onNext={() => setActive(prev => (prev + 1) % images.length)}
+        />
+      )}
     </section>
   )
 }

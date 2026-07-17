@@ -234,16 +234,6 @@
   .gallery-carousel-dur-9 { animation-duration: 72s; }
   .gallery-carousel-dur-10 { animation-duration: 80s; }
 
-  /* Hero image positioning — frames basket/table foreground */
-  .hero-img-pos {
-    object-position: center 40%;
-  }
-  @media (max-width: 768px) {
-    .hero-img-pos {
-      object-position: center 35%;
-    }
-  }
-
   /* Admin-controlled heading size scale */
   /* Compound selectors (.heading-lg h1) have specificity 0,1,1 vs Tailwind's */
   /* single-class utilities (.text-5xl) at 0,1,0 — compound wins */
