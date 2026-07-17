@@ -19,7 +19,12 @@ function normalizeHeroImage(image: unknown): HeroImage {
   if (typeof image === 'string') {
     return { src: image, positionMobile: 'top', positionDesktop: 'top' };
   }
-  return image as HeroImage;
+  const partial = image as Partial<HeroImage>;
+  return {
+    src: partial.src ?? '',
+    positionMobile: partial.positionMobile ?? 'top',
+    positionDesktop: partial.positionDesktop ?? 'top',
+  };
 }
 
 function normalizeContent(content: SiteContent): SiteContent {
