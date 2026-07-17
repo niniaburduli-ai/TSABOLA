@@ -1,10 +1,11 @@
 import { Cormorant_Garamond, Geist_Mono, Inter, Lora, Playfair_Display, Poppins, Raleway, Space_Grotesk } from 'next/font/google';
 import { type ReactNode } from 'react';
 
+import { PwaRegister } from '@/shared/components/pwa-register';
 import { APP_DESCRIPTION, APP_NAME } from '@/shared/const/app.const';
 import { ThemeProvider } from '@/shared/providers/theme-provider';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import './globals.css';
 
@@ -58,6 +59,15 @@ const raleway = Raleway({
 export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_DESCRIPTION,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: APP_NAME,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#722f37',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -74,6 +84,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>{children}</ThemeProvider>
+        <PwaRegister />
       </body>
     </html>
   );

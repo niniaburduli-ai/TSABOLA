@@ -24,7 +24,7 @@ export function TsabolaHero() {
   }, [images.length])
 
   return (
-    <section id="hero" className="relative w-full h-96 sm:h-screen overflow-hidden bg-charcoal">
+    <section id="hero" className="relative w-full h-80 sm:h-hero overflow-hidden bg-charcoal">
       {/* Image slides — crossfade */}
       {images.map((src, i) => (
         <div
