@@ -26,10 +26,18 @@ export type NewsItem = {
   image: string
 }
 
+export type HeroImagePosition = 'top' | 'center' | 'bottom'
+
+export type HeroImage = {
+  src: string
+  positionMobile: HeroImagePosition
+  positionDesktop: HeroImagePosition
+}
+
 export type SiteContent = {
   site: { name: L; slogan: L }
   nav: { wines: L; gallery: L; about: L; contact: L; news: L }
-  hero: { headline: L; subline: L; cta: L; images: string[] }
+  hero: { headline: L; subline: L; cta: L; images: HeroImage[] }
   wines: WineItem[]
   news: { title: L; subtitle: L; items: NewsItem[] }
   gallery: { title: L; subtitle: L; images: string[] }

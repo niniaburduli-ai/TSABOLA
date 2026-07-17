@@ -20,9 +20,9 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     cta: { ka: 'ღვინოები აღმოაჩინე', en: 'Discover Our Wines' },
     images: [
-      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
-      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
-      '',
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png', positionMobile: 'top', positionDesktop: 'center' },
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png', positionMobile: 'top', positionDesktop: 'center' },
+      { src: '', positionMobile: 'center', positionDesktop: 'center' },
     ],
   },
   wines: [
