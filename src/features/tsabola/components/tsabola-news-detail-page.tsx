@@ -7,13 +7,16 @@ import { TsabolaHeader } from './tsabola-header'
 import { TsabolaNewsArticle } from './tsabola-news-article'
 import { useLang } from '../hooks/use-lang'
 
+import type { NewsNavTarget } from './tsabola-news-article'
 import type { NewsItem } from '../types'
 
 type Props = {
   item: NewsItem
+  prev: NewsNavTarget | null
+  next: NewsNavTarget | null
 }
 
-export function TsabolaNewsDetailPage({ item }: Props) {
+export function TsabolaNewsDetailPage({ item, prev, next }: Props) {
   const { t, r } = useLang()
 
   return (
@@ -25,7 +28,7 @@ export function TsabolaNewsDetailPage({ item }: Props) {
             ← {r(t.nav.news)}
           </Link>
         </div>
-        <TsabolaNewsArticle item={item} />
+        <TsabolaNewsArticle item={item} prev={prev} next={next} />
       </main>
       <TsabolaFooter />
     </div>

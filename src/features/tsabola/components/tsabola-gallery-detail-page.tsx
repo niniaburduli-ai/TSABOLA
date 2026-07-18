@@ -9,11 +9,15 @@ import { TsabolaGalleryArticle } from './tsabola-gallery-article'
 import { TsabolaHeader } from './tsabola-header'
 import { useLang } from '../hooks/use-lang'
 
+import type { GalleryNavTarget } from './tsabola-gallery-article'
+
 type Props = {
   image: GalleryImage
+  prev: GalleryNavTarget | null
+  next: GalleryNavTarget | null
 }
 
-export function TsabolaGalleryDetailPage({ image }: Props) {
+export function TsabolaGalleryDetailPage({ image, prev, next }: Props) {
   const { t, r } = useLang()
 
   return (
@@ -25,7 +29,7 @@ export function TsabolaGalleryDetailPage({ image }: Props) {
             ← {r(t.nav.gallery)}
           </Link>
         </div>
-        <TsabolaGalleryArticle image={image} />
+        <TsabolaGalleryArticle image={image} prev={prev} next={next} />
       </main>
       <TsabolaFooter />
     </div>
