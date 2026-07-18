@@ -95,7 +95,7 @@ export function TsabolaGallery({ initialImages }: Props) {
           <div className="overflow-hidden">
             <div className={`flex gap-2 w-max animate-gallery-scroll ${durationClass}`}>
               {[...publishedImages, ...publishedImages].map((image, i) => (
-                <div key={`${image._id}-${i}`} className="flex-shrink-0 w-48 sm:w-56">
+                <div key={`${image._id}-${i}`} className="flex-shrink-0 w-64 sm:w-80">
                   <TsabolaGalleryCard image={image} />
                 </div>
               ))}
