@@ -24,25 +24,32 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function TsabolaContact() {
   const { t, r } = useLang()
-  const eyebrowRef = useTextStyle<HTMLParagraphElement>('contact', 'eyebrow')
-  const headingRef = useTextStyle<HTMLHeadingElement>('contact', 'heading')
-  const valueRef = useTextStyle<HTMLSpanElement>('contact', 'value')
+  const eyebrowStyle = useTextStyle('contact', 'eyebrow')
+  const headingStyle = useTextStyle('contact', 'heading')
+  const valueStyle = useTextStyle('contact', 'value')
 
   return (
-    <section id="contact" className="relative w-full py-16 px-6 overflow-hidden bg-map-cream">
+    <section id="contact" className="relative w-full py-16 px-6 overflow-hidden bg-cream dark:bg-charcoal">
       <Image
-        src="https://res.cloudinary.com/dm8ksdiiq/image/upload/v1783260886/tsabola/contact/map.png"
+        src="https://res.cloudinary.com/dm8ksdiiq/image/upload/v1784495049/tsabola/contact/map-day.png"
         alt=""
         fill
         sizes="100vw"
-        className="object-contain object-center pointer-events-none"
+        className="object-contain object-center pointer-events-none dark:hidden"
+      />
+      <Image
+        src="https://res.cloudinary.com/dm8ksdiiq/image/upload/v1784495068/tsabola/contact/map-night.png"
+        alt=""
+        fill
+        sizes="100vw"
+        className="hidden object-contain object-center pointer-events-none dark:block"
       />
 
       <div className="relative z-10 max-w-xl mx-auto text-center">
-        <p ref={eyebrowRef} className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">
+        <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
           {r(t.contact.subtitle)}
         </p>
-        <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-8">
+        <h2 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${headingStyle.className}`}>
           {r(t.contact.title)}
         </h2>
         <div className="w-12 h-0.5 bg-wine mx-auto mb-12" />
@@ -50,37 +57,37 @@ export function TsabolaContact() {
         <div className="flex flex-col gap-6">
           <a
             href={`tel:${t.contact.phone}`}
-            className="flex items-center gap-3 justify-center text-charcoal/70 hover:text-wine transition-colors"
+            className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <Phone className="size-4 text-wine flex-shrink-0" />
-            <span ref={valueRef}>{t.contact.phone}</span>
+            <span style={valueStyle.style} className={valueStyle.className}>{t.contact.phone}</span>
           </a>
           <a
             href={`https://wa.me/${t.contact.whatsapp.replace(/\D/g, '')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 justify-center text-charcoal/70 hover:text-wine transition-colors"
+            className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <WhatsAppIcon className="size-4 text-wine flex-shrink-0" />
-            <span ref={valueRef}>{t.contact.phone}</span>
+            <span style={valueStyle.style} className={valueStyle.className}>{t.contact.phone}</span>
           </a>
           <a
             href={`https://mail.google.com/mail/?view=cm&to=${t.contact.email}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 justify-center text-charcoal/70 hover:text-wine transition-colors"
+            className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <Mail className="size-4 text-wine flex-shrink-0" />
-            <span ref={valueRef}>{t.contact.email}</span>
+            <span style={valueStyle.style} className={valueStyle.className}>{t.contact.email}</span>
           </a>
           <a
             href="https://www.google.com/maps/search/?api=1&query=Zemo+Khandaki,+Kaspi,+Shida+Kartli,+Georgia"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 justify-center text-charcoal/70 hover:text-wine transition-colors"
+            className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <MapPin className="size-4 text-wine flex-shrink-0" />
-            <span ref={valueRef}>{r(t.contact.address)}</span>
+            <span style={valueStyle.style} className={valueStyle.className}>{r(t.contact.address)}</span>
           </a>
         </div>
       </div>

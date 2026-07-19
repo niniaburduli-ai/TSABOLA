@@ -22,11 +22,11 @@ const FALLBACK_IMAGES: HeroImage[] = [
 
 export function TsabolaHero() {
   const { t, r } = useLang()
-  const siteNameRef = useTextStyle<HTMLParagraphElement>('hero', 'siteName')
-  const sloganRef = useTextStyle<HTMLParagraphElement>('hero', 'slogan')
-  const headlineRef = useTextStyle<HTMLHeadingElement>('hero', 'headline')
-  const sublineRef = useTextStyle<HTMLParagraphElement>('hero', 'subline')
-  const ctaRef = useTextStyle<HTMLAnchorElement>('hero', 'cta')
+  const siteNameStyle = useTextStyle('hero', 'siteName')
+  const sloganStyle = useTextStyle('hero', 'slogan')
+  const headlineStyle = useTextStyle('hero', 'headline')
+  const sublineStyle = useTextStyle('hero', 'subline')
+  const ctaStyle = useTextStyle('hero', 'cta')
   const siteName = r(t.site.name)
   const headline = r(t.hero.headline)
   const [active, setActive] = useState(0)
@@ -87,53 +87,63 @@ export function TsabolaHero() {
 
       {/* Text content — bottom center, compact */}
       <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6 pointer-events-none">
-        <p
-          ref={siteNameRef}
-          aria-label={siteName}
-          className="animate-rise text-cream text-2xl sm:text-3xl tracking-widest uppercase mb-1 font-heading font-bold"
-        >
-          <span aria-hidden="true">
-            {siteNameTyped.display}
-            <span
-              className={[
-                'inline-block w-px h-6 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
-                siteNameTyped.typing ? 'animate-pulse' : 'opacity-0',
-              ].join(' ')}
-            />
-          </span>
-        </p>
-        <p ref={sloganRef} className="animate-rise text-cream/60 text-base tracking-wide uppercase mb-3 font-sans">
-          {r(t.site.slogan)}
-        </p>
+        <div className="flex flex-col items-center mb-1 max-w-full">
+          <p
+            style={siteNameStyle.style}
+            aria-label={siteName}
+            className={`animate-rise text-cream tracking-widest uppercase font-heading font-bold whitespace-nowrap mb-1 ${siteNameStyle.className}`}
+          >
+            <span aria-hidden="true">
+              {siteNameTyped.display}
+              <span
+                className={[
+                  'inline-block w-px h-4 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
+                  siteNameTyped.typing ? 'animate-pulse' : 'opacity-0',
+                ].join(' ')}
+              />
+            </span>
+          </p>
+          <p
+            style={sloganStyle.style}
+            className={`animate-rise text-cream/60 tracking-wide uppercase font-sans whitespace-nowrap truncate mb-3 ${sloganStyle.className}`}
+          >
+            {r(t.site.slogan)}
+          </p>
+        </div>
         <h1
-          ref={headlineRef}
+          style={headlineStyle.style}
           aria-label={headline}
           className={[
-            'animate-rise animate-rise-1 text-cream text-2xl sm:text-3xl',
+            'animate-rise animate-rise-1 text-cream',
             'font-heading font-bold leading-snug mb-1',
-            'max-w-2xl text-balance',
+            'max-w-full sm:max-w-2xl whitespace-normal sm:whitespace-nowrap text-balance',
+            headlineStyle.className,
           ].join(' ')}
         >
           <span aria-hidden="true">
             {headlineTyped.display}
             <span
               className={[
-                'inline-block w-px h-6 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
+                'inline-block w-px h-5 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
                 headlineTyped.typing ? 'animate-pulse' : 'opacity-0',
               ].join(' ')}
             />
           </span>
         </h1>
-        <p ref={sublineRef} className="animate-rise animate-rise-2 text-cream/55 text-base font-sans leading-relaxed mb-4 max-w-xs">
+        <p
+          style={sublineStyle.style}
+          className={`animate-rise animate-rise-2 text-cream/55 font-sans leading-relaxed mb-4 max-w-xs ${sublineStyle.className}`}
+        >
           {r(t.hero.subline)}
         </p>
         <a
-          ref={ctaRef}
+          style={ctaStyle.style}
           href="#wines"
           className={[
             'hero-cta animate-rise animate-rise-3 px-5 py-2 border border-cream/35',
-            'text-cream text-base font-heading tracking-wide pointer-events-auto',
+            'text-cream font-heading tracking-wide pointer-events-auto',
             'hover:bg-cream transition-colors duration-300',
+            ctaStyle.className,
           ].join(' ')}
         >
           {r(t.hero.cta)}

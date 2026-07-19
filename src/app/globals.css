@@ -51,7 +51,6 @@
   --color-charcoal: #1a1a1a;
   --color-cream: #faf8f5;
   --color-border-wine: #e8e0d8;
-  --color-map-cream: #f2eae0;
   --font-display: var(--font-display);
   --animate-hero-scroll: hero-scroll 24s linear infinite;
 }
@@ -198,6 +197,20 @@
 }
 
 @layer utilities {
+  /* Admin-configurable text size, mobile vs desktop. A pure CSS media query (not a JS
+     matchMedia hook) so the correct size paints on the very first frame — no post-hydration
+     flip once the browser learns the real viewport width. The --ts-fs-* custom properties are
+     set inline by useTextStyle during render (server + client), not via a ref, so the correct
+     value is already in the server-rendered HTML — no flash from a fallback size to this one. */
+  .ts-responsive-text {
+    font-size: var(--ts-fs-mobile) !important;
+  }
+  @media (min-width: 640px) {
+    .ts-responsive-text {
+      font-size: var(--ts-fs-desktop) !important;
+    }
+  }
+
   .animate-hero-scroll {
     will-change: transform;
   }

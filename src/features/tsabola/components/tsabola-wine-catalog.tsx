@@ -11,8 +11,8 @@ import type { WineItem } from '../types'
 
 export function TsabolaWineCatalog() {
   const { t, lang, r } = useLang()
-  const eyebrowRef = useTextStyle<HTMLParagraphElement>('wines', 'eyebrow')
-  const headingRef = useTextStyle<HTMLHeadingElement>('wines', 'heading')
+  const eyebrowStyle = useTextStyle('wines', 'eyebrow')
+  const headingStyle = useTextStyle('wines', 'heading')
   const [activeWine, setActiveWine] = useState<WineItem | null>(null)
   const handleClose = useCallback(() => setActiveWine(null), [])
 
@@ -20,10 +20,10 @@ export function TsabolaWineCatalog() {
     <section id="wines" className="bg-cream dark:bg-charcoal py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <p ref={eyebrowRef} className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">
+          <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
             {r(t.wines.subtitle)}
           </p>
-          <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream">
+          <h2 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>
             {r(t.wines.title)}
           </h2>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />

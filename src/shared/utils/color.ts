@@ -50,12 +50,26 @@ function hslToHex(h: number, s: number, l: number): string {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`
 }
 
-// Flips a hex color's lightness (keeping hue/saturation) so admin-picked text colors
-// tuned for a light background stay readable once that background goes dark, and vice versa.
-export function invertLightnessForDarkMode(hex: string): string {
-  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex
-  const { h, s, l } = hexToHsl(hex)
-  return hslToHex(h, s, 100 - l)
+// Flips a color's lightness (keeping hue/saturation) so admin-picked text colors tuned
+// for a light background stay readable once that background goes dark, and vice versa.
+// Muted/soft roles arrive here as `rgba(r, g, b, a)` (see hexToRgba) rather than hex, so
+// both formats must be handled or dark-mode inversion silently no-ops for those roles.
+export function invertLightnessForDarkMode(color: string): string {
+  if (/^#[0-9a-fA-F]{6}$/.test(color)) {
+    const { h, s, l } = hexToHsl(color)
+    return hslToHex(h, s, 100 - l)
+  }
+
+  const rgbaMatch = color.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/)
+  if (rgbaMatch) {
+    const [, r, g, b, a] = rgbaMatch
+    const hex = `#${[r, g, b].map((v) => Number(v).toString(16).padStart(2, '0')).join('')}`
+    const { h, s, l } = hexToHsl(hex)
+    const inverted = hslToHex(h, s, 100 - l)
+    return hexToRgba(inverted, Number(a))
+  }
+
+  return color
 }
 
 // Muted/soft text-element roles are expressed as the theme's base color at reduced opacity

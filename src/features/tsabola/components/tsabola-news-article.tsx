@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
 import { useTextStyle } from '../hooks/use-text-style'
 
@@ -23,11 +24,11 @@ type Props = {
 export function TsabolaNewsArticle({ item, prev, next }: Props) {
   const { r } = useLang()
   const router = useRouter()
-  const dateRef = useTextStyle<HTMLParagraphElement>('news', 'cardDate')
-  const titleRef = useTextStyle<HTMLHeadingElement>('news', 'articleTitle')
-  const bodyRef = useTextStyle<HTMLParagraphElement>('news', 'articleBody')
-  const navLabelRef = useTextStyle<HTMLSpanElement>('news', 'cardDate')
-  const navTitleRef = useTextStyle<HTMLSpanElement>('news', 'cardBody')
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const dateStyle = useTextStyle('news', 'cardDate')
+  const titleStyle = useTextStyle('news', 'articleTitle')
+  const bodyStyle = useTextStyle('news', 'articleBody')
+  const navLabelStyle = useTextStyle('news', 'cardDate')
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -39,37 +40,56 @@ export function TsabolaNewsArticle({ item, prev, next }: Props) {
   }, [prev, next, router])
 
   return (
-    <article className="max-w-3xl mx-auto px-6 py-16">
-      <p ref={dateRef} className="text-xs uppercase tracking-widest text-wine mb-3">{r(item.date)}</p>
-      <h1 ref={titleRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">{r(item.title)}</h1>
+    <article className="max-w-4xl mx-auto px-6 py-16">
+      <p style={dateStyle.style} className={`uppercase tracking-widest text-wine mb-3 ${dateStyle.className}`}>{r(item.date)}</p>
+      <h1 style={titleStyle.style} className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${titleStyle.className}`}>{r(item.title)}</h1>
 
       {item.image && (
-        <div className="rounded overflow-hidden bg-charcoal/5 mb-10">
+        <button
+          type="button"
+          onClick={() => setLightboxOpen(true)}
+          aria-label="ფოტოს სრულად ნახვა"
+          className="block max-w-md mx-auto mb-10 cursor-zoom-in"
+        >
           <img src={item.image} alt={r(item.title)} className="w-full h-auto" />
-        </div>
+        </button>
       )}
 
-      <p ref={bodyRef} className="text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line">{r(item.body)}</p>
+      {lightboxOpen && (
+        <TsabolaLightbox
+          images={[item.image]}
+          index={0}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={() => {}}
+          onNext={() => {}}
+        />
+      )}
+
+      <p style={bodyStyle.style} className={`text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line ${bodyStyle.className}`}>{r(item.body)}</p>
 
       {(prev || next) && (
         <div className="flex items-center justify-between gap-4 mt-16 pt-8 border-t border-charcoal/10 dark:border-cream/10">
           {prev ? (
-            <Link href={`/news/${prev.slug}`} className="group flex flex-col text-left">
-              <span ref={navLabelRef} className="text-xs uppercase tracking-widest text-wine mb-1">← {r(PREV_LABEL)}</span>
-              <span ref={navTitleRef} className="text-sm text-charcoal/70 dark:text-cream/70 group-hover:text-wine transition-colors">
+            <div className="flex flex-col text-left">
+              <Link href={`/news/${prev.slug}`} className="mb-1 hover:opacity-70 transition-opacity">
+                <span style={navLabelStyle.style} className={`uppercase tracking-widest text-wine ${navLabelStyle.className}`}>← {r(PREV_LABEL)}</span>
+              </Link>
+              <span className="text-base font-semibold text-charcoal dark:text-cream">
                 {r(prev.title)}
               </span>
-            </Link>
+            </div>
           ) : (
             <span />
           )}
           {next ? (
-            <Link href={`/news/${next.slug}`} className="group flex flex-col text-right">
-              <span ref={navLabelRef} className="text-xs uppercase tracking-widest text-wine mb-1">{r(NEXT_LABEL)} →</span>
-              <span ref={navTitleRef} className="text-sm text-charcoal/70 dark:text-cream/70 group-hover:text-wine transition-colors">
+            <div className="flex flex-col text-right">
+              <Link href={`/news/${next.slug}`} className="mb-1 hover:opacity-70 transition-opacity">
+                <span style={navLabelStyle.style} className={`uppercase tracking-widest text-wine ${navLabelStyle.className}`}>{r(NEXT_LABEL)} →</span>
+              </Link>
+              <span className="text-base font-semibold text-charcoal dark:text-cream">
                 {r(next.title)}
               </span>
-            </Link>
+            </div>
           ) : (
             <span />
           )}

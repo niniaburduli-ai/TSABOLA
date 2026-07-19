@@ -6,7 +6,6 @@ import { useTheme } from 'next-themes'
 import { useSyncExternalStore } from 'react'
 
 import { useLang } from '../hooks/use-lang'
-import { useSiteContentSync } from '../hooks/use-site-content-sync'
 
 function subscribeNoop() {
   return () => {}
@@ -68,7 +67,6 @@ function UkFlagIcon() {
 }
 
 export function TsabolaHeader() {
-  useSiteContentSync()
   const { t, lang, setLang, r } = useLang()
   const { resolvedTheme, setTheme } = useTheme()
   const mounted = useSyncExternalStore(subscribeNoop, getClientSnapshot, getServerSnapshot)

@@ -14,7 +14,7 @@ type Props = {
 
 export function TsabolaGalleryCard({ image }: Props) {
   const { r } = useLang()
-  const captionRef = useTextStyle<HTMLParagraphElement>('gallery', 'caption')
+  const captionStyle = useTextStyle('gallery', 'caption')
   const caption = r(image.caption)
 
   return (
@@ -28,7 +28,10 @@ export function TsabolaGalleryCard({ image }: Props) {
       />
       <div className="absolute inset-0 bg-wine/0 group-hover:bg-wine/20 transition-colors duration-300" />
       {caption && (
-        <p ref={captionRef} className="absolute bottom-0 left-0 right-0 p-3 text-xs text-white bg-gradient-to-t from-black/70 to-transparent">
+        <p
+          style={captionStyle.style}
+          className={`absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 to-transparent ${captionStyle.className}`}
+        >
           {caption}
         </p>
       )}

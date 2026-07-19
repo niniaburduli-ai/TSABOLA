@@ -15,9 +15,9 @@ type Props = {
 
 export function TsabolaNewsCard({ item }: Props) {
   const { r } = useLang()
-  const dateRef = useTextStyle<HTMLParagraphElement>('news', 'cardDate')
-  const titleRef = useTextStyle<HTMLHeadingElement>('news', 'cardTitle')
-  const bodyRef = useTextStyle<HTMLParagraphElement>('news', 'cardBody')
+  const dateStyle = useTextStyle('news', 'cardDate')
+  const titleStyle = useTextStyle('news', 'cardTitle')
+  const bodyStyle = useTextStyle('news', 'cardBody')
 
   return (
     <Link
@@ -41,10 +41,15 @@ export function TsabolaNewsCard({ item }: Props) {
           <div className="w-full h-full bg-gradient-to-br from-wine/15 via-cream to-charcoal/20" />
         )}
       </div>
-      <div className="flex flex-col flex-1 p-5 space-y-2">
-        <p ref={dateRef} className="text-xs uppercase tracking-widest text-wine">{r(item.date)}</p>
-        <h3 ref={titleRef} className="font-display font-bold text-charcoal dark:text-cream line-clamp-2">{r(item.title)}</h3>
-        <p ref={bodyRef} className="text-sm text-charcoal/70 dark:text-cream/70 line-clamp-2 flex-1">{r(item.body)}</p>
+      <div className="flex flex-col flex-1 p-6 space-y-3">
+        <p style={dateStyle.style} className={`uppercase tracking-widest text-wine ${dateStyle.className}`}>{r(item.date)}</p>
+        <h3
+          style={titleStyle.style}
+          className={`font-display font-bold text-charcoal dark:text-cream line-clamp-2 ${titleStyle.className}`}
+        >
+          {r(item.title)}
+        </h3>
+        <p style={bodyStyle.style} className={`text-charcoal/70 dark:text-cream/70 line-clamp-3 flex-1 ${bodyStyle.className}`}>{r(item.body)}</p>
       </div>
     </Link>
   )

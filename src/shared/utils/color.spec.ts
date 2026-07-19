@@ -19,4 +19,8 @@ describe('invertLightnessForDarkMode', () => {
   it('returns the input unchanged for a non-hex value', () => {
     expect(invertLightnessForDarkMode('not-a-color')).toBe('not-a-color');
   });
+
+  it('inverts an rgba() muted-role color while preserving alpha', () => {
+    expect(invertLightnessForDarkMode('rgba(26, 26, 26, 0.65)')).toBe('rgba(229, 229, 229, 0.65)');
+  });
 });

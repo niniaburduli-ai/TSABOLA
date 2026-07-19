@@ -17,10 +17,10 @@ type Props = {
 
 export function TsabolaWineCard({ item, lang, onOpen }: Props) {
   const discount = getWineDiscount(item.price, item.discountPrice)
-  const badgeRef = useTextStyle<HTMLSpanElement>('wines', 'badge')
-  const nameRef = useTextStyle<HTMLHeadingElement>('wines', 'name')
-  const detailsRef = useTextStyle<HTMLParagraphElement>('wines', 'details')
-  const priceRef = useTextStyle<HTMLParagraphElement>('wines', 'price')
+  const badgeStyle = useTextStyle('wines', 'badge')
+  const nameStyle = useTextStyle('wines', 'name')
+  const detailsStyle = useTextStyle('wines', 'details')
+  const priceStyle = useTextStyle('wines', 'price')
 
   return (
     <article
@@ -59,14 +59,17 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
       )}
 
       <div className="p-6 flex flex-col justify-center gap-3 flex-1 sm:order-1 sm:w-3/5">
-        <span ref={badgeRef} className="inline-block self-start px-3 py-1 text-sm font-semibold tracking-widest uppercase border border-wine/40 text-wine">
+        <span
+          style={badgeStyle.style}
+          className={`inline-block self-start px-3 py-1 font-semibold tracking-widest uppercase border border-wine/40 text-wine ${badgeStyle.className}`}
+        >
           {r(item.typeBadge, lang)}
         </span>
-        <h3 ref={nameRef} className="font-display text-2xl font-bold text-charcoal dark:text-cream">{r(item.name, lang)}</h3>
+        <h3 style={nameStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}>{r(item.name, lang)}</h3>
         {item.details && (
           <div className="border-t border-wine/10 pt-3">
             {r(item.details, lang).split('\n').map((line, i) => (
-              <p key={i} ref={detailsRef} className="text-xs text-charcoal/50 dark:text-cream/50 leading-relaxed">
+              <p key={i} style={detailsStyle.style} className={`text-charcoal/50 dark:text-cream/50 leading-relaxed ${detailsStyle.className}`}>
                 {line}
               </p>
             ))}
@@ -85,7 +88,7 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
             </span>
           </div>
         ) : (
-          <p ref={priceRef} className="font-display text-xl font-bold text-wine">
+          <p style={priceStyle.style} className={`font-display font-bold text-wine ${priceStyle.className}`}>
             {formatWinePrice(item.price)}
           </p>
         )}

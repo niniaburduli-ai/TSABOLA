@@ -3,7 +3,6 @@ import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '@/features/t
 import { siteContentRepository } from '@/features/tsabola/repository/site-content.repository';
 import type { HeroImage, HeroPosition, NewsItem, SectionKey, SiteContent, ThemeConfig, WineItem } from '@/features/tsabola/types';
 import { DEFAULT_HERO_POSITION, LEGACY_HERO_POSITION } from '@/shared/const/hero-image.const';
-import { stripLegacyElementDefaults } from '@/shared/const/site-section-elements.const';
 import { SITE_SECTION_KEYS } from '@/shared/const/site-section.const';
 import { ServiceResult, TranslationMemory } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
@@ -111,8 +110,7 @@ function normalizeTheme(theme: unknown): ThemeConfig {
     const defaults = DEFAULT_THEME.sections[key].elements;
     const saved = partial.sections?.[key]?.elements ?? {};
     const elements = Object.keys(defaults).reduce((els, elKey) => {
-      const migrated = stripLegacyElementDefaults(key, elKey, saved[elKey] ?? {});
-      els[elKey] = { ...defaults[elKey], ...migrated };
+      els[elKey] = { ...defaults[elKey], ...(saved[elKey] ?? {}) };
       return els;
     }, {} as ThemeConfig['sections'][SectionKey]['elements']);
     acc[key] = { elements };

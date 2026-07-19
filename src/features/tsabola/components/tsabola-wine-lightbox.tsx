@@ -16,11 +16,11 @@ type Props = {
 }
 
 export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
-  const badgeRef = useTextStyle<HTMLSpanElement>('wines', 'badge')
-  const nameRef = useTextStyle<HTMLHeadingElement>('wines', 'lightboxName')
-  const detailsRef = useTextStyle<HTMLParagraphElement>('wines', 'details')
-  const longDescriptionRef = useTextStyle<HTMLParagraphElement>('wines', 'longDescription')
-  const metaRef = useTextStyle<HTMLSpanElement>('wines', 'meta')
+  const badgeStyle = useTextStyle('wines', 'badge')
+  const nameStyle = useTextStyle('wines', 'lightboxName')
+  const detailsStyle = useTextStyle('wines', 'details')
+  const longDescriptionStyle = useTextStyle('wines', 'longDescription')
+  const metaStyle = useTextStyle('wines', 'meta')
 
   useEffect(() => {
     if (!open) return
@@ -81,11 +81,14 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
           </div>
 
           <div className="md:w-3/5 p-8 flex flex-col gap-4">
-            <span ref={badgeRef} className="inline-block self-start px-3 py-1 text-sm font-semibold tracking-widest uppercase border border-wine/40 text-wine">
+            <span
+              style={badgeStyle.style}
+              className={`inline-block self-start px-3 py-1 font-semibold tracking-widest uppercase border border-wine/40 text-wine ${badgeStyle.className}`}
+            >
               {r(wine.typeBadge, lang)}
             </span>
 
-            <h2 ref={nameRef} className="font-display text-3xl font-bold text-charcoal dark:text-cream">
+            <h2 style={nameStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}>
               {r(wine.name, lang)}
             </h2>
 
@@ -94,7 +97,11 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
             {wine.details && (
               <div className="flex flex-col gap-1">
                 {r(wine.details, lang).split('\n').map((line, i) => (
-                  <p key={i} ref={detailsRef} className="text-xs text-charcoal/60 dark:text-cream/60 tracking-wide">
+                  <p
+                    key={i}
+                    style={detailsStyle.style}
+                    className={`text-charcoal/60 dark:text-cream/60 tracking-wide ${detailsStyle.className}`}
+                  >
                     {line}
                   </p>
                 ))}
@@ -102,7 +109,10 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
             )}
 
             {wine.longDescription && (
-              <p ref={longDescriptionRef} className="text-sm text-charcoal/70 dark:text-cream/70 leading-relaxed italic">
+              <p
+                style={longDescriptionStyle.style}
+                className={`text-charcoal/70 dark:text-cream/70 leading-relaxed italic ${longDescriptionStyle.className}`}
+              >
                 {r(wine.longDescription, lang)}
               </p>
             )}
@@ -114,7 +124,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                     <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'მიირთვით' : 'Serve'}
                     </span>
-                    <span ref={metaRef} className="text-sm font-semibold text-charcoal dark:text-cream">{wine.serveTemp}</span>
+                    <span style={metaStyle.style} className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}>{wine.serveTemp}</span>
                   </div>
                 )}
                 {wine.alcohol && (
@@ -122,7 +132,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                     <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'ალკ' : 'Alc'}
                     </span>
-                    <span ref={metaRef} className="text-sm font-semibold text-charcoal dark:text-cream">{wine.alcohol}</span>
+                    <span style={metaStyle.style} className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}>{wine.alcohol}</span>
                   </div>
                 )}
                 {wine.volume && (
@@ -130,7 +140,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                     <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'მოცულობა' : 'Volume'}
                     </span>
-                    <span ref={metaRef} className="text-sm font-semibold text-charcoal dark:text-cream">{wine.volume}</span>
+                    <span style={metaStyle.style} className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}>{wine.volume}</span>
                   </div>
                 )}
               </div>

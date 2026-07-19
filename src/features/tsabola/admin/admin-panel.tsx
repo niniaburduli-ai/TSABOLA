@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { AdminHeader } from './admin-header'
 import { AdminSidebar } from './admin-sidebar'
@@ -16,7 +16,9 @@ import { ExportReset } from './export-reset'
 import { SectionStyleEditor } from './section-style-editor'
 import { ThemeEditor } from './theme-editor'
 import { VisibilityEditor } from './visibility-editor'
-import { useSiteContentSync } from '../hooks/use-site-content-sync'
+import { useContentStore } from '../store/content-store'
+
+import type { SectionVisibility, SiteContent, ThemeConfig } from '../types'
 
 const EDITOR_MAP: Record<string, React.ComponentType> = {
   site: SiteEditor,
@@ -34,8 +36,19 @@ const EDITOR_MAP: Record<string, React.ComponentType> = {
   reset: ExportReset,
 }
 
-export function AdminPanel() {
-  useSiteContentSync()
+type Props = {
+  initialContent: SiteContent
+  initialTheme: ThemeConfig
+  initialVisibility: SectionVisibility
+}
+
+export function AdminPanel({ initialContent, initialTheme, initialVisibility }: Props) {
+  const hydrated = useRef(false)
+  if (!hydrated.current) {
+    useContentStore.setState({ content: initialContent, theme: initialTheme, visibility: initialVisibility })
+    hydrated.current = true
+  }
+
   const [active, setActive] = useState('site')
   const Editor = EDITOR_MAP[active] ?? SiteEditor
 

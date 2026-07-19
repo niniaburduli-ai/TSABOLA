@@ -106,7 +106,7 @@ export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>
   news: {
     eyebrow: 0.75, heading: 3,
     cardDate: 0.75, cardTitle: 1, cardBody: 0.875,
-    articleTitle: 3, articleBody: 1,
+    articleTitle: 2.25, articleBody: 1,
   },
   gallery: {
     eyebrow: 0.75, heading: 3,
@@ -114,6 +114,15 @@ export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>
   },
   about: { eyebrow: 1, heading: 3, body: 1 },
   contact: { eyebrow: 0.75, heading: 3, value: 1 },
+}
+
+// Per-element mobile override for SECTION_ELEMENT_BASE_REM — falls back to the desktop rem
+// when a section/key isn't listed here. Hero mobile hierarchy: siteName and headline match
+// each other (the two "voices" of the hero) and both shrink from their desktop size to fit a
+// ~340px column without wrapping past 2 lines; everything else (slogan/subline/cta) sits a
+// tier below siteName so the hierarchy stays readable at a glance.
+export const SECTION_ELEMENT_BASE_REM_MOBILE: Partial<Record<SectionKey, Record<string, number>>> = {
+  hero: { siteName: 1.25, slogan: 0.75, headline: 1.25, subline: 0.75, cta: 0.875 },
 }
 
 // Every element starts fully inherited from the global theme (no overrides) until an admin
@@ -130,47 +139,3 @@ export function buildDefaultSectionStyles(): Record<SectionKey, SectionStyle> {
   }, {} as Record<SectionKey, SectionStyle>)
 }
 
-// Pre-cascade builds always saved a concrete color/font/size for every element (there was no
-// "inherited" state yet). A saved field that still exactly matches that original hardcoded
-// literal is migrated back to "inherited" so sites saved before the Theme tab cascaded start
-// following it again; a field that differs was a real admin customization and is kept as-is.
-const LEGACY_ELEMENT_DEFAULT: Record<SectionKey, Record<string, { color: string; font: string; size: HeadingSizeScale }>> = {
-  hero: {
-    siteName: { color: '#faf8f5', font: '--font-space-grotesk', size: 'md' },
-    slogan: { color: '#c9c6c0', font: '--font-sans', size: 'md' },
-    headline: { color: '#faf8f5', font: '--font-space-grotesk', size: 'md' },
-    subline: { color: '#bdbab4', font: '--font-sans', size: 'md' },
-    cta: { color: '#faf8f5', font: '--font-space-grotesk', size: 'md' },
-  },
-  wines: {
-    eyebrow: { color: '#722F37', font: '--font-sans', size: 'md' },
-    heading: { color: '#1a1a1a', font: '--font-display', size: 'md' },
-  },
-  news: {
-    eyebrow: { color: '#722F37', font: '--font-sans', size: 'md' },
-    heading: { color: '#1a1a1a', font: '--font-display', size: 'md' },
-  },
-  gallery: {
-    eyebrow: { color: '#722F37', font: '--font-sans', size: 'md' },
-    heading: { color: '#1a1a1a', font: '--font-display', size: 'md' },
-  },
-  about: {
-    eyebrow: { color: '#722F37', font: '--font-sans', size: 'md' },
-    heading: { color: '#1a1a1a', font: '--font-display', size: 'md' },
-    body: { color: '#4a4a4a', font: '--font-sans', size: 'md' },
-  },
-  contact: {
-    eyebrow: { color: '#722F37', font: '--font-sans', size: 'md' },
-    heading: { color: '#1a1a1a', font: '--font-display', size: 'md' },
-  },
-}
-
-export function stripLegacyElementDefaults(section: SectionKey, key: string, style: TextElementStyle): TextElementStyle {
-  const legacy = LEGACY_ELEMENT_DEFAULT[section]?.[key]
-  if (!legacy) return style
-  const result = { ...style }
-  if (result.color === legacy.color) delete result.color
-  if (result.font === legacy.font) delete result.font
-  if (result.size === legacy.size) delete result.size
-  return result
-}

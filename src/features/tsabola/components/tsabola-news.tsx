@@ -12,8 +12,8 @@ const NO_NEWS_LABEL = { ka: 'სიახლეები ჯერ არ არ
 
 export function TsabolaNews() {
   const { t, r } = useLang()
-  const eyebrowRef = useTextStyle<HTMLParagraphElement>('news', 'eyebrow')
-  const headingRef = useTextStyle<HTMLHeadingElement>('news', 'heading')
+  const eyebrowStyle = useTextStyle('news', 'eyebrow')
+  const headingStyle = useTextStyle('news', 'heading')
   const items = t.news.items.filter((item) => item.published)
   const scrollerRef = useRef<HTMLDivElement>(null)
 
@@ -27,12 +27,12 @@ export function TsabolaNews() {
 
   return (
     <section id="news" className="bg-white dark:bg-charcoal py-16">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <p ref={eyebrowRef} className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">
+          <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
             {r(t.news.subtitle)}
           </p>
-          <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream">
+          <h2 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>
             {r(t.news.title)}
           </h2>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />

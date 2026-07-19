@@ -7,26 +7,32 @@ import { useTextStyle } from '../hooks/use-text-style'
 
 export function TsabolaAbout() {
   const { t, r } = useLang()
-  const eyebrowRef = useTextStyle<HTMLParagraphElement>('about', 'eyebrow')
-  const headingRef = useTextStyle<HTMLHeadingElement>('about', 'heading')
-  const bodyRef = useTextStyle<HTMLParagraphElement>('about', 'body')
+  const eyebrowStyle = useTextStyle('about', 'eyebrow')
+  const headingStyle = useTextStyle('about', 'heading')
+  const bodyStyle = useTextStyle('about', 'body')
   const paragraphs = r(t.about.body).split('\n\n').filter(Boolean)
 
   return (
     <section id="about" className="bg-cream dark:bg-charcoal py-16 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <p ref={eyebrowRef} className="text-base font-bold tracking-widest uppercase text-wine mb-6">
+          <p
+            style={eyebrowStyle.style}
+            className={`font-bold tracking-widest uppercase text-wine mb-6 ${eyebrowStyle.className}`}
+          >
             {r(t.nav.about)}
           </p>
-          <h2 ref={headingRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">
+          <h2
+            style={headingStyle.style}
+            className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${headingStyle.className}`}
+          >
             {r(t.about.title)}
           </h2>
           {paragraphs.map((p, i) => (
             <p
               key={i}
-              ref={bodyRef}
-              className={`text-charcoal/70 dark:text-cream/70 leading-relaxed mb-4 ${i === 0 ? 'border-l-2 border-wine pl-4' : ''}`}
+              style={bodyStyle.style}
+              className={`text-charcoal/70 dark:text-cream/70 leading-relaxed mb-4 ${bodyStyle.className} ${i === 0 ? 'border-l-2 border-wine pl-4' : ''}`}
             >
               {p}
             </p>

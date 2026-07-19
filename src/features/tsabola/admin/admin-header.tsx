@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
 
 import { useContentStore } from '../store/content-store'
@@ -56,9 +55,11 @@ export function AdminHeader() {
         >
           {label}
         </button>
-        <Link href="/" className="underline hover:text-amber-900">
+        {/* Hard reload, not next/link — avoids the Router Cache flashing a pre-save snapshot */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/" className="underline hover:text-amber-900">
           ← საიტზე დაბრუნება
-        </Link>
+        </a>
       </div>
     </div>
   )
