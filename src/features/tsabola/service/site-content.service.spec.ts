@@ -71,7 +71,7 @@ describe('getSiteContent', () => {
 
   const baseContent = {
     hero: { headline: { ka: '', en: '' }, subline: { ka: '', en: '' }, cta: { ka: '', en: '' }, images: [] as unknown[] },
-    news: { title: { ka: '', en: '' }, subtitle: { ka: '', en: '' }, items: [] },
+    news: { title: { ka: '', en: '' }, subtitle: { ka: '', en: '' }, items: [] as unknown[] },
   };
 
   it('migrates legacy string hero images to objects defaulting to a centered focal point', async () => {
@@ -131,6 +131,63 @@ describe('getSiteContent', () => {
 
     expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
       { src: '/a.jpg', positionMobile: { x: 30, y: 40 }, positionDesktop: { x: 70, y: 60 }, size: 'md' },
+    ]);
+  });
+
+  it('defaults a centered focal point and md size for a wine item missing them', async () => {
+    const wine = { id: 'red', name: { ka: '', en: '' }, image: '/red.jpg' };
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, wines: { items: [wine] } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    const item = (result.data as { content: SiteContent }).content.wines.items[0];
+    expect(item.imageSize).toBe('md');
+    expect(item.position).toEqual({ x: 50, y: 50 });
+  });
+
+  it('defaults a centered focal point and md size for a news item missing them', async () => {
+    const item = { id: 'news-1', title: { ka: '', en: '' }, image: '/n.jpg' };
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, news: { ...baseContent.news, items: [item] } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    const normalized = (result.data as { content: SiteContent }).content.news.items[0];
+    expect(normalized.imageSize).toBe('md');
+    expect(normalized.position).toEqual({ x: 50, y: 50 });
+  });
+
+  it('defaults a centered focal point for the about section when missing', async () => {
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, about: { image: '/about.jpg' } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    expect((result.data as { content: SiteContent }).content.about.position).toEqual({ x: 50, y: 50 });
+  });
+
+  it('migrates legacy string gallery images to objects defaulting to a centered focal point', async () => {
+    vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
+      content: { ...baseContent, gallery: { images: ['/g1.jpg', '/g2.jpg'] } },
+      theme: {},
+      visibility: {},
+    } as SiteContentDocument);
+
+    const result = await getSiteContent();
+
+    expect((result.data as { content: SiteContent }).content.gallery.images).toEqual([
+      { src: '/g1.jpg', position: { x: 50, y: 50 } },
+      { src: '/g2.jpg', position: { x: 50, y: 50 } },
     ]);
   });
 });

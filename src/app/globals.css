@@ -73,6 +73,12 @@
   aspect-ratio: 390 / 280;
 }
 
+/* Portrait crop ratio shared by About/Wines photo uploads and their admin
+   focal-point pickers (matches the ImageUploadButton aspectRatio={3/4} target). */
+@utility aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

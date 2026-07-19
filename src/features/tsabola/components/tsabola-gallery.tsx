@@ -20,7 +20,7 @@ export function TsabolaGallery({ initialImages }: Props) {
   const { t, r } = useLang()
   const eyebrowRef = useTextStyle<HTMLParagraphElement>('gallery', 'eyebrow')
   const headingRef = useTextStyle<HTMLHeadingElement>('gallery', 'heading')
-  const staticImages = t.gallery.images.filter(Boolean)
+  const staticImages = t.gallery.images.filter((image) => Boolean(image.src))
   const [dbImages, setDbImages] = useState<GalleryImage[]>(initialImages)
   const [activeIndex, setActiveIndex] = useState(-1)
 
@@ -69,16 +69,18 @@ export function TsabolaGallery({ initialImages }: Props) {
 
         {publishedImages.length === 0 && (
           <div className="grid grid-cols-3 gap-2">
-            {staticImages.map((src, i) => (
+            {staticImages.map((image, i) => (
               <div
                 key={i}
                 className="relative aspect-square overflow-hidden cursor-zoom-in group"
                 onClick={() => setActiveIndex(i)}
               >
                 <img
-                  src={src}
+                  src={image.src}
                   alt=""
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
+                  style={{ objectPosition: `${image.position.x}% ${image.position.y}%` }}
                 />
                 <div className="absolute inset-0 bg-wine/0 group-hover:bg-wine/20 transition-colors duration-300" />
               </div>
@@ -106,7 +108,7 @@ export function TsabolaGallery({ initialImages }: Props) {
 
       {activeIndex !== -1 && (
         <TsabolaLightbox
-          images={staticImages}
+          images={staticImages.map((image) => image.src)}
           index={activeIndex}
           onClose={close}
           onPrev={prev}

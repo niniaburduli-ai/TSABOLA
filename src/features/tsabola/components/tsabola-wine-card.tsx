@@ -4,6 +4,7 @@ import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
 import { formatWinePrice } from '@/shared/utils/format'
 
 import { r } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 import { getWineDiscount } from '../hooks/use-wine-discount'
 
 import type { WineItem } from '../types'
@@ -16,6 +17,10 @@ type Props = {
 
 export function TsabolaWineCard({ item, lang, onOpen }: Props) {
   const discount = getWineDiscount(item.price, item.discountPrice)
+  const badgeRef = useTextStyle<HTMLSpanElement>('wines', 'badge')
+  const nameRef = useTextStyle<HTMLHeadingElement>('wines', 'name')
+  const detailsRef = useTextStyle<HTMLParagraphElement>('wines', 'details')
+  const priceRef = useTextStyle<HTMLParagraphElement>('wines', 'price')
 
   return (
     <article
@@ -41,6 +46,8 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
               src={item.image}
               alt={r(item.name, lang)}
               className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${IMAGE_SIZE_SCALE_CLASS[item.imageSize]}`}
+              // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
+              style={{ objectPosition: `${item.position.x}% ${item.position.y}%` }}
             />
           </div>
         </button>
@@ -52,14 +59,14 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
       )}
 
       <div className="p-6 flex flex-col justify-center gap-3 flex-1 sm:order-1 sm:w-3/5">
-        <span className="inline-block self-start px-3 py-1 text-sm font-semibold tracking-widest uppercase border border-wine/40 text-wine">
+        <span ref={badgeRef} className="inline-block self-start px-3 py-1 text-sm font-semibold tracking-widest uppercase border border-wine/40 text-wine">
           {r(item.typeBadge, lang)}
         </span>
-        <h3 className="font-display text-2xl font-bold text-charcoal dark:text-cream">{r(item.name, lang)}</h3>
+        <h3 ref={nameRef} className="font-display text-2xl font-bold text-charcoal dark:text-cream">{r(item.name, lang)}</h3>
         {item.details && (
           <div className="border-t border-wine/10 pt-3">
             {r(item.details, lang).split('\n').map((line, i) => (
-              <p key={i} className="text-xs text-charcoal/50 dark:text-cream/50 leading-relaxed">
+              <p key={i} ref={detailsRef} className="text-xs text-charcoal/50 dark:text-cream/50 leading-relaxed">
                 {line}
               </p>
             ))}
@@ -78,7 +85,7 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
             </span>
           </div>
         ) : (
-          <p className="font-display text-xl font-bold text-wine">
+          <p ref={priceRef} className="font-display text-xl font-bold text-wine">
             {formatWinePrice(item.price)}
           </p>
         )}

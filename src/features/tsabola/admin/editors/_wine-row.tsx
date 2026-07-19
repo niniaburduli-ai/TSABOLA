@@ -1,5 +1,7 @@
 'use client'
 
+import { ChevronDown, ChevronUp } from 'lucide-react'
+
 import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
 import { getWineDiscount } from '@/features/tsabola/hooks/use-wine-discount'
 import type { WineItem } from '@/features/tsabola/types'
@@ -7,6 +9,7 @@ import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 
 import { BilingualField } from './_bilingual-field'
+import { HeroPositionPicker } from './_hero-position-picker'
 import { ImageSizeSelect } from './_image-size-select'
 
 type WineRowProps = {
@@ -26,24 +29,33 @@ export function WineRow({ wine, index, isFirst, isLast, expanded, onToggleExpand
 
   return (
     <div className="border border-border-wine rounded p-4 space-y-4">
-      <div className="flex items-center justify-between">
-        <button onClick={onToggleExpand} className="font-medium text-charcoal hover:text-wine text-left">
-          {wine.name.ka || wine.name.en || `ღვინო ${index + 1}`}
+      <div className="flex items-center justify-between gap-3">
+        <button onClick={onToggleExpand} className="flex items-center gap-3 flex-1 min-w-0 text-left">
+          {wine.image ? (
+            <img src={wine.image} alt="" className="w-12 h-12 object-cover rounded flex-shrink-0" />
+          ) : (
+            <div className="w-12 h-12 rounded bg-cream flex-shrink-0" />
+          )}
+          <span className="font-medium text-charcoal hover:text-wine truncate">
+            {wine.name.ka || wine.name.en || `ღვინო ${index + 1}`}
+          </span>
         </button>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <button
             onClick={() => onMove(-1)}
             disabled={isFirst}
-            className="text-xs px-2 py-1 border rounded hover:bg-cream disabled:opacity-30"
+            className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+            aria-label="ზემოთ გადატანა"
           >
-          ↑
+            <ChevronUp className="w-4 h-4" />
           </button>
           <button
             onClick={() => onMove(1)}
             disabled={isLast}
-            className="text-xs px-2 py-1 border rounded hover:bg-cream disabled:opacity-30"
+            className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+            aria-label="ქვემოთ გადატანა"
           >
-          ↓
+            <ChevronDown className="w-4 h-4" />
           </button>
           <button onClick={onDelete} className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50">
           წაშლა
@@ -108,6 +120,18 @@ export function WineRow({ wine, index, isFirst, isLast, expanded, onToggleExpand
             <Input value={wine.image} onChange={(e) => onUpdate({ ...wine, image: e.target.value })} placeholder="/wines/name.jpg" />
             <ImageUploadButton folder="tsabola/wines" onUpload={(url) => onUpdate({ ...wine, image: url })} aspectRatio={3 / 4} />
             <ImageSizeSelect value={wine.imageSize} onChange={(imageSize) => onUpdate({ ...wine, imageSize })} />
+            {wine.image && (
+              <div className="max-w-56">
+                <HeroPositionPicker
+                  label="ფოკუსი"
+                  src={wine.image}
+                  value={wine.position}
+                  onChange={(position) => onUpdate({ ...wine, position })}
+                  size={wine.imageSize}
+                  aspectClassName="aspect-portrait"
+                />
+              </div>
+            )}
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>

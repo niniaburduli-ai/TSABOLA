@@ -3,6 +3,7 @@ import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '@/features/t
 import { siteContentRepository } from '@/features/tsabola/repository/site-content.repository';
 import type { HeroImage, HeroPosition, NewsItem, SectionKey, SiteContent, ThemeConfig, WineItem } from '@/features/tsabola/types';
 import { DEFAULT_HERO_POSITION, LEGACY_HERO_POSITION } from '@/shared/const/hero-image.const';
+import { stripLegacyElementDefaults } from '@/shared/const/site-section-elements.const';
 import { SITE_SECTION_KEYS } from '@/shared/const/site-section.const';
 import { ServiceResult, TranslationMemory } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
@@ -14,7 +15,13 @@ type SiteContentPayload = { content: unknown; theme: unknown; visibility: unknow
 
 function normalizeNewsItem(item: NewsItem): NewsItem {
   const fallbackSlug = slugify(item.title?.en ?? '') || slugify(item.title?.ka ?? '') || item.id;
-  return { ...item, slug: item.slug || fallbackSlug, published: item.published ?? true };
+  return {
+    ...item,
+    slug: item.slug || fallbackSlug,
+    published: item.published ?? true,
+    imageSize: item.imageSize ?? 'md',
+    position: toHeroPosition(item.position),
+  };
 }
 
 function toHeroPosition(value: unknown): HeroPosition {
@@ -39,15 +46,51 @@ function normalizeHeroImage(image: unknown): HeroImage {
   };
 }
 
+function normalizeWineItem(item: unknown): WineItem {
+  const partial = (item ?? {}) as Partial<WineItem>;
+  return {
+    ...(partial as WineItem),
+    imageSize: partial.imageSize ?? 'md',
+    position: toHeroPosition(partial.position),
+  };
+}
+
 function normalizeWinesSection(wines: unknown): SiteContent['wines'] {
   if (Array.isArray(wines)) {
-    return { title: { ka: 'ღვინოები', en: 'Wines' }, subtitle: { ka: 'კატალოგი', en: 'Catalog' }, items: wines as WineItem[] };
+    return { title: { ka: 'ღვინოები', en: 'Wines' }, subtitle: { ka: 'კატალოგი', en: 'Catalog' }, items: wines.map(normalizeWineItem) };
   }
   const partial = (wines ?? {}) as Partial<SiteContent['wines']>;
   return {
     title: partial.title ?? { ka: 'ღვინოები', en: 'Wines' },
     subtitle: partial.subtitle ?? { ka: 'კატალოგი', en: 'Catalog' },
-    items: partial.items ?? [],
+    items: (partial.items ?? []).map(normalizeWineItem),
+  };
+}
+
+function normalizeAboutSection(about: unknown): SiteContent['about'] {
+  const partial = (about ?? {}) as Partial<SiteContent['about']>;
+  return {
+    title: partial.title ?? { ka: '', en: '' },
+    body: partial.body ?? { ka: '', en: '' },
+    imageAlt: partial.imageAlt ?? { ka: '', en: '' },
+    image: partial.image ?? '',
+    imageSize: partial.imageSize ?? 'md',
+    position: toHeroPosition(partial.position),
+  };
+}
+
+function toGalleryStaticImage(image: unknown): SiteContent['gallery']['images'][number] {
+  if (typeof image === 'string') return { src: image, position: DEFAULT_HERO_POSITION };
+  const partial = (image ?? {}) as Partial<SiteContent['gallery']['images'][number]>;
+  return { src: partial.src ?? '', position: toHeroPosition(partial.position) };
+}
+
+function normalizeGallerySection(gallery: unknown): SiteContent['gallery'] {
+  const partial = (gallery ?? {}) as Partial<Omit<SiteContent['gallery'], 'images'>> & { images?: unknown[] };
+  return {
+    title: partial.title ?? { ka: 'გალერეა', en: 'Gallery' },
+    subtitle: partial.subtitle ?? { ka: '', en: '' },
+    images: (partial.images ?? []).map(toGalleryStaticImage),
   };
 }
 
@@ -57,6 +100,8 @@ function normalizeContent(content: SiteContent): SiteContent {
     hero: { ...content.hero, images: content.hero.images.map(normalizeHeroImage) },
     wines: normalizeWinesSection(content.wines),
     news: { ...content.news, items: content.news.items.map(normalizeNewsItem) },
+    gallery: normalizeGallerySection(content.gallery),
+    about: normalizeAboutSection(content.about),
   };
 }
 
@@ -66,7 +111,8 @@ function normalizeTheme(theme: unknown): ThemeConfig {
     const defaults = DEFAULT_THEME.sections[key].elements;
     const saved = partial.sections?.[key]?.elements ?? {};
     const elements = Object.keys(defaults).reduce((els, elKey) => {
-      els[elKey] = { ...defaults[elKey], ...saved[elKey] };
+      const migrated = stripLegacyElementDefaults(key, elKey, saved[elKey] ?? {});
+      els[elKey] = { ...defaults[elKey], ...migrated };
       return els;
     }, {} as ThemeConfig['sections'][SectionKey]['elements']);
     acc[key] = { elements };

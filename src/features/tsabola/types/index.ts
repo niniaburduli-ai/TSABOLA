@@ -15,6 +15,7 @@ export type WineItem = {
   description: L
   image: string
   imageSize: ImageSize
+  position: HeroPosition
   details?: L
   longDescription?: L
   serveTemp?: string
@@ -30,6 +31,8 @@ export type NewsItem = {
   date: L
   body: L
   image: string
+  imageSize: ImageSize
+  position: HeroPosition
 }
 
 export type HeroImage = {
@@ -39,14 +42,19 @@ export type HeroImage = {
   size: ImageSize
 }
 
+export type GalleryStaticImage = {
+  src: string
+  position: HeroPosition
+}
+
 export type SiteContent = {
   site: { name: L; slogan: L }
   nav: { wines: L; gallery: L; about: L; contact: L; news: L }
   hero: { headline: L; subline: L; cta: L; images: HeroImage[] }
   wines: { title: L; subtitle: L; items: WineItem[] }
   news: { title: L; subtitle: L; items: NewsItem[] }
-  gallery: { title: L; subtitle: L; images: string[] }
-  about: { title: L; body: L; imageAlt: L; image: string; imageSize: ImageSize }
+  gallery: { title: L; subtitle: L; images: GalleryStaticImage[] }
+  about: { title: L; body: L; imageAlt: L; image: string; imageSize: ImageSize; position: HeroPosition }
   contact: { title: L; subtitle: L; email: string; phone: string; whatsapp: string; address: L }
   footer: { copy: L }
 }
@@ -65,10 +73,12 @@ export type SectionKey = keyof SectionVisibility
 export type HeadingSizeScale = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 // One independently-styleable line of text within a section (e.g. hero's headline vs its slogan).
+// All fields are optional overrides — when unset, the element inherits color/font/size from the
+// global ThemeConfig (colorWine/colorCharcoal/colorCream, headingFont/bodyFont, headingSize/bodySize).
 export type TextElementStyle = {
-  color: string
-  font: string
-  size: HeadingSizeScale
+  color?: string
+  font?: string
+  size?: HeadingSizeScale
 }
 
 export type SectionStyle = {

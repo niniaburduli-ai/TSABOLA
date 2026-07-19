@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 
 export type GalleryNavTarget = { slug: string; caption: GalleryImage['caption'] }
 
@@ -23,6 +24,9 @@ function formatDate(iso: string): string {
 export function TsabolaGalleryArticle({ image, prev, next }: Props) {
   const { r } = useLang()
   const router = useRouter()
+  const dateRef = useTextStyle<HTMLParagraphElement>('gallery', 'date')
+  const captionRef = useTextStyle<HTMLHeadingElement>('gallery', 'articleCaption')
+  const descriptionRef = useTextStyle<HTMLParagraphElement>('gallery', 'articleDescription')
   const caption = r(image.caption)
   const description = r(image.description)
 
@@ -37,9 +41,9 @@ export function TsabolaGalleryArticle({ image, prev, next }: Props) {
 
   return (
     <article className="max-w-3xl mx-auto px-6 py-16">
-      <p className="text-xs uppercase tracking-widest text-wine mb-3">{formatDate(image.date)}</p>
+      <p ref={dateRef} className="text-xs uppercase tracking-widest text-wine mb-3">{formatDate(image.date)}</p>
       {caption && (
-        <h1 className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">{caption}</h1>
+        <h1 ref={captionRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">{caption}</h1>
       )}
 
       <div className="relative flex justify-center bg-cream/30 dark:bg-charcoal/50 rounded mb-10">
@@ -75,7 +79,7 @@ export function TsabolaGalleryArticle({ image, prev, next }: Props) {
       </div>
 
       {description && (
-        <p className="text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line">{description}</p>
+        <p ref={descriptionRef} className="text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line">{description}</p>
       )}
     </article>
   )

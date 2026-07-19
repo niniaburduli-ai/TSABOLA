@@ -33,12 +33,14 @@ export function TsabolaAbout() {
           ))}
         </div>
 
-        <div className="aspect-[3/4] overflow-hidden">
+        <div className="aspect-portrait overflow-hidden">
           {t.about.image ? (
             <img
               src={t.about.image}
               alt={r(t.about.imageAlt)}
               className={`w-full h-full object-cover ${IMAGE_SIZE_SCALE_CLASS[t.about.imageSize]}`}
+              // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
+              style={{ objectPosition: `${t.about.position.x}% ${t.about.position.y}%` }}
             />
           ) : (
             <div

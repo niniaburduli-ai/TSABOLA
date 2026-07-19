@@ -57,3 +57,13 @@ export function invertLightnessForDarkMode(hex: string): string {
   const { h, s, l } = hexToHsl(hex)
   return hslToHex(h, s, 100 - l)
 }
+
+// Muted/soft text-element roles are expressed as the theme's base color at reduced opacity
+// rather than a separate stored hex, so they track the global color live.
+export function hexToRgba(hex: string, alpha: number): string {
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}

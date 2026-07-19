@@ -23,7 +23,7 @@ function getServerSnapshot() {
 const NAV_LINKS = [
   { key: 'wines', href: '/#wines' },
   { key: 'news', href: '/news' },
-  { key: 'gallery', href: '/gallery' },
+  { key: 'gallery', href: '/#gallery' },
   { key: 'about', href: '/#about' },
   { key: 'contact', href: '/#contact' },
 ] as const

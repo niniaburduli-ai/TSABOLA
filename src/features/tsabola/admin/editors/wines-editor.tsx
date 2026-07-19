@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useContentStore } from '@/features/tsabola/store/content-store'
 import type { WineItem } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
+import { DEFAULT_HERO_POSITION } from '@/shared/const/hero-image.const'
 
 import { BilingualField } from './_bilingual-field'
 import { WineRow } from './_wine-row'
@@ -19,6 +20,7 @@ const EMPTY_WINE: WineItem = {
   description: { ka: '', en: '' },
   image: '',
   imageSize: 'md',
+  position: DEFAULT_HERO_POSITION,
   details: { ka: '', en: '' },
   longDescription: { ka: '', en: '' },
   serveTemp: '',

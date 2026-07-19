@@ -7,6 +7,10 @@ const GalleryImageSchema = new Schema(
     slug: { type: String, default: '' },
     published: { type: Boolean, required: true, default: true },
     imageSize: { type: String, enum: ['sm', 'md', 'lg'], default: 'md' },
+    position: {
+      x: { type: Number, default: 50 },
+      y: { type: Number, default: 50 },
+    },
     date: { type: Date, default: null },
     caption: {
       ka: { type: String, default: '' },

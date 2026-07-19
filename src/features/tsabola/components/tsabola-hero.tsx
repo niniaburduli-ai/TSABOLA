@@ -13,7 +13,7 @@ import { useSequentialTypewriter } from '../hooks/use-typewriter'
 
 import type { HeroImage } from '../types'
 
-const SLIDE_DURATION = 6000
+const SLIDE_PAUSE_MS = 2000
 
 const FALLBACK_IMAGES: HeroImage[] = [
   { src: '/TSABO WHITE.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
@@ -41,11 +41,12 @@ export function TsabolaHero() {
 
   useEffect(() => {
     if (lightboxOpen) return
-    const id = setInterval(() => {
+    if (!headlineTyped.done) return
+    const id = setTimeout(() => {
       setActive(prev => (prev + 1) % images.length)
-    }, SLIDE_DURATION)
-    return () => clearInterval(id)
-  }, [images.length, lightboxOpen])
+    }, SLIDE_PAUSE_MS)
+    return () => clearTimeout(id)
+  }, [headlineTyped.done, images.length, lightboxOpen])
 
   return (
     <section id="hero" className="relative w-full aspect-hero-mobile sm:h-hero overflow-hidden bg-charcoal">

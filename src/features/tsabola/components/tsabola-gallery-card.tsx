@@ -6,6 +6,7 @@ import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
 
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 
 type Props = {
   image: GalleryImage
@@ -13,6 +14,7 @@ type Props = {
 
 export function TsabolaGalleryCard({ image }: Props) {
   const { r } = useLang()
+  const captionRef = useTextStyle<HTMLParagraphElement>('gallery', 'caption')
   const caption = r(image.caption)
 
   return (
@@ -21,10 +23,12 @@ export function TsabolaGalleryCard({ image }: Props) {
         src={image.url}
         alt={caption}
         className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${IMAGE_SIZE_SCALE_CLASS[image.imageSize]}`}
+        // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
+        style={{ objectPosition: `${image.position.x}% ${image.position.y}%` }}
       />
       <div className="absolute inset-0 bg-wine/0 group-hover:bg-wine/20 transition-colors duration-300" />
       {caption && (
-        <p className="absolute bottom-0 left-0 right-0 p-3 text-xs text-white bg-gradient-to-t from-black/70 to-transparent">
+        <p ref={captionRef} className="absolute bottom-0 left-0 right-0 p-3 text-xs text-white bg-gradient-to-t from-black/70 to-transparent">
           {caption}
         </p>
       )}

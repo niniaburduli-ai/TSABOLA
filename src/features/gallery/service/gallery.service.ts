@@ -3,6 +3,7 @@ import { GalleryImageDocument } from '@/features/gallery/schema/gallery.schema';
 import { GalleryImage } from '@/features/gallery/types/gallery.types';
 import { UpdateGalleryImageType } from '@/features/gallery/validations/gallery.validation';
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
+import { DEFAULT_HERO_POSITION } from '@/shared/const/hero-image.const';
 import { ServiceResult } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
 import { slugify } from '@/shared/utils/slugify';
@@ -18,6 +19,10 @@ function toGalleryImage(image: GalleryImageDocument): GalleryImage {
     slug: image.slug || fallbackSlug,
     published: image.published ?? true,
     imageSize: image.imageSize ?? 'md',
+    position: {
+      x: typeof image.position?.x === 'number' ? image.position.x : DEFAULT_HERO_POSITION.x,
+      y: typeof image.position?.y === 'number' ? image.position.y : DEFAULT_HERO_POSITION.y,
+    },
     caption: { ka: caption.ka ?? '', en: caption.en ?? '' },
     description: { ka: image.description?.ka ?? '', en: image.description?.en ?? '' },
     date: new Date(image.date ?? image.createdAt ?? Date.now()).toISOString(),

@@ -1,5 +1,6 @@
 'use client'
 
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 
 import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
@@ -8,9 +9,12 @@ import type { NewsItem } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
+import { DEFAULT_HERO_POSITION } from '@/shared/const/hero-image.const'
 import { slugify } from '@/shared/utils/slugify'
 
 import { BilingualField } from './_bilingual-field'
+import { HeroPositionPicker } from './_hero-position-picker'
+import { ImageSizeSelect } from './_image-size-select'
 
 function toBilingualDate(date: NewsItem['date']): NewsItem['date'] {
   return typeof date === 'string' ? { ka: date, en: date } : date
@@ -24,6 +28,8 @@ const EMPTY_ITEM: NewsItem = {
   date: { ka: '', en: '' },
   body: { ka: '', en: '' },
   image: '',
+  imageSize: 'md',
+  position: DEFAULT_HERO_POSITION,
 }
 
 export function NewsEditor() {
@@ -81,30 +87,39 @@ export function NewsEditor() {
 
       {news.items.map((item, i) => (
         <div key={item.id} className="border border-border-wine rounded p-4 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3">
             <button
               onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-              className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2"
+              className="flex items-center gap-3 flex-1 min-w-0 text-left"
             >
-              {item.title.ka || item.title.en || `სიახლე ${i + 1}`}
-              {item.published === false && (
-                <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">დრაფტი</span>
+              {item.image ? (
+                <img src={item.image} alt="" className="w-12 h-12 object-cover rounded flex-shrink-0" />
+              ) : (
+                <div className="w-12 h-12 rounded bg-cream flex-shrink-0" />
               )}
+              <span className="font-medium text-charcoal hover:text-wine truncate flex items-center gap-2">
+                {item.title.ka || item.title.en || `სიახლე ${i + 1}`}
+                {item.published === false && (
+                  <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60 flex-shrink-0">დრაფტი</span>
+                )}
+              </span>
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <button
                 onClick={() => moveItem(i, -1)}
                 disabled={i === 0}
-                className="text-xs px-2 py-1 border rounded hover:bg-cream disabled:opacity-30"
+                className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+                aria-label="ზემოთ გადატანა"
               >
-                ↑
+                <ChevronUp className="w-4 h-4" />
               </button>
               <button
                 onClick={() => moveItem(i, 1)}
                 disabled={i === news.items.length - 1}
-                className="text-xs px-2 py-1 border rounded hover:bg-cream disabled:opacity-30"
+                className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+                aria-label="ქვემოთ გადატანა"
               >
-                ↓
+                <ChevronDown className="w-4 h-4" />
               </button>
               <button
                 onClick={() => deleteItem(i)}
@@ -173,6 +188,22 @@ export function NewsEditor() {
                     aspectRatio={16 / 9}
                   />
                 </div>
+                <ImageSizeSelect
+                  value={item.imageSize}
+                  onChange={(imageSize) => updateItem(i, { ...item, imageSize })}
+                />
+                {item.image && (
+                  <div className="max-w-56">
+                    <HeroPositionPicker
+                      label="ფოკუსი"
+                      src={item.image}
+                      value={item.position}
+                      onChange={(position) => updateItem(i, { ...item, position })}
+                      size={item.imageSize}
+                      aspectClassName="aspect-video"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           )}

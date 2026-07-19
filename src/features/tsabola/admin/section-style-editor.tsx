@@ -33,7 +33,8 @@ export function SectionStyleEditor() {
                 {SITE_SECTION_ELEMENTS[key].map((el) => (
                   <TextElementStyleRow
                     key={el.key}
-                    label={el.label}
+                    def={el}
+                    theme={theme}
                     style={theme.sections[key].elements[el.key]}
                     onChange={(patch) => updateElement(key, el.key, patch)}
                   />

@@ -1,3 +1,4 @@
+import { DEFAULT_HERO_POSITION } from '@/shared/const/hero-image.const'
 import { buildDefaultSectionStyles } from '@/shared/const/site-section-elements.const'
 
 import type { SiteContent, ThemeConfig, SectionVisibility } from '../types'
@@ -40,7 +41,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           en: 'Light straw. Delicate aroma, pleasant freshness, harmonious finish.',
         },
         image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764200/tsabola/wines/white-wine.png',
-        imageSize: 'md',
+        imageSize: 'md', position: DEFAULT_HERO_POSITION,
         details: {
           ka: 'ღვინო: მშრალი | ყურძენი: ჩინებული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
           en: 'Wine: Dry | Grape: Chinebuli\nRegion: Zemo Khandaki, Shida Kartli',
@@ -68,7 +69,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           en: 'Deep ruby. Velvety structure, ripe berry aromas, balanced finish.',
         },
         image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764216/tsabola/wines/red-wine.png',
-        imageSize: 'md',
+        imageSize: 'md', position: DEFAULT_HERO_POSITION,
         details: {
           ka: 'ღვინო: მშრალი | ყურძენი: დანახარული\nრეგიონი: ზემო ხანდაკი, შიდა ქართლი',
           en: 'Wine: Dry | Grape: Danakharuli\nRegion: Zemo Khandaki, Shida Kartli',
@@ -105,6 +106,7 @@ export const DEFAULT_CONTENT: SiteContent = {
             'New bottles are now available.',
         },
         image: '',
+        imageSize: 'md', position: DEFAULT_HERO_POSITION,
       },
       {
         id: 'news-2',
@@ -119,6 +121,7 @@ export const DEFAULT_CONTENT: SiteContent = {
             'Offer valid until December 31.',
         },
         image: '',
+        imageSize: 'md', position: DEFAULT_HERO_POSITION,
       },
     ],
   },
@@ -126,12 +129,12 @@ export const DEFAULT_CONTENT: SiteContent = {
     title: { ka: 'გალერეა', en: 'Gallery' },
     subtitle: { ka: 'ვენახი, მარანი, ხელოვნება', en: 'Vineyard, Cellar, Craft' },
     images: [
-      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764255/tsabola/gallery/gallery-white.png',
-      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764272/tsabola/gallery/gallery-red.png',
-      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764309/tsabola/gallery/gallery-rtveli.png',
-      'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764337/tsabola/gallery/gallery-supra.png',
-      '',
-      '',
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764255/tsabola/gallery/gallery-white.png', position: DEFAULT_HERO_POSITION },
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764272/tsabola/gallery/gallery-red.png', position: DEFAULT_HERO_POSITION },
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764309/tsabola/gallery/gallery-rtveli.png', position: DEFAULT_HERO_POSITION },
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764337/tsabola/gallery/gallery-supra.png', position: DEFAULT_HERO_POSITION },
+      { src: '', position: DEFAULT_HERO_POSITION },
+      { src: '', position: DEFAULT_HERO_POSITION },
     ],
   },
   about: {
@@ -165,7 +168,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     imageAlt: { ka: 'რთველი — ყურძნის კრეფა', en: 'Rtveli — grape harvest' },
     image: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764363/tsabola/about/about-vazi.png',
-    imageSize: 'md',
+    imageSize: 'md', position: DEFAULT_HERO_POSITION,
   },
   contact: {
     title: { ka: 'კონტაქტი', en: 'Contact' },

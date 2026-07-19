@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react'
 import { GalleryUpload } from '@/features/gallery/components/gallery-upload'
 import type { GalleryImage } from '@/features/gallery/types/gallery.types'
 import { useContentStore } from '@/features/tsabola/store/content-store'
-import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
+import { DEFAULT_HERO_POSITION } from '@/shared/const/hero-image.const'
 
 import { BilingualField } from './_bilingual-field'
 import { GalleryImageRow } from './_gallery-image-row'
@@ -27,12 +27,6 @@ export function GalleryEditor() {
       .catch(() => {})
   }, [])
 
-  const updateImage = (index: number, val: string) => {
-    const images = [...gallery.images]
-    images[index] = val
-    updateSection('gallery', { ...gallery, images })
-  }
-
   function updateLocal(id: string, patch: Partial<GalleryImage>) {
     setDbImages((prev) => prev.map((img) => (img._id === id ? { ...img, ...patch } : img)))
   }
@@ -48,6 +42,7 @@ export function GalleryEditor() {
           slug: image.slug,
           published: image.published,
           imageSize: image.imageSize,
+          position: image.position,
           caption: image.caption,
           description: image.description,
           date: image.date,
@@ -62,6 +57,7 @@ export function GalleryEditor() {
         slug: updated.slug,
         published: updated.published,
         imageSize: updated.imageSize,
+        position: updated.position,
         caption: updated.caption,
         description: updated.description,
         date: updated.date,
@@ -106,6 +102,7 @@ export function GalleryEditor() {
                 slug: '',
                 published: true,
                 imageSize: 'md',
+                position: DEFAULT_HERO_POSITION,
                 caption: { ka: '', en: '' },
                 description: { ka: '', en: '' },
                 date: new Date().toISOString(),
@@ -134,18 +131,6 @@ export function GalleryEditor() {
             ))}
           </div>
         )}
-      </div>
-
-      <div className="space-y-3">
-        <Label className="text-sm font-medium text-charcoal/70">სტატიკური სურათების მისამართები</Label>
-        {gallery.images.map((src, i) => (
-          <Input
-            key={i}
-            value={src}
-            onChange={(e) => updateImage(i, e.target.value)}
-            placeholder={`/gallery/image-${i + 1}.jpg`}
-          />
-        ))}
       </div>
     </div>
   )

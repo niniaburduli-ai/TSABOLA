@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { useLang } from '../hooks/use-lang'
+import { useTextStyle } from '../hooks/use-text-style'
 
 import type { L, NewsItem } from '../types'
 
@@ -22,6 +23,11 @@ type Props = {
 export function TsabolaNewsArticle({ item, prev, next }: Props) {
   const { r } = useLang()
   const router = useRouter()
+  const dateRef = useTextStyle<HTMLParagraphElement>('news', 'cardDate')
+  const titleRef = useTextStyle<HTMLHeadingElement>('news', 'articleTitle')
+  const bodyRef = useTextStyle<HTMLParagraphElement>('news', 'articleBody')
+  const navLabelRef = useTextStyle<HTMLSpanElement>('news', 'cardDate')
+  const navTitleRef = useTextStyle<HTMLSpanElement>('news', 'cardBody')
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -34,8 +40,8 @@ export function TsabolaNewsArticle({ item, prev, next }: Props) {
 
   return (
     <article className="max-w-3xl mx-auto px-6 py-16">
-      <p className="text-xs uppercase tracking-widest text-wine mb-3">{r(item.date)}</p>
-      <h1 className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">{r(item.title)}</h1>
+      <p ref={dateRef} className="text-xs uppercase tracking-widest text-wine mb-3">{r(item.date)}</p>
+      <h1 ref={titleRef} className="font-display text-4xl sm:text-5xl font-bold text-charcoal dark:text-cream mb-8">{r(item.title)}</h1>
 
       {item.image && (
         <div className="rounded overflow-hidden bg-charcoal/5 mb-10">
@@ -43,14 +49,14 @@ export function TsabolaNewsArticle({ item, prev, next }: Props) {
         </div>
       )}
 
-      <p className="text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line">{r(item.body)}</p>
+      <p ref={bodyRef} className="text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line">{r(item.body)}</p>
 
       {(prev || next) && (
         <div className="flex items-center justify-between gap-4 mt-16 pt-8 border-t border-charcoal/10 dark:border-cream/10">
           {prev ? (
             <Link href={`/news/${prev.slug}`} className="group flex flex-col text-left">
-              <span className="text-xs uppercase tracking-widest text-wine mb-1">← {r(PREV_LABEL)}</span>
-              <span className="text-sm text-charcoal/70 dark:text-cream/70 group-hover:text-wine transition-colors">
+              <span ref={navLabelRef} className="text-xs uppercase tracking-widest text-wine mb-1">← {r(PREV_LABEL)}</span>
+              <span ref={navTitleRef} className="text-sm text-charcoal/70 dark:text-cream/70 group-hover:text-wine transition-colors">
                 {r(prev.title)}
               </span>
             </Link>
@@ -59,8 +65,8 @@ export function TsabolaNewsArticle({ item, prev, next }: Props) {
           )}
           {next ? (
             <Link href={`/news/${next.slug}`} className="group flex flex-col text-right">
-              <span className="text-xs uppercase tracking-widest text-wine mb-1">{r(NEXT_LABEL)} →</span>
-              <span className="text-sm text-charcoal/70 dark:text-cream/70 group-hover:text-wine transition-colors">
+              <span ref={navLabelRef} className="text-xs uppercase tracking-widest text-wine mb-1">{r(NEXT_LABEL)} →</span>
+              <span ref={navTitleRef} className="text-sm text-charcoal/70 dark:text-cream/70 group-hover:text-wine transition-colors">
                 {r(next.title)}
               </span>
             </Link>

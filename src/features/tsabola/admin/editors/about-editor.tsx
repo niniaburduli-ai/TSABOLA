@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui
 import { Textarea } from '@/shared/components/ui/textarea'
 
 import { BilingualField } from './_bilingual-field'
+import { HeroPositionPicker } from './_hero-position-picker'
 import { ImageSizeSelect } from './_image-size-select'
 
 export function AboutEditor() {
@@ -60,6 +61,23 @@ export function AboutEditor() {
           value={about.imageSize}
           onChange={(imageSize) => updateSection('about', { ...about, imageSize })}
         />
+        {about.image && (
+          <>
+            <p className="text-xs text-charcoal/40">
+              ჩამოათრიეთ ფოტო, რომ საიტზე ნაჩვენები ნაწილი ზუსტად ასე გამოჩნდეს
+            </p>
+            <div className="max-w-56">
+              <HeroPositionPicker
+                label="ფოკუსი"
+                src={about.image}
+                value={about.position}
+                onChange={(position) => updateSection('about', { ...about, position })}
+                size={about.imageSize}
+                aspectClassName="aspect-portrait"
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

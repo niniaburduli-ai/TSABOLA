@@ -6,6 +6,7 @@ import { Label } from '@/shared/components/ui/label'
 import { slugify } from '@/shared/utils/slugify'
 
 import { BilingualField } from './_bilingual-field'
+import { HeroPositionPicker } from './_hero-position-picker'
 import { ImageSizeSelect } from './_image-size-select'
 
 type Props = {
@@ -90,6 +91,16 @@ export function GalleryImageRow({
               </Label>
             </div>
             <ImageSizeSelect value={image.imageSize} onChange={(imageSize) => onChange({ imageSize })} />
+          </div>
+          <div className="max-w-56">
+            <HeroPositionPicker
+              label="ფოკუსი"
+              src={image.url}
+              value={image.position}
+              onChange={(position) => onChange({ position })}
+              size={image.imageSize}
+              aspectClassName="aspect-square"
+            />
           </div>
           <div className="flex items-center gap-3">
             <button
