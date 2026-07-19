@@ -16,13 +16,13 @@ export const DEFAULT_CONTENT: SiteContent = {
     images: [
       {
         src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
-        positionMobile: 'top', positionDesktop: 'center', size: 'md',
+        positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
       },
       {
         src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
-        positionMobile: 'top', positionDesktop: 'center', size: 'md',
+        positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
       },
-      { src: '', positionMobile: 'center', positionDesktop: 'center', size: 'md' },
+      { src: '', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
     ],
   },
   wines: {

@@ -3,33 +3,22 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
+import { HERO_ZOOM_CLASS } from '@/shared/const/hero-image.const'
+import { useMediaQuery } from '@/shared/hooks/use-media-query'
 
 import { TsabolaLightbox } from './tsabola-lightbox'
 import { useLang } from '../hooks/use-lang'
 import { useTextStyle } from '../hooks/use-text-style'
 import { useSequentialTypewriter } from '../hooks/use-typewriter'
 
-import type { HeroImage, HeroImagePosition } from '../types'
+import type { HeroImage } from '../types'
 
 const SLIDE_DURATION = 6000
 
 const FALLBACK_IMAGES: HeroImage[] = [
-  { src: '/TSABO WHITE.png', positionMobile: 'center', positionDesktop: 'center', size: 'md' },
-  { src: '/TSABO RED.png', positionMobile: 'center', positionDesktop: 'center', size: 'md' },
+  { src: '/TSABO WHITE.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
+  { src: '/TSABO RED.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
 ]
-
-const MOBILE_POSITION_CLASS: Record<HeroImagePosition, string> = {
-  top: 'object-top',
-  center: 'object-center',
-  bottom: 'object-bottom',
-}
-
-const DESKTOP_POSITION_CLASS: Record<HeroImagePosition, string> = {
-  top: 'sm:object-top',
-  center: 'sm:object-center',
-  bottom: 'sm:object-bottom',
-}
 
 export function TsabolaHero() {
   const { t, r } = useLang()
@@ -42,6 +31,7 @@ export function TsabolaHero() {
   const headline = r(t.hero.headline)
   const [active, setActive] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const isDesktop = useMediaQuery('(min-width: 640px)')
   const [siteNameTyped, headlineTyped] = useSequentialTypewriter([siteName, headline], active)
 
   const images: HeroImage[] = (() => {
@@ -58,30 +48,30 @@ export function TsabolaHero() {
   }, [images.length, lightboxOpen])
 
   return (
-    <section id="hero" className="relative w-full h-80 sm:h-hero overflow-hidden bg-charcoal">
+    <section id="hero" className="relative w-full aspect-hero-mobile sm:h-hero overflow-hidden bg-charcoal">
       {/* Image slides — crossfade */}
-      {images.map((image, i) => (
-        <div
-          key={i}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            i === active ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <Image
-            src={image.src}
-            alt=""
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            className={[
-              'object-cover',
-              MOBILE_POSITION_CLASS[image.positionMobile],
-              DESKTOP_POSITION_CLASS[image.positionDesktop],
-              IMAGE_SIZE_SCALE_CLASS[image.size],
-            ].join(' ')}
-          />
-        </div>
-      ))}
+      {images.map((image, i) => {
+        const position = isDesktop ? image.positionDesktop : image.positionMobile
+        return (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              i === active ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Image
+              src={image.src}
+              alt=""
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className={['object-cover', HERO_ZOOM_CLASS[image.size]].join(' ')}
+              // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
+              style={{ objectPosition: `${position.x}% ${position.y}%` }}
+            />
+          </div>
+        )
+      })}
 
       {/* Click-to-expand overlay for the currently visible slide */}
       <button

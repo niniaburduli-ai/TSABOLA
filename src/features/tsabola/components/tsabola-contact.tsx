@@ -28,15 +28,15 @@ export function TsabolaContact() {
   const headingRef = useTextStyle<HTMLHeadingElement>('contact', 'heading')
 
   return (
-    <section id="contact" className="relative w-full py-16 px-6 overflow-hidden">
+    <section id="contact" className="relative w-full py-16 px-6 overflow-hidden bg-map-cream dark:bg-charcoal">
       <Image
         src="https://res.cloudinary.com/dm8ksdiiq/image/upload/v1783260886/tsabola/contact/map.png"
         alt=""
         fill
         sizes="100vw"
-        className="object-cover"
+        className="object-contain object-center pointer-events-none"
       />
-      <div className="absolute inset-0 bg-cream/55 dark:bg-charcoal/70" />
+      <div className="absolute inset-0 hidden dark:block bg-charcoal/50 pointer-events-none" />
 
       <div className="relative z-10 max-w-xl mx-auto text-center">
         <p ref={eyebrowRef} className="text-xs font-semibold tracking-widest uppercase text-wine mb-3">

@@ -1,21 +1,17 @@
 'use client'
 
 import { ImageUploadButton } from '@/features/tsabola/components/image-upload-button'
-import type { HeroImage, HeroImagePosition } from '@/features/tsabola/types'
+import type { HeroImage } from '@/features/tsabola/types'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
+import { HERO_ZOOM_LABEL } from '@/shared/const/hero-image.const'
+import { IMAGE_SIZE_OPTIONS } from '@/shared/const/image-size.const'
 
 import { BilingualField } from './_bilingual-field'
-import { ImageSizeSelect } from './_image-size-select'
+import { HeroPositionPicker } from './_hero-position-picker'
 import { useContentStore } from '../../store/content-store'
-
-const POSITION_LABEL: Record<HeroImagePosition, string> = {
-  top: 'ზედა',
-  center: 'ცენტრი',
-  bottom: 'ქვედა',
-}
 
 export function HeroEditor() {
   const { content, updateSection } = useContentStore()
@@ -30,7 +26,12 @@ export function HeroEditor() {
   }
 
   const addImage = () => {
-    const image: HeroImage = { src: '', positionMobile: 'center', positionDesktop: 'center', size: 'md' }
+    const image: HeroImage = {
+      src: '',
+      positionMobile: { x: 50, y: 50 },
+      positionDesktop: { x: 50, y: 50 },
+      size: 'md',
+    }
     updateSection('hero', { ...hero, images: [...hero.images, image] })
   }
 
@@ -72,40 +73,46 @@ export function HeroEditor() {
               onUpload={(url) => patchImage(i, { src: url })}
               aspectRatio={16 / 9}
             />
-            <div className="flex gap-3">
-              <div className="flex-1 space-y-1">
-                <Label className="text-xs text-charcoal/50">მობილურზე</Label>
-                <Select
+            <div className="space-y-1">
+              <Label className="text-xs text-charcoal/50">გადიდება</Label>
+              <Select
+                value={image.size}
+                onValueChange={(v) => patchImage(i, { size: v as HeroImage['size'] })}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {IMAGE_SIZE_OPTIONS.map((size) => (
+                    <SelectItem key={size} value={size}>{HERO_ZOOM_LABEL[size]}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <p className="text-xs text-charcoal/40">
+              ჩამოათრიეთ ფოტო, რომ საიტზე ნაჩვენები ნაწილი ზუსტად ასე გამოჩნდეს
+            </p>
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <HeroPositionPicker
+                  label="მობილურზე"
+                  src={image.src}
                   value={image.positionMobile}
-                  onValueChange={(v) => patchImage(i, { positionMobile: v as HeroImagePosition })}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="top">{POSITION_LABEL.top}</SelectItem>
-                    <SelectItem value="center">{POSITION_LABEL.center}</SelectItem>
-                    <SelectItem value="bottom">{POSITION_LABEL.bottom}</SelectItem>
-                  </SelectContent>
-                </Select>
+                  onChange={(positionMobile) => patchImage(i, { positionMobile })}
+                  size={image.size}
+                  aspectClassName="aspect-hero-mobile"
+                />
               </div>
-              <div className="flex-1 space-y-1">
-                <Label className="text-xs text-charcoal/50">დესქტოპზე</Label>
-                <Select
+              <div className="flex-[2]">
+                <HeroPositionPicker
+                  label="დესქტოპზე"
+                  src={image.src}
                   value={image.positionDesktop}
-                  onValueChange={(v) => patchImage(i, { positionDesktop: v as HeroImagePosition })}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="top">{POSITION_LABEL.top}</SelectItem>
-                    <SelectItem value="center">{POSITION_LABEL.center}</SelectItem>
-                    <SelectItem value="bottom">{POSITION_LABEL.bottom}</SelectItem>
-                  </SelectContent>
-                </Select>
+                  onChange={(positionDesktop) => patchImage(i, { positionDesktop })}
+                  size={image.size}
+                  aspectClassName="h-hero"
+                />
               </div>
-              <ImageSizeSelect value={image.size} onChange={(size) => patchImage(i, { size })} />
             </div>
           </div>
         ))}

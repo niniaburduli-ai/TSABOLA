@@ -51,14 +51,26 @@
   --color-charcoal: #1a1a1a;
   --color-cream: #faf8f5;
   --color-border-wine: #e8e0d8;
+  --color-map-cream: #f2eae0;
   --font-display: var(--font-display);
   --animate-hero-scroll: hero-scroll 24s linear infinite;
 }
 
+/* No max-height cap: a cap would make the real crop wider than the set ratio on
+   common screens (e.g. 1366x768), breaking the admin preview's WYSIWYG guarantee.
+   Also used directly by the admin desktop focal-point picker (not aspect-video,
+   which stays Tailwind's default 16/9 for unrelated uses like news cards).
+   Ratio (not a cap) is tuned to 12/5 so header + hero fit one screen on common
+   laptop viewports (~1366x768) without forcing a scroll to see the hero text. */
 @utility h-hero {
   height: auto;
-  aspect-ratio: 16 / 9;
-  max-height: 88vh;
+  aspect-ratio: 12 / 5;
+}
+
+/* Mobile hero section's own aspect ratio — shared with the admin focal-point
+   picker so both crop identically on every device (no fixed-pixel height). */
+@utility aspect-hero-mobile {
+  aspect-ratio: 390 / 280;
 }
 
 :root {

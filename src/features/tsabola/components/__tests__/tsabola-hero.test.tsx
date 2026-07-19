@@ -7,10 +7,18 @@ import { useLanguageStore } from '../../store/language-store'
 import { TsabolaHero } from '../tsabola-hero'
 
 const HERO_IMAGES = [
-  { src: '/hero/one.jpg', positionMobile: 'top' as const, positionDesktop: 'center' as const, size: 'md' as const },
-  { src: '/hero/two.jpg', positionMobile: 'bottom' as const, positionDesktop: 'top' as const, size: 'lg' as const },
-  { src: '', positionMobile: 'center' as const, positionDesktop: 'center' as const, size: 'md' as const },
+  { src: '/hero/one.jpg', positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md' as const },
+  { src: '/hero/two.jpg', positionMobile: { x: 50, y: 100 }, positionDesktop: { x: 50, y: 0 }, size: 'lg' as const },
+  { src: '', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' as const },
 ]
+
+function mockDesktopViewport(isDesktop: boolean) {
+  window.matchMedia = vi.fn().mockReturnValue({
+    matches: isDesktop,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+  })
+}
 
 beforeEach(() => {
   useLanguageStore.setState({ lang: 'ka' })
@@ -27,20 +35,27 @@ describe('TsabolaHero', () => {
     expect(container.querySelectorAll('img').length).toBe(2)
   })
 
-  it("applies each image's mobile and desktop position classes", () => {
+  it('applies each image mobile focal point as inline object-position', () => {
+    mockDesktopViewport(false)
     const { container } = render(<TsabolaHero />)
     const images = container.querySelectorAll('img')
-    expect(images[0].className).toContain('object-top')
-    expect(images[0].className).toContain('sm:object-center')
-    expect(images[1].className).toContain('object-bottom')
-    expect(images[1].className).toContain('sm:object-top')
+    expect(images[0].style.objectPosition).toBe('50% 0%')
+    expect(images[1].style.objectPosition).toBe('50% 100%')
   })
 
-  it("applies each image's size scale class", () => {
+  it('applies each image desktop focal point as inline object-position', () => {
+    mockDesktopViewport(true)
     const { container } = render(<TsabolaHero />)
     const images = container.querySelectorAll('img')
-    expect(images[0].className).toContain('scale-100')
-    expect(images[1].className).toContain('scale-110')
+    expect(images[0].style.objectPosition).toBe('50% 50%')
+    expect(images[1].style.objectPosition).toBe('50% 0%')
+  })
+
+  it("applies each image's zoom scale class", () => {
+    const { container } = render(<TsabolaHero />)
+    const images = container.querySelectorAll('img')
+    expect(images[0].className).toContain('scale-110')
+    expect(images[1].className).toContain('scale-125')
   })
 
   it('wraps the headline instead of clipping it', () => {

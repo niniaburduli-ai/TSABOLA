@@ -1,7 +1,8 @@
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
 import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '@/features/tsabola/content/site-content';
 import { siteContentRepository } from '@/features/tsabola/repository/site-content.repository';
-import type { HeroImage, NewsItem, SectionKey, SiteContent, ThemeConfig, WineItem } from '@/features/tsabola/types';
+import type { HeroImage, HeroPosition, NewsItem, SectionKey, SiteContent, ThemeConfig, WineItem } from '@/features/tsabola/types';
+import { DEFAULT_HERO_POSITION, LEGACY_HERO_POSITION } from '@/shared/const/hero-image.const';
 import { SITE_SECTION_KEYS } from '@/shared/const/site-section.const';
 import { ServiceResult, TranslationMemory } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
@@ -16,15 +17,24 @@ function normalizeNewsItem(item: NewsItem): NewsItem {
   return { ...item, slug: item.slug || fallbackSlug, published: item.published ?? true };
 }
 
+function toHeroPosition(value: unknown): HeroPosition {
+  if (typeof value === 'string') return LEGACY_HERO_POSITION[value] ?? DEFAULT_HERO_POSITION;
+  const partial = value as Partial<HeroPosition> | undefined;
+  return {
+    x: typeof partial?.x === 'number' ? partial.x : DEFAULT_HERO_POSITION.x,
+    y: typeof partial?.y === 'number' ? partial.y : DEFAULT_HERO_POSITION.y,
+  };
+}
+
 function normalizeHeroImage(image: unknown): HeroImage {
   if (typeof image === 'string') {
-    return { src: image, positionMobile: 'top', positionDesktop: 'top', size: 'md' };
+    return { src: image, positionMobile: DEFAULT_HERO_POSITION, positionDesktop: DEFAULT_HERO_POSITION, size: 'md' };
   }
   const partial = image as Partial<HeroImage>;
   return {
     src: partial.src ?? '',
-    positionMobile: partial.positionMobile ?? 'top',
-    positionDesktop: partial.positionDesktop ?? 'top',
+    positionMobile: toHeroPosition(partial.positionMobile),
+    positionDesktop: toHeroPosition(partial.positionDesktop),
     size: partial.size ?? 'md',
   };
 }

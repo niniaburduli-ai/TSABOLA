@@ -1,6 +1,7 @@
+import type { HeroPosition } from '@/shared/const/hero-image.const'
 import type { ImageSize } from '@/shared/types/common'
 
-export type { ImageSize }
+export type { ImageSize, HeroPosition }
 
 export type L = { ka: string; en: string }
 
@@ -31,12 +32,10 @@ export type NewsItem = {
   image: string
 }
 
-export type HeroImagePosition = 'top' | 'center' | 'bottom'
-
 export type HeroImage = {
   src: string
-  positionMobile: HeroImagePosition
-  positionDesktop: HeroImagePosition
+  positionMobile: HeroPosition
+  positionDesktop: HeroPosition
   size: ImageSize
 }
 

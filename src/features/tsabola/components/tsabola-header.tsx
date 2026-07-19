@@ -77,8 +77,8 @@ export function TsabolaHeader() {
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-cream/90 dark:bg-charcoal/90 border-b border-border-wine dark:border-cream/10">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-display text-2xl font-bold text-wine tracking-wide">
+      <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
+        <Link href="/" className="font-display text-3xl font-bold text-wine tracking-wide">
           {r(t.site.name)}
         </Link>
 
@@ -87,7 +87,7 @@ export function TsabolaHeader() {
             <Link
               key={key}
               href={href}
-              className="text-sm font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200"
+              className="text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200"
             >
               {r(t.nav[key])}
             </Link>
