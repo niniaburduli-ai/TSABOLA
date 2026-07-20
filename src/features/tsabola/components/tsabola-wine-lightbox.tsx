@@ -82,13 +82,13 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
 
           <div className="md:w-3/5 p-8 flex flex-col gap-4">
             <span
-              style={badgeStyle.style}
+              style={badgeStyle.style} suppressHydrationWarning
               className={`inline-block self-start px-3 py-1 font-semibold tracking-widest uppercase border border-wine/40 text-wine ${badgeStyle.className}`}
             >
               {r(wine.typeBadge, lang)}
             </span>
 
-            <h2 style={nameStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}>
+            <h2 style={nameStyle.style} suppressHydrationWarning className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}>
               {r(wine.name, lang)}
             </h2>
 
@@ -99,7 +99,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                 {r(wine.details, lang).split('\n').map((line, i) => (
                   <p
                     key={i}
-                    style={detailsStyle.style}
+                    style={detailsStyle.style} suppressHydrationWarning
                     className={`text-charcoal/60 dark:text-cream/60 tracking-wide ${detailsStyle.className}`}
                   >
                     {line}
@@ -110,7 +110,7 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
 
             {wine.longDescription && (
               <p
-                style={longDescriptionStyle.style}
+                style={longDescriptionStyle.style} suppressHydrationWarning
                 className={`text-charcoal/70 dark:text-cream/70 leading-relaxed italic ${longDescriptionStyle.className}`}
               >
                 {r(wine.longDescription, lang)}
@@ -124,7 +124,13 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                     <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'მიირთვით' : 'Serve'}
                     </span>
-                    <span style={metaStyle.style} className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}>{wine.serveTemp}</span>
+                    <span
+                      style={metaStyle.style}
+                      suppressHydrationWarning
+                      className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}
+                    >
+                      {wine.serveTemp}
+                    </span>
                   </div>
                 )}
                 {wine.alcohol && (
@@ -132,7 +138,13 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                     <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'ალკ' : 'Alc'}
                     </span>
-                    <span style={metaStyle.style} className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}>{wine.alcohol}</span>
+                    <span
+                      style={metaStyle.style}
+                      suppressHydrationWarning
+                      className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}
+                    >
+                      {wine.alcohol}
+                    </span>
                   </div>
                 )}
                 {wine.volume && (
@@ -140,7 +152,13 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
                     <span className="text-xs text-charcoal/40 dark:text-cream/40 tracking-widest uppercase">
                       {lang === 'ka' ? 'მოცულობა' : 'Volume'}
                     </span>
-                    <span style={metaStyle.style} className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}>{wine.volume}</span>
+                    <span
+                      style={metaStyle.style}
+                      suppressHydrationWarning
+                      className={`font-semibold text-charcoal dark:text-cream ${metaStyle.className}`}
+                    >
+                      {wine.volume}
+                    </span>
                   </div>
                 )}
               </div>

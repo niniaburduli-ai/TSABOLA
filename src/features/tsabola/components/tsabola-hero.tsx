@@ -89,7 +89,7 @@ export function TsabolaHero() {
       <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6 pointer-events-none">
         <div className="flex flex-col items-center mb-1 max-w-full">
           <p
-            style={siteNameStyle.style}
+            style={siteNameStyle.style} suppressHydrationWarning
             aria-label={siteName}
             className={`animate-rise text-cream tracking-widest uppercase font-heading font-bold whitespace-nowrap mb-1 ${siteNameStyle.className}`}
           >
@@ -104,14 +104,14 @@ export function TsabolaHero() {
             </span>
           </p>
           <p
-            style={sloganStyle.style}
+            style={sloganStyle.style} suppressHydrationWarning
             className={`animate-rise text-cream/60 tracking-wide uppercase font-sans whitespace-nowrap truncate mb-3 ${sloganStyle.className}`}
           >
             {r(t.site.slogan)}
           </p>
         </div>
         <h1
-          style={headlineStyle.style}
+          style={headlineStyle.style} suppressHydrationWarning
           aria-label={headline}
           className={[
             'animate-rise animate-rise-1 text-cream',
@@ -131,13 +131,13 @@ export function TsabolaHero() {
           </span>
         </h1>
         <p
-          style={sublineStyle.style}
+          style={sublineStyle.style} suppressHydrationWarning
           className={`animate-rise animate-rise-2 text-cream/55 font-sans leading-relaxed mb-4 max-w-xs ${sublineStyle.className}`}
         >
           {r(t.hero.subline)}
         </p>
         <a
-          style={ctaStyle.style}
+          style={ctaStyle.style} suppressHydrationWarning
           href="#wines"
           className={[
             'hero-cta animate-rise animate-rise-3 px-5 py-2 border border-cream/35',

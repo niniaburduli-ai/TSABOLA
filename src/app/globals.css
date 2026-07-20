@@ -204,11 +204,21 @@
      value is already in the server-rendered HTML — no flash from a fallback size to this one. */
   .ts-responsive-text {
     font-size: var(--ts-fs-mobile) !important;
+    color: var(--ts-color-light);
   }
   @media (min-width: 640px) {
     .ts-responsive-text {
       font-size: var(--ts-fs-desktop) !important;
     }
+  }
+  /* Same race as the size rule above, for color: next-themes flips the `.dark` class on
+     <html> synchronously pre-hydration, but its `resolvedTheme` React value only updates
+     after a post-mount effect. Picking the color in JS from `resolvedTheme` left text using
+     the wrong (light) color on first paint until a theme toggle forced a re-render. Emitting
+     both variants as custom properties and letting the `.dark` class pick between them in
+     pure CSS makes the correct color present from the very first frame. */
+  .dark .ts-responsive-text {
+    color: var(--ts-color-dark);
   }
 
   .animate-hero-scroll {

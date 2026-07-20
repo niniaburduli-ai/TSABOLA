@@ -17,13 +17,13 @@ export function TsabolaAbout() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
           <p
-            style={eyebrowStyle.style}
+            style={eyebrowStyle.style} suppressHydrationWarning
             className={`font-bold tracking-widest uppercase text-wine mb-6 ${eyebrowStyle.className}`}
           >
             {r(t.nav.about)}
           </p>
           <h2
-            style={headingStyle.style}
+            style={headingStyle.style} suppressHydrationWarning
             className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${headingStyle.className}`}
           >
             {r(t.about.title)}
@@ -31,7 +31,7 @@ export function TsabolaAbout() {
           {paragraphs.map((p, i) => (
             <p
               key={i}
-              style={bodyStyle.style}
+              style={bodyStyle.style} suppressHydrationWarning
               className={`text-charcoal/70 dark:text-cream/70 leading-relaxed mb-4 ${bodyStyle.className} ${i === 0 ? 'border-l-2 border-wine pl-4' : ''}`}
             >
               {p}

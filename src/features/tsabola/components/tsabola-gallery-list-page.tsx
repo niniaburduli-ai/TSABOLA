@@ -30,13 +30,13 @@ export function TsabolaGalleryListPage({ images }: Props) {
         </Link>
         <div className="text-center mb-16">
           <p
-            style={eyebrowStyle.style}
+            style={eyebrowStyle.style} suppressHydrationWarning
             className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}
           >
             {r(t.gallery.subtitle)}
           </p>
           <h1
-            style={headingStyle.style}
+            style={headingStyle.style} suppressHydrationWarning
             className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}
           >
             {r(t.gallery.title)}

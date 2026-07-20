@@ -20,10 +20,10 @@ export function TsabolaWineCatalog() {
     <section id="wines" className="bg-cream dark:bg-charcoal py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
+          <p style={eyebrowStyle.style} suppressHydrationWarning className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
             {r(t.wines.subtitle)}
           </p>
-          <h2 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>
+          <h2 style={headingStyle.style} suppressHydrationWarning className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>
             {r(t.wines.title)}
           </h2>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />

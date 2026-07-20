@@ -42,14 +42,20 @@ export function TsabolaNewsCard({ item }: Props) {
         )}
       </div>
       <div className="flex flex-col flex-1 p-6 space-y-3">
-        <p style={dateStyle.style} className={`uppercase tracking-widest text-wine ${dateStyle.className}`}>{r(item.date)}</p>
+        <p style={dateStyle.style} suppressHydrationWarning className={`uppercase tracking-widest text-wine ${dateStyle.className}`}>{r(item.date)}</p>
         <h3
-          style={titleStyle.style}
+          style={titleStyle.style} suppressHydrationWarning
           className={`font-display font-bold text-charcoal dark:text-cream line-clamp-2 ${titleStyle.className}`}
         >
           {r(item.title)}
         </h3>
-        <p style={bodyStyle.style} className={`text-charcoal/70 dark:text-cream/70 line-clamp-3 flex-1 ${bodyStyle.className}`}>{r(item.body)}</p>
+        <p
+          style={bodyStyle.style}
+          suppressHydrationWarning
+          className={`text-charcoal/70 dark:text-cream/70 line-clamp-3 flex-1 ${bodyStyle.className}`}
+        >
+          {r(item.body)}
+        </p>
       </div>
     </Link>
   )

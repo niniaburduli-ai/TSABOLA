@@ -29,7 +29,7 @@ export function TsabolaGalleryCard({ image }: Props) {
       <div className="absolute inset-0 bg-wine/0 group-hover:bg-wine/20 transition-colors duration-300" />
       {caption && (
         <p
-          style={captionStyle.style}
+          style={captionStyle.style} suppressHydrationWarning
           className={`absolute bottom-0 left-0 right-0 p-3 text-white bg-gradient-to-t from-black/70 to-transparent ${captionStyle.className}`}
         >
           {caption}

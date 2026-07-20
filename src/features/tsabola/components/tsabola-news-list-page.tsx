@@ -29,8 +29,20 @@ export function TsabolaNewsListPage({ items }: Props) {
           ← {r(BACK_TO_MAIN_LABEL)}
         </Link>
         <div className="text-center mb-16">
-          <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>{r(t.news.subtitle)}</p>
-          <h1 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>{r(t.news.title)}</h1>
+          <p
+            style={eyebrowStyle.style}
+            suppressHydrationWarning
+            className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}
+          >
+            {r(t.news.subtitle)}
+          </p>
+          <h1
+            style={headingStyle.style}
+            suppressHydrationWarning
+            className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}
+          >
+            {r(t.news.title)}
+          </h1>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />
         </div>
         <TsabolaNewsGrid items={items} />

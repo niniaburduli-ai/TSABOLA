@@ -60,16 +60,27 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
 
       <div className="p-6 flex flex-col justify-center gap-3 flex-1 sm:order-1 sm:w-3/5">
         <span
-          style={badgeStyle.style}
+          style={badgeStyle.style} suppressHydrationWarning
           className={`inline-block self-start px-3 py-1 font-semibold tracking-widest uppercase border border-wine/40 text-wine ${badgeStyle.className}`}
         >
           {r(item.typeBadge, lang)}
         </span>
-        <h3 style={nameStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}>{r(item.name, lang)}</h3>
+        <h3
+          style={nameStyle.style}
+          suppressHydrationWarning
+          className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}
+        >
+          {r(item.name, lang)}
+        </h3>
         {item.details && (
           <div className="border-t border-wine/10 pt-3">
             {r(item.details, lang).split('\n').map((line, i) => (
-              <p key={i} style={detailsStyle.style} className={`text-charcoal/50 dark:text-cream/50 leading-relaxed ${detailsStyle.className}`}>
+              <p
+                key={i}
+                style={detailsStyle.style}
+                suppressHydrationWarning
+                className={`text-charcoal/50 dark:text-cream/50 leading-relaxed ${detailsStyle.className}`}
+              >
                 {line}
               </p>
             ))}
@@ -88,7 +99,7 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
             </span>
           </div>
         ) : (
-          <p style={priceStyle.style} className={`font-display font-bold text-wine ${priceStyle.className}`}>
+          <p style={priceStyle.style} suppressHydrationWarning className={`font-display font-bold text-wine ${priceStyle.className}`}>
             {formatWinePrice(item.price)}
           </p>
         )}

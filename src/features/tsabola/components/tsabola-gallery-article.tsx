@@ -41,10 +41,16 @@ export function TsabolaGalleryArticle({ image, prev, next }: Props) {
 
   return (
     <article className="max-w-3xl mx-auto px-6 py-16">
-      <p style={dateStyle.style} className={`uppercase tracking-widest text-wine mb-3 ${dateStyle.className}`}>{formatDate(image.date)}</p>
+      <p
+        style={dateStyle.style}
+        suppressHydrationWarning
+        className={`uppercase tracking-widest text-wine mb-3 ${dateStyle.className}`}
+      >
+        {formatDate(image.date)}
+      </p>
       {caption && (
         <h1
-          style={captionStyle.style}
+          style={captionStyle.style} suppressHydrationWarning
           className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${captionStyle.className}`}
         >
           {caption}
@@ -85,7 +91,7 @@ export function TsabolaGalleryArticle({ image, prev, next }: Props) {
 
       {description && (
         <p
-          style={descriptionStyle.style}
+          style={descriptionStyle.style} suppressHydrationWarning
           className={`text-charcoal/80 dark:text-cream/80 leading-relaxed whitespace-pre-line ${descriptionStyle.className}`}
         >
           {description}

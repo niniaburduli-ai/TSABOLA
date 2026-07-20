@@ -46,10 +46,14 @@ export function TsabolaContact() {
       />
 
       <div className="relative z-10 max-w-xl mx-auto text-center">
-        <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
+        <p style={eyebrowStyle.style} suppressHydrationWarning className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
           {r(t.contact.subtitle)}
         </p>
-        <h2 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${headingStyle.className}`}>
+        <h2
+          style={headingStyle.style}
+          suppressHydrationWarning
+          className={`font-display font-bold text-charcoal dark:text-cream mb-8 ${headingStyle.className}`}
+        >
           {r(t.contact.title)}
         </h2>
         <div className="w-12 h-0.5 bg-wine mx-auto mb-12" />
@@ -60,7 +64,7 @@ export function TsabolaContact() {
             className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <Phone className="size-4 text-wine flex-shrink-0" />
-            <span style={valueStyle.style} className={valueStyle.className}>{t.contact.phone}</span>
+            <span style={valueStyle.style} suppressHydrationWarning className={valueStyle.className}>{t.contact.phone}</span>
           </a>
           <a
             href={`https://wa.me/${t.contact.whatsapp.replace(/\D/g, '')}`}
@@ -69,7 +73,7 @@ export function TsabolaContact() {
             className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <WhatsAppIcon className="size-4 text-wine flex-shrink-0" />
-            <span style={valueStyle.style} className={valueStyle.className}>{t.contact.phone}</span>
+            <span style={valueStyle.style} suppressHydrationWarning className={valueStyle.className}>{t.contact.phone}</span>
           </a>
           <a
             href={`https://mail.google.com/mail/?view=cm&to=${t.contact.email}`}
@@ -78,7 +82,7 @@ export function TsabolaContact() {
             className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <Mail className="size-4 text-wine flex-shrink-0" />
-            <span style={valueStyle.style} className={valueStyle.className}>{t.contact.email}</span>
+            <span style={valueStyle.style} suppressHydrationWarning className={valueStyle.className}>{t.contact.email}</span>
           </a>
           <a
             href="https://www.google.com/maps/search/?api=1&query=Zemo+Khandaki,+Kaspi,+Shida+Kartli,+Georgia"
@@ -87,7 +91,7 @@ export function TsabolaContact() {
             className="flex items-center gap-3 justify-center text-charcoal/70 dark:text-cream/70 hover:text-wine transition-colors"
           >
             <MapPin className="size-4 text-wine flex-shrink-0" />
-            <span style={valueStyle.style} className={valueStyle.className}>{r(t.contact.address)}</span>
+            <span style={valueStyle.style} suppressHydrationWarning className={valueStyle.className}>{r(t.contact.address)}</span>
           </a>
         </div>
       </div>

@@ -44,10 +44,10 @@ export function TsabolaGallery({ initialImages }: Props) {
     <section id="gallery" className="bg-white dark:bg-charcoal py-16 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <p style={eyebrowStyle.style} className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
+          <p style={eyebrowStyle.style} suppressHydrationWarning className={`font-semibold tracking-widest uppercase text-wine mb-3 ${eyebrowStyle.className}`}>
             {r(t.gallery.subtitle)}
           </p>
-          <h2 style={headingStyle.style} className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>
+          <h2 style={headingStyle.style} suppressHydrationWarning className={`font-display font-bold text-charcoal dark:text-cream ${headingStyle.className}`}>
             {r(t.gallery.title)}
           </h2>
           <div className="w-12 h-0.5 bg-wine mx-auto mt-6" />
