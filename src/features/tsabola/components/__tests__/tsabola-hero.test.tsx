@@ -6,10 +6,12 @@ import { useContentStore } from '../../store/content-store'
 import { useLanguageStore } from '../../store/language-store'
 import { TsabolaHero } from '../tsabola-hero'
 
+const TAGLINE = { ka: 'ტესტი', en: 'Test' }
+
 const HERO_IMAGES = [
-  { src: '/hero/one.jpg', positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md' as const },
-  { src: '/hero/two.jpg', positionMobile: { x: 50, y: 100 }, positionDesktop: { x: 50, y: 0 }, size: 'lg' as const },
-  { src: '', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' as const },
+  { src: '/hero/one.jpg', positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md' as const, tagline: TAGLINE },
+  { src: '/hero/two.jpg', positionMobile: { x: 50, y: 100 }, positionDesktop: { x: 50, y: 0 }, size: 'lg' as const, tagline: TAGLINE },
+  { src: '', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' as const, tagline: TAGLINE },
 ]
 
 function mockDesktopViewport(isDesktop: boolean) {

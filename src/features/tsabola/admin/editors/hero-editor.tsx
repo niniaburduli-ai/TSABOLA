@@ -31,6 +31,7 @@ export function HeroEditor() {
       positionMobile: { x: 50, y: 50 },
       positionDesktop: { x: 50, y: 50 },
       size: 'md',
+      tagline: { ka: '', en: '' },
     }
     updateSection('hero', { ...hero, images: [...hero.images, image] })
   }
@@ -43,8 +44,6 @@ export function HeroEditor() {
   return (
     <div className="max-w-xl space-y-8">
       <h2 className="font-display text-2xl font-bold text-charcoal">მთავარი ბანერი</h2>
-      <BilingualField label="სათაური" value={hero.headline} onChange={update('headline')} />
-      <BilingualField label="ქვესათაური" value={hero.subline} onChange={update('subline')} />
       <BilingualField label="CTA ღილაკი" value={hero.cta} onChange={update('cta')} />
 
       <div className="space-y-4">
@@ -72,6 +71,11 @@ export function HeroEditor() {
               folder="tsabola/hero"
               onUpload={(url) => patchImage(i, { src: url })}
               aspectRatio={16 / 9}
+            />
+            <BilingualField
+              label="წარწერა (ამ ფოტოსთვის)"
+              value={image.tagline}
+              onChange={(tagline) => patchImage(i, { tagline })}
             />
             <div className="space-y-1">
               <Label className="text-xs text-charcoal/50">გადიდება</Label>

@@ -11,19 +11,16 @@ export const DEFAULT_CONTENT: SiteContent = {
     news: { ka: 'სიახლეები', en: 'News' },
   },
   hero: {
-    headline: { ka: 'კახეთის სულისკვეთება', en: 'The Spirit of Kakheti' },
-    subline: { ka: 'საოჯახო მარნის ცოცხალი ისტორია', en: 'The living history of a family winery' },
     cta: { ka: 'ღვინოები აღმოაჩინე', en: 'Discover Our Wines' },
     images: [
-      {
-        src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764139/tsabola/hero/hero-rtveli.png',
         positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
-      },
-      {
-        src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
+        tagline: { ka: 'ტრადიცია ქართლის გულიდან', en: 'Tradition from the Heart of Kartli' } },
+      { src: 'https://res.cloudinary.com/dm8ksdiiq/image/upload/v1782764150/tsabola/hero/hero-venaxi.png',
         positionMobile: { x: 50, y: 0 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
-      },
-      { src: '', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
+        tagline: { ka: 'საოჯახო მარნის ცოცხალი ისტორია', en: 'The living history of a family winery' } },
+      { src: '', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
+        tagline: { ka: 'ღვინო, რომელიც თავის ამბავს ყვება', en: 'The wine that tells its own story' } },
     ],
   },
   wines: {
@@ -32,7 +29,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     items: [
       {
         id: 'white',
-        name: { ka: 'თეთრი მშრალი', en: 'White Dry' },
+        name: { ka: 'ცაბო ჩინებული', en: 'Tsabo Chinebuli' },
         type: { ka: 'თეთრი', en: 'White' },
         typeBadge: { ka: 'თეთრი', en: 'White' },
         price: '30₾',
@@ -60,7 +57,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       },
       {
         id: 'red',
-        name: { ka: 'წითელი მშრალი', en: 'Red Dry' },
+        name: { ka: 'ცაბო დანახარული', en: 'Tsabo Danakharuli' },
         type: { ka: 'წითელი', en: 'Red' },
         typeBadge: { ka: 'წითელი', en: 'Red' },
         price: '50₾',
@@ -182,7 +179,6 @@ export const DEFAULT_CONTENT: SiteContent = {
     copy: { ka: '© 2018 ცაბო. ყველა უფლება დაცულია.', en: '© 2018 TSABO. All rights reserved.' },
   },
 }
-
 export const DEFAULT_THEME: ThemeConfig = {
   colorWine: '#722F37',
   colorCharcoal: '#1a1a1a',
@@ -193,7 +189,6 @@ export const DEFAULT_THEME: ThemeConfig = {
   bodyFont: '--font-sans',
   sections: buildDefaultSectionStyles(),
 }
-
 export const DEFAULT_VISIBILITY: SectionVisibility = {
   hero: true,
   wines: true,

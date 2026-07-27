@@ -50,10 +50,8 @@ export function resolveElementStyle(
 export const SITE_SECTION_ELEMENTS: Record<SectionKey, SectionElementDef[]> = {
   hero: [
     { key: 'siteName', label: 'საიტის სახელი', kind: 'heading', role: 'cream' },
-    { key: 'slogan', label: 'სლოგანი', kind: 'body', role: 'cream-muted' },
-    { key: 'headline', label: 'სათაური', kind: 'heading', role: 'cream' },
-    { key: 'subline', label: 'ქვესათაური', kind: 'body', role: 'cream-soft' },
-    { key: 'cta', label: 'ღილაკი', kind: 'heading', role: 'cream' },
+    { key: 'tagline', label: 'წარწერა (სურათის მიხედვით)', kind: 'body', role: 'cream' },
+    { key: 'cta', label: 'ღილაკი', kind: 'heading', role: 'cream-muted' },
   ],
   wines: [
     { key: 'eyebrow', label: 'ზედწარწერა', kind: 'body', role: 'wine' },
@@ -97,7 +95,7 @@ export const SITE_SECTION_ELEMENTS: Record<SectionKey, SectionElementDef[]> = {
 
 // Each element's natural font-size in rem — the anchor that HEADING_SIZE_MULTIPLIER scales from.
 export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>> = {
-  hero: { siteName: 1.875, slogan: 1, headline: 1.875, subline: 1, cta: 1 },
+  hero: { siteName: 1.875, tagline: 1.25, cta: 1 },
   wines: {
     eyebrow: 0.75, heading: 3,
     badge: 0.875, name: 1.5, details: 0.75, price: 1.25,
@@ -117,19 +115,17 @@ export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>
 }
 
 // Per-element mobile override for SECTION_ELEMENT_BASE_REM — falls back to the desktop rem
-// when a section/key isn't listed here. Hero mobile hierarchy: siteName and headline match
-// each other (the two "voices" of the hero) and both shrink from their desktop size to fit a
-// ~340px column without wrapping past 2 lines; everything else (slogan/subline/cta) sits a
-// tier below siteName so the hierarchy stays readable at a glance.
+// when a section/key isn't listed here. siteName shrinks to fit a ~340px column without
+// wrapping; tagline/cta sit a tier below so the hierarchy stays readable at a glance.
 export const SECTION_ELEMENT_BASE_REM_MOBILE: Partial<Record<SectionKey, Record<string, number>>> = {
-  hero: { siteName: 1.25, slogan: 0.75, headline: 1.25, subline: 0.75, cta: 0.875 },
+  hero: { siteName: 1.25, tagline: 0.9375, cta: 0.875 },
 }
 
 // Every element starts fully inherited from the global theme (no overrides) until an admin
 // customizes it in the Section Style tab.
 export function buildDefaultSectionStyles(): Record<SectionKey, SectionStyle> {
   const keys = Object.keys(SITE_SECTION_ELEMENTS) as SectionKey[]
-  return keys.reduce((acc, key) => {
+  const styles = keys.reduce((acc, key) => {
     const elements = SITE_SECTION_ELEMENTS[key].reduce((els, el) => {
       els[el.key] = {}
       return els
@@ -137,5 +133,10 @@ export function buildDefaultSectionStyles(): Record<SectionKey, SectionStyle> {
     acc[key] = { elements }
     return acc
   }, {} as Record<SectionKey, SectionStyle>)
+
+  // Hero tagline is body-kind (keep body sizing) but reads as one voice with the CTA,
+  // so it defaults to the heading font instead of the inherited body font.
+  styles.hero.elements.tagline.font = '--font-space-grotesk'
+  return styles
 }
 

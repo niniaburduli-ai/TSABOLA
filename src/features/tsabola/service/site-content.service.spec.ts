@@ -70,7 +70,7 @@ describe('getSiteContent', () => {
   });
 
   const baseContent = {
-    hero: { headline: { ka: '', en: '' }, subline: { ka: '', en: '' }, cta: { ka: '', en: '' }, images: [] as unknown[] },
+    hero: { cta: { ka: '', en: '' }, images: [] as unknown[] },
     news: { title: { ka: '', en: '' }, subtitle: { ka: '', en: '' }, items: [] as unknown[] },
   };
 
@@ -83,9 +83,10 @@ describe('getSiteContent', () => {
 
     const result = await getSiteContent();
 
+    const tagline = { ka: '', en: '' };
     expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
-      { src: '/a.jpg', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
-      { src: '/b.jpg', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
+      { src: '/a.jpg', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md', tagline },
+      { src: '/b.jpg', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md', tagline },
     ]);
   });
 
@@ -100,13 +101,13 @@ describe('getSiteContent', () => {
     const result = await getSiteContent();
 
     expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
-      { src: '/a.jpg', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 100 }, size: 'lg' },
+      { src: '/a.jpg', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 100 }, size: 'lg', tagline: { ka: '', en: '' } },
     ]);
   });
 
   it('leaves already-migrated x/y hero image objects untouched', async () => {
     const images = [
-      { src: '/a.jpg', positionMobile: { x: 20, y: 80 }, positionDesktop: { x: 60, y: 10 }, size: 'lg' },
+      { src: '/a.jpg', positionMobile: { x: 20, y: 80 }, positionDesktop: { x: 60, y: 10 }, size: 'lg', tagline: { ka: '', en: '' } },
     ];
     vi.mocked(siteContentRepository.findOne).mockResolvedValueOnce({
       content: { ...baseContent, hero: { ...baseContent.hero, images } },
@@ -130,7 +131,7 @@ describe('getSiteContent', () => {
     const result = await getSiteContent();
 
     expect((result.data as { content: SiteContent }).content.hero.images).toEqual([
-      { src: '/a.jpg', positionMobile: { x: 30, y: 40 }, positionDesktop: { x: 70, y: 60 }, size: 'md' },
+      { src: '/a.jpg', positionMobile: { x: 30, y: 40 }, positionDesktop: { x: 70, y: 60 }, size: 'md', tagline: { ka: '', en: '' } },
     ]);
   });
 

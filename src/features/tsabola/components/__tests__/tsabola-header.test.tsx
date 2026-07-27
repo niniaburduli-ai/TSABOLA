@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('TsabolaHeader', () => {
   it('renders site name in ka', () => {
     render(<TsabolaHeader />)
-    expect(screen.getByText('ცაბო')).toBeInTheDocument()
+    expect(screen.getAllByText('ცაბო').length).toBeGreaterThan(0)
   })
 
   it('renders KA and EN flag buttons', () => {
@@ -31,6 +31,14 @@ describe('TsabolaHeader', () => {
 
   it('renders nav links', () => {
     render(<TsabolaHeader />)
-    expect(screen.getByText('ღვინოები')).toBeInTheDocument()
+    expect(screen.getAllByText('ღვინოები').length).toBeGreaterThan(0)
+  })
+
+  it('renders a mobile menu toggle that opens a nav drawer', () => {
+    render(<TsabolaHeader />)
+    const toggle = screen.getByRole('button', { name: 'Open navigation' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
   })
 })

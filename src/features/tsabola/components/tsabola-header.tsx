@@ -1,9 +1,9 @@
 'use client'
 
-import { Moon, Sun } from 'lucide-react'
+import { Menu, Moon, Sun, X } from 'lucide-react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
-import { useSyncExternalStore } from 'react'
+import { Fragment, useState, useSyncExternalStore } from 'react'
 
 import { useLang } from '../hooks/use-lang'
 
@@ -70,64 +70,132 @@ export function TsabolaHeader() {
   const { t, lang, setLang, r } = useLang()
   const { resolvedTheme, setTheme } = useTheme()
   const mounted = useSyncExternalStore(subscribeNoop, getClientSnapshot, getServerSnapshot)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const isDark = mounted && resolvedTheme === 'dark'
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-cream/90 dark:bg-charcoal/90 border-b border-border-wine dark:border-cream/10">
-      <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
-        <Link href="/" className="font-display text-3xl font-bold text-wine tracking-wide">
-          {r(t.site.name)}
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ key, href }) => (
-            <Link
-              key={key}
-              href={href}
-              className="text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200"
-            >
-              {r(t.nav[key])}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
+    <Fragment>
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-cream/90 dark:bg-charcoal/90 border-b border-border-wine dark:border-cream/10">
+        <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => setLang('ka')}
-              aria-label="ქართული"
-              className={[
-                'rounded-full transition-opacity duration-200',
-                lang === 'ka' ? 'opacity-100 ring-2 ring-wine ring-offset-2 ring-offset-cream dark:ring-offset-charcoal' : 'opacity-40 hover:opacity-70',
-              ].join(' ')}
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open navigation"
+              aria-expanded={menuOpen}
+              className="w-8 h-8 flex items-center justify-center rounded text-charcoal/60 dark:text-cream/60 hover:text-wine transition-colors"
             >
-              <GeorgiaFlagIcon />
+              <Menu className="size-5" />
             </button>
+
+            <Link href="/" className="font-display text-3xl font-bold text-wine tracking-wide">
+              {r(t.site.name)}
+            </Link>
+          </div>
+
+          <nav className="hidden md:flex items-center gap-8">
+            {NAV_LINKS.map(({ key, href }) => (
+              <Link
+                key={key}
+                href={href}
+                className="text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200"
+              >
+                {r(t.nav[key])}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setLang('ka')}
+                aria-label="ქართული"
+                className={[
+                  'rounded-full transition-opacity duration-200',
+                  lang === 'ka' ? 'opacity-100 ring-2 ring-wine ring-offset-2 ring-offset-cream dark:ring-offset-charcoal' : 'opacity-40 hover:opacity-70',
+                ].join(' ')}
+              >
+                <GeorgiaFlagIcon />
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                aria-label="English"
+                className={[
+                  'rounded-full transition-opacity duration-200',
+                  lang === 'en' ? 'opacity-100 ring-2 ring-wine ring-offset-2 ring-offset-cream dark:ring-offset-charcoal' : 'opacity-40 hover:opacity-70',
+                ].join(' ')}
+              >
+                <UkFlagIcon />
+              </button>
+            </div>
+
             <button
               type="button"
-              onClick={() => setLang('en')}
-              aria-label="English"
-              className={[
-                'rounded-full transition-opacity duration-200',
-                lang === 'en' ? 'opacity-100 ring-2 ring-wine ring-offset-2 ring-offset-cream dark:ring-offset-charcoal' : 'opacity-40 hover:opacity-70',
-              ].join(' ')}
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to night mode'}
+              className="w-8 h-8 flex items-center justify-center rounded text-charcoal/60 dark:text-cream/60 hover:text-wine transition-colors"
             >
-              <UkFlagIcon />
+              {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div
+        className={[
+          'fixed inset-0 z-50',
+          menuOpen ? 'pointer-events-auto' : 'pointer-events-none',
+        ].join(' ')}
+        aria-hidden={!menuOpen}
+      >
+        <button
+          type="button"
+          tabIndex={menuOpen ? 0 : -1}
+          aria-label="Close navigation"
+          onClick={() => setMenuOpen(false)}
+          className={[
+            'absolute inset-0 bg-charcoal/40 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none',
+            menuOpen ? 'opacity-100' : 'opacity-0',
+          ].join(' ')}
+        />
+        <div
+          className={[
+            'absolute inset-y-0 left-0 flex w-72 flex-col bg-cream dark:bg-charcoal shadow-xl',
+            'transition-transform duration-300 ease-out motion-reduce:transition-none',
+            menuOpen ? 'translate-x-0' : '-translate-x-full',
+          ].join(' ')}
+        >
+          <div className="flex items-center justify-between border-b border-border-wine dark:border-cream/10 px-4 h-12">
+            <span className="font-display text-lg font-bold text-wine tracking-wide">
+              {r(t.site.name)}
+            </span>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close navigation"
+              className="w-8 h-8 flex items-center justify-center rounded text-charcoal/60 dark:text-cream/60 hover:text-wine transition-colors"
+            >
+              <X className="size-5" />
             </button>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to night mode'}
-            className="w-8 h-8 flex items-center justify-center rounded text-charcoal/60 dark:text-cream/60 hover:text-wine transition-colors"
-          >
-            {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-          </button>
+          <nav className="flex flex-col gap-1 p-4">
+            {NAV_LINKS.map(({ key, href }) => (
+              <Link
+                key={key}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-2"
+              >
+                {r(t.nav[key])}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
-    </header>
+    </Fragment>
   )
 }

@@ -16,37 +16,44 @@ import type { HeroImage } from '../types'
 const SLIDE_PAUSE_MS = 2000
 
 const FALLBACK_IMAGES: HeroImage[] = [
-  { src: '/TSABO WHITE.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
-  { src: '/TSABO RED.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md' },
+  {
+    src: '/TSABO WHITE.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
+    tagline: { ka: 'ტრადიცია ქართლის გულიდან', en: 'Tradition from the Heart of Kartli' },
+  },
+  {
+    src: '/TSABO RED.png', positionMobile: { x: 50, y: 50 }, positionDesktop: { x: 50, y: 50 }, size: 'md',
+    tagline: { ka: 'საოჯახო მარნის ცოცხალი ისტორია', en: 'The living history of a family winery' },
+  },
 ]
 
 export function TsabolaHero() {
   const { t, r } = useLang()
   const siteNameStyle = useTextStyle('hero', 'siteName')
-  const sloganStyle = useTextStyle('hero', 'slogan')
-  const headlineStyle = useTextStyle('hero', 'headline')
-  const sublineStyle = useTextStyle('hero', 'subline')
+  const taglineStyle = useTextStyle('hero', 'tagline')
   const ctaStyle = useTextStyle('hero', 'cta')
   const siteName = r(t.site.name)
-  const headline = r(t.hero.headline)
   const [active, setActive] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 640px)')
-  const [siteNameTyped, headlineTyped] = useSequentialTypewriter([siteName, headline], active)
 
   const images: HeroImage[] = (() => {
     const filtered = (t.hero.images ?? []).filter((image): image is HeroImage => Boolean(image?.src))
     return filtered.length >= 1 ? filtered : FALLBACK_IMAGES
   })()
 
+  // Each slide retypes both lines together (replayKey=active) — line 1 is always the site
+  // name, line 2 is that slide's own tagline (see hero.images[].tagline).
+  const tagline = r(images[active].tagline)
+  const [siteNameTyped, taglineTyped] = useSequentialTypewriter([siteName, tagline], active)
+
   useEffect(() => {
     if (lightboxOpen) return
-    if (!headlineTyped.done) return
+    if (!taglineTyped.done) return
     const id = setTimeout(() => {
       setActive(prev => (prev + 1) % images.length)
     }, SLIDE_PAUSE_MS)
     return () => clearTimeout(id)
-  }, [headlineTyped.done, images.length, lightboxOpen])
+  }, [taglineTyped.done, images.length, lightboxOpen])
 
   return (
     <section id="hero" className="relative w-full aspect-hero-mobile sm:h-hero overflow-hidden bg-charcoal">
@@ -87,55 +94,41 @@ export function TsabolaHero() {
 
       {/* Text content — bottom center, compact */}
       <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center text-center px-6 pb-6 pointer-events-none">
-        <div className="flex flex-col items-center mb-1 max-w-full">
-          <p
-            style={siteNameStyle.style} suppressHydrationWarning
-            aria-label={siteName}
-            className={`animate-rise text-cream tracking-widest uppercase font-heading font-bold whitespace-nowrap mb-1 ${siteNameStyle.className}`}
-          >
-            <span aria-hidden="true">
-              {siteNameTyped.display}
-              <span
-                className={[
-                  'inline-block w-px h-4 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
-                  siteNameTyped.typing ? 'animate-pulse' : 'opacity-0',
-                ].join(' ')}
-              />
-            </span>
-          </p>
-          <p
-            style={sloganStyle.style} suppressHydrationWarning
-            className={`animate-rise text-cream/60 tracking-wide uppercase font-sans whitespace-nowrap truncate mb-3 ${sloganStyle.className}`}
-          >
-            {r(t.site.slogan)}
-          </p>
-        </div>
+        <p
+          style={siteNameStyle.style} suppressHydrationWarning
+          aria-label={siteName}
+          className={`animate-rise text-cream tracking-widest uppercase font-heading font-bold whitespace-nowrap mb-2 ${siteNameStyle.className}`}
+        >
+          <span aria-hidden="true">
+            {siteNameTyped.display}
+            <span
+              className={[
+                'inline-block w-px h-4 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
+                siteNameTyped.typing ? 'animate-pulse' : 'opacity-0',
+              ].join(' ')}
+            />
+          </span>
+        </p>
         <h1
-          style={headlineStyle.style} suppressHydrationWarning
-          aria-label={headline}
+          style={taglineStyle.style} suppressHydrationWarning
+          aria-label={tagline}
           className={[
             'animate-rise animate-rise-1 text-cream',
-            'font-heading font-bold leading-snug mb-1',
-            'max-w-full sm:max-w-2xl whitespace-normal sm:whitespace-nowrap text-balance',
-            headlineStyle.className,
+            'font-heading tracking-wide leading-snug mb-4',
+            'max-w-full sm:max-w-xl whitespace-normal text-balance',
+            taglineStyle.className,
           ].join(' ')}
         >
           <span aria-hidden="true">
-            {headlineTyped.display}
+            {taglineTyped.display}
             <span
               className={[
-                'inline-block w-px h-5 sm:h-7 ml-0.5 -mb-1 bg-cream/70 align-middle',
-                headlineTyped.typing ? 'animate-pulse' : 'opacity-0',
+                'inline-block w-px h-4 sm:h-6 ml-0.5 -mb-1 bg-cream/70 align-middle',
+                taglineTyped.typing ? 'animate-pulse' : 'opacity-0',
               ].join(' ')}
             />
           </span>
         </h1>
-        <p
-          style={sublineStyle.style} suppressHydrationWarning
-          className={`animate-rise animate-rise-2 text-cream/55 font-sans leading-relaxed mb-4 max-w-xs ${sublineStyle.className}`}
-        >
-          {r(t.hero.subline)}
-        </p>
         <a
           style={ctaStyle.style} suppressHydrationWarning
           href="#wines"

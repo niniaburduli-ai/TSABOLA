@@ -34,7 +34,13 @@ function toHeroPosition(value: unknown): HeroPosition {
 
 function normalizeHeroImage(image: unknown): HeroImage {
   if (typeof image === 'string') {
-    return { src: image, positionMobile: DEFAULT_HERO_POSITION, positionDesktop: DEFAULT_HERO_POSITION, size: 'md' };
+    return {
+      src: image,
+      positionMobile: DEFAULT_HERO_POSITION,
+      positionDesktop: DEFAULT_HERO_POSITION,
+      size: 'md',
+      tagline: { ka: '', en: '' },
+    };
   }
   const partial = image as Partial<HeroImage>;
   return {
@@ -42,6 +48,7 @@ function normalizeHeroImage(image: unknown): HeroImage {
     positionMobile: toHeroPosition(partial.positionMobile),
     positionDesktop: toHeroPosition(partial.positionDesktop),
     size: partial.size ?? 'md',
+    tagline: partial.tagline ?? { ka: '', en: '' },
   };
 }
 
