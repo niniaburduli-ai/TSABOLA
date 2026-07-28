@@ -119,6 +119,7 @@ export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>
 // wrapping; tagline/cta sit a tier below so the hierarchy stays readable at a glance.
 export const SECTION_ELEMENT_BASE_REM_MOBILE: Partial<Record<SectionKey, Record<string, number>>> = {
   hero: { siteName: 1.25, tagline: 0.9375, cta: 0.875 },
+  about: { heading: 1.75 },
 }
 
 // Every element starts fully inherited from the global theme (no overrides) until an admin

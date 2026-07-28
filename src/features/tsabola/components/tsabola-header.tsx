@@ -188,7 +188,7 @@ export function TsabolaHeader() {
                 key={key}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-2"
+                className="text-sm md:text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-2"
               >
                 {r(t.nav[key])}
               </Link>
