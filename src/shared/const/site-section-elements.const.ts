@@ -95,7 +95,7 @@ export const SITE_SECTION_ELEMENTS: Record<SectionKey, SectionElementDef[]> = {
 
 // Each element's natural font-size in rem — the anchor that HEADING_SIZE_MULTIPLIER scales from.
 export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>> = {
-  hero: { siteName: 1.875, tagline: 1.25, cta: 1 },
+  hero: { siteName: 1.875, tagline: 1.5, cta: 1 },
   wines: {
     eyebrow: 0.75, heading: 3,
     badge: 0.875, name: 1.5, details: 0.75, price: 1.25,
@@ -119,6 +119,10 @@ export const SECTION_ELEMENT_BASE_REM: Record<SectionKey, Record<string, number>
 // wrapping; tagline/cta sit a tier below so the hierarchy stays readable at a glance.
 export const SECTION_ELEMENT_BASE_REM_MOBILE: Partial<Record<SectionKey, Record<string, number>>> = {
   hero: { siteName: 1.25, tagline: 0.9375, cta: 0.875 },
+  wines: { heading: 1.5 },
+  news: { heading: 1.5 },
+  gallery: { heading: 1.5 },
+  contact: { heading: 1.5 },
   about: { heading: 1.75 },
 }
 
