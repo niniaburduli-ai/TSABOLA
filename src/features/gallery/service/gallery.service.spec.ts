@@ -4,6 +4,7 @@ vi.mock('@/features/gallery/repository/gallery.repository', () => ({
   galleryRepository: {
     findById: vi.fn(),
     updateById: vi.fn(),
+    deleteById: vi.fn(),
   },
 }));
 vi.mock('@/shared/utils/resolve-bilingual-field', () => ({
@@ -12,12 +13,18 @@ vi.mock('@/shared/utils/resolve-bilingual-field', () => ({
 vi.mock('@/features/translation-queue/service/translation-queue.service', () => ({
   enqueueTranslation: vi.fn(),
 }));
+vi.mock('@/shared/lib/cloudinary', () => ({
+  cloudinaryManager: {
+    destroy: vi.fn(),
+  },
+}));
 
 import { galleryRepository } from '@/features/gallery/repository/gallery.repository';
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
+import { cloudinaryManager } from '@/shared/lib/cloudinary';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
 
-import { updateGalleryImage } from './gallery.service';
+import { deleteGalleryImage, updateGalleryImage } from './gallery.service';
 
 const BASE_DOC = {
   _id: { toString: () => 'abc123' },
@@ -87,5 +94,44 @@ describe('updateGalleryImage', () => {
     vi.mocked(galleryRepository.findById).mockResolvedValueOnce(null);
     const result = await updateGalleryImage('missing', { slug: 'x' });
     expect(result.status).toBe(404);
+  });
+});
+
+describe('deleteGalleryImage', () => {
+  beforeEach(() => {
+    vi.mocked(galleryRepository.findById).mockReset();
+    vi.mocked(galleryRepository.deleteById).mockReset();
+    vi.mocked(cloudinaryManager.destroy).mockReset();
+  });
+
+  it('destroys the Cloudinary asset after deleting the Mongo record', async () => {
+    vi.mocked(galleryRepository.findById).mockResolvedValueOnce(BASE_DOC as never);
+    vi.mocked(galleryRepository.deleteById).mockResolvedValueOnce(undefined);
+    vi.mocked(cloudinaryManager.destroy).mockResolvedValueOnce(undefined);
+
+    const result = await deleteGalleryImage('abc123');
+
+    expect(galleryRepository.deleteById).toHaveBeenCalledWith('abc123');
+    expect(cloudinaryManager.destroy).toHaveBeenCalledWith('pub-1');
+    expect(result.status).toBe(200);
+  });
+
+  it('still succeeds when the Cloudinary destroy call fails', async () => {
+    vi.mocked(galleryRepository.findById).mockResolvedValueOnce(BASE_DOC as never);
+    vi.mocked(galleryRepository.deleteById).mockResolvedValueOnce(undefined);
+    vi.mocked(cloudinaryManager.destroy).mockRejectedValueOnce(new Error('not found'));
+
+    const result = await deleteGalleryImage('abc123');
+
+    expect(result.status).toBe(200);
+  });
+
+  it('skips Cloudinary destroy when the record no longer exists', async () => {
+    vi.mocked(galleryRepository.findById).mockResolvedValueOnce(null);
+    vi.mocked(galleryRepository.deleteById).mockResolvedValueOnce(undefined);
+
+    await deleteGalleryImage('missing');
+
+    expect(cloudinaryManager.destroy).not.toHaveBeenCalled();
   });
 });

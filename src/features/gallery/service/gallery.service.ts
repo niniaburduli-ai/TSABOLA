@@ -4,6 +4,7 @@ import { GalleryImage } from '@/features/gallery/types/gallery.types';
 import { UpdateGalleryImageType } from '@/features/gallery/validations/gallery.validation';
 import { enqueueTranslation } from '@/features/translation-queue/service/translation-queue.service';
 import { DEFAULT_HERO_POSITION } from '@/shared/const/hero-image.const';
+import { cloudinaryManager } from '@/shared/lib/cloudinary';
 import { ServiceResult } from '@/shared/types/common';
 import { resolveBilingualField } from '@/shared/utils/resolve-bilingual-field';
 import { slugify } from '@/shared/utils/slugify';
@@ -92,6 +93,16 @@ export async function updateGalleryImage(
 }
 
 export async function deleteGalleryImage(id: string): Promise<ServiceResult<null>> {
+  const existing = await galleryRepository.findById(id);
   await galleryRepository.deleteById(id);
+
+  if (existing?.publicId) {
+    try {
+      await cloudinaryManager.destroy(existing.publicId);
+    } catch {
+      // Mongo record is already gone; a stray Cloudinary asset is cleaned up by the audit script.
+    }
+  }
+
   return { data: null, status: 200 };
 }
