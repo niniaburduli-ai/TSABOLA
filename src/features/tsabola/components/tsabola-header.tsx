@@ -199,7 +199,7 @@ export function TsabolaHeader() {
                 key={key}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="text-sm font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-1.5"
+                className="text-xs font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-1"
               >
                 {r(t.nav[key])}
               </Link>
