@@ -3,12 +3,15 @@
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
+import { TopLikedChart } from './_top-liked-chart'
+
 type DashboardStats = {
   wines: number
   news: { total: number; published: number }
   gallery: { total: number; published: number }
   users: { total: number; admins: number }
   contentUpdatedAt: string | null
+  topLikedWines: { wineId: string; name: string; count: number }[]
 }
 
 type SessionUser = { name?: string | null }
@@ -70,6 +73,8 @@ export function DashboardEditor() {
               </div>
             ))}
           </div>
+
+          <TopLikedChart wines={stats.topLikedWines} />
 
           <p className="text-xs text-charcoal/40 pt-4 border-t border-border-wine">
             ბოლო შენახვა: {updatedLabel}

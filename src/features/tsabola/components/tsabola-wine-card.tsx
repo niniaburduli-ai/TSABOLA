@@ -1,5 +1,6 @@
 'use client'
 
+import { WineLikeButton } from '@/features/wine-likes/components/wine-like-button'
 import { IMAGE_SIZE_SCALE_CLASS } from '@/shared/const/image-size.const'
 import { formatWinePrice } from '@/shared/utils/format'
 
@@ -30,33 +31,36 @@ export function TsabolaWineCard({ item, lang, onOpen }: Props) {
       ].join(' ')}
     >
       {/* Image */}
-      {item.image ? (
-        <button
-          type="button"
-          onClick={() => onOpen(item)}
-          aria-label={r(item.name, lang)}
-          className={
-            'w-full h-80 sm:h-auto sm:w-2/5 sm:order-2 sm:self-stretch bg-cream/20 block ' +
-            'overflow-hidden cursor-pointer focus:outline-none ' +
-            'focus-visible:ring-2 focus-visible:ring-wine/50'
-          }
-        >
-          <div className="h-full w-full group-hover:animate-wine-float">
-            <img
-              src={item.image}
-              alt={r(item.name, lang)}
-              className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${IMAGE_SIZE_SCALE_CLASS[item.imageSize]}`}
-              // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
-              style={{ objectPosition: `${item.position.x}% ${item.position.y}%` }}
-            />
-          </div>
-        </button>
-      ) : (
-        <div
-          data-placeholder="true"
-          className="w-full h-80 sm:h-auto sm:w-2/5 sm:order-2 sm:self-stretch bg-gradient-to-br from-wine/10 via-cream to-charcoal/10"
-        />
-      )}
+      <div className="relative w-full h-80 sm:h-auto sm:w-2/5 sm:order-2 sm:self-stretch">
+        {item.image ? (
+          <button
+            type="button"
+            onClick={() => onOpen(item)}
+            aria-label={r(item.name, lang)}
+            className={
+              'w-full h-full bg-cream/20 block ' +
+              'overflow-hidden cursor-pointer focus:outline-none ' +
+              'focus-visible:ring-2 focus-visible:ring-wine/50'
+            }
+          >
+            <div className="h-full w-full group-hover:animate-wine-float">
+              <img
+                src={item.image}
+                alt={r(item.name, lang)}
+                className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${IMAGE_SIZE_SCALE_CLASS[item.imageSize]}`}
+                // Continuous focal point (0-100%) has no static Tailwind utility — inline style is the only way to express it.
+                style={{ objectPosition: `${item.position.x}% ${item.position.y}%` }}
+              />
+            </div>
+          </button>
+        ) : (
+          <div
+            data-placeholder="true"
+            className="w-full h-full bg-gradient-to-br from-wine/10 via-cream to-charcoal/10"
+          />
+        )}
+        <WineLikeButton wineId={item.id} className="absolute top-3 right-3 z-10" />
+      </div>
 
       <div className="p-6 flex flex-col justify-center gap-3 flex-1 sm:order-1 sm:w-3/5">
         <span

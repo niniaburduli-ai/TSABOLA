@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from 'react'
 
+import { useHydrateWineLikes } from '@/features/wine-likes/hooks/use-wine-likes'
+
 import { TsabolaWineCard } from './tsabola-wine-card'
 import { TsabolaWineLightbox } from './tsabola-wine-lightbox'
 import { useLang } from '../hooks/use-lang'
@@ -11,6 +13,7 @@ import type { WineItem } from '../types'
 
 export function TsabolaWineCatalog() {
   const { t, lang, r } = useLang()
+  useHydrateWineLikes()
   const eyebrowStyle = useTextStyle('wines', 'eyebrow')
   const headingStyle = useTextStyle('wines', 'heading')
   const [activeWine, setActiveWine] = useState<WineItem | null>(null)

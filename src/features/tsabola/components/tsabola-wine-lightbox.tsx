@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
+import { WineLikeButton } from '@/features/wine-likes/components/wine-like-button'
+
 import { r } from '../hooks/use-lang'
 import { useTextStyle } from '../hooks/use-text-style'
 
@@ -81,12 +83,15 @@ export function TsabolaWineLightbox({ wine, lang, open, onClose }: Props) {
           </div>
 
           <div className="md:w-3/5 p-8 flex flex-col gap-4">
-            <span
-              style={badgeStyle.style} suppressHydrationWarning
-              className={`inline-block self-start px-3 py-1 font-semibold tracking-widest uppercase border border-wine/40 text-wine ${badgeStyle.className}`}
-            >
-              {r(wine.typeBadge, lang)}
-            </span>
+            <div className="flex items-center justify-between gap-3">
+              <span
+                style={badgeStyle.style} suppressHydrationWarning
+                className={`inline-block self-start px-3 py-1 font-semibold tracking-widest uppercase border border-wine/40 text-wine ${badgeStyle.className}`}
+              >
+                {r(wine.typeBadge, lang)}
+              </span>
+              <WineLikeButton wineId={wine.id} />
+            </div>
 
             <h2 style={nameStyle.style} suppressHydrationWarning className={`font-display font-bold text-charcoal dark:text-cream ${nameStyle.className}`}>
               {r(wine.name, lang)}
