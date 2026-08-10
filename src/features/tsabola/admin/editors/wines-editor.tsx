@@ -45,7 +45,7 @@ export function WinesEditor() {
   }
 
   const addWine = () => {
-    const newWine: WineItem = { ...EMPTY_WINE, id: `wine-${content.wines.items.length + 1}` }
+    const newWine: WineItem = { ...EMPTY_WINE, id: crypto.randomUUID() }
     setWines([...content.wines.items, newWine])
     setExpandedId(newWine.id)
   }
