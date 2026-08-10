@@ -171,8 +171,10 @@ export const DEFAULT_CONTENT: SiteContent = {
     title: { ka: 'კონტაქტი', en: 'Contact' },
     subtitle: { ka: 'დაგვიკავშირდით', en: 'Get in touch' },
     email: 'tsabowinery@gmail.com',
-    phone: '+995 599 615 438',
+    phone: '+995 599 61 54 38',
     whatsapp: '+995599615438',
+    // eslint-disable-next-line max-len
+    facebook: 'https://www.facebook.com/search/top?q=tsabo%20saojaxo%20marani%20%E1%83%A1%E1%83%90%E1%83%9D%E1%83%AF%E1%83%90%E1%83%AE%E1%83%9D%20%E1%83%9B%E1%83%90%E1%83%A0%E1%83%90%E1%83%9C%E1%83%98%20%E1%83%AA%E1%83%90%E1%83%91%E1%83%9D',
     address: { ka: 'ზემო ხანდაკი, შიდა ქართლი, საქართველო', en: 'Zemo Khandaki, Shida Kartli, Georgia' },
   },
   footer: {

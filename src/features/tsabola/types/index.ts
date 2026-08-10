@@ -56,7 +56,7 @@ export type SiteContent = {
   news: { title: L; subtitle: L; items: NewsItem[] }
   gallery: { title: L; subtitle: L; images: GalleryStaticImage[] }
   about: { title: L; body: L; imageAlt: L; image: string; imageSize: ImageSize; position: HeroPosition }
-  contact: { title: L; subtitle: L; email: string; phone: string; whatsapp: string; address: L }
+  contact: { title: L; subtitle: L; email: string; phone: string; whatsapp: string; facebook: string; address: L }
   footer: { copy: L }
 }
 

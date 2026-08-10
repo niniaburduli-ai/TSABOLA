@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 
+import { FloatingContactRail } from '@/features/tsabola/components/floating-contact-rail';
 import { TsabolaContentProvider } from '@/features/tsabola/components/tsabola-content-provider';
 import { DEFAULT_CONTENT, DEFAULT_THEME, DEFAULT_VISIBILITY } from '@/features/tsabola/content/site-content';
 import { getSiteContent } from '@/features/tsabola/service/site-content.service';
@@ -32,6 +33,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
         >
           <div className="min-h-screen bg-background">
             {children}
+            <FloatingContactRail />
           </div>
         </TsabolaContentProvider>
       </StoreProvider>

@@ -42,6 +42,13 @@ export function ContactEditor() {
           onChange={(e) => updateSection('contact', { ...contact, phone: e.target.value })}
         />
       </div>
+      <div>
+        <Label className="text-sm text-charcoal/70">Facebook ლინკი</Label>
+        <Input
+          value={contact.facebook}
+          onChange={(e) => updateSection('contact', { ...contact, facebook: e.target.value })}
+        />
+      </div>
     </div>
   )
 }
