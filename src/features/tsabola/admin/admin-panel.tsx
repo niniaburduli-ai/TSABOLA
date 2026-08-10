@@ -52,14 +52,20 @@ export function AdminPanel({ initialContent, initialTheme, initialVisibility }: 
   }
 
   const [active, setActive] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const Editor = EDITOR_MAP[active] ?? DashboardEditor
 
   return (
     <div className="force-light-theme flex flex-col h-screen bg-white">
-      <AdminHeader />
+      <AdminHeader onMenuClick={() => setSidebarOpen(true)} />
       <div className="flex flex-1 overflow-hidden">
-        <AdminSidebar active={active} onSelect={setActive} />
-        <main className="flex-1 overflow-y-auto p-8">
+        <AdminSidebar
+          active={active}
+          onSelect={setActive}
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+        />
+        <main className="flex-1 overflow-y-auto p-4 md:p-8">
           <Editor />
         </main>
       </div>

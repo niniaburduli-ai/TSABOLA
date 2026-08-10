@@ -61,11 +61,11 @@ export function DashboardEditor() {
 
       {stats && (
         <>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             {tiles.map((tile) => (
-              <div key={tile.label} className="border border-border-wine rounded p-4 bg-cream/40">
+              <div key={tile.label} className="border border-border-wine rounded p-3 bg-cream/40 sm:p-4">
                 <p className="text-xs font-medium text-charcoal/50 uppercase tracking-wide">{tile.label}</p>
-                <p className="text-2xl font-bold text-wine mt-1">{tile.value}</p>
+                <p className="text-xl font-bold text-wine mt-1 whitespace-nowrap sm:text-2xl">{tile.value}</p>
                 {tile.hint && <p className="text-xs text-charcoal/40 mt-1">{tile.hint}</p>}
               </div>
             ))}

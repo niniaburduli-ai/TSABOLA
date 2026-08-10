@@ -1,5 +1,6 @@
 'use client'
 
+import { Menu } from 'lucide-react'
 import { useState } from 'react'
 
 import { useContentStore } from '../store/content-store'
@@ -8,7 +9,11 @@ import type { SiteContent, ThemeConfig, SectionVisibility } from '../types'
 
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
 
-export function AdminHeader() {
+type Props = {
+  onMenuClick: () => void
+}
+
+export function AdminHeader({ onMenuClick }: Props) {
   const [status, setStatus] = useState<SaveStatus>('idle')
   const { content, theme, visibility, setContent } = useContentStore()
 
@@ -45,9 +50,24 @@ export function AdminHeader() {
         'bg-charcoal text-cream hover:bg-charcoal/80'
 
   return (
-    <div className="bg-amber-50 border-b border-amber-200 px-6 py-2 text-xs text-amber-800 font-medium flex items-center justify-between">
-      <span>⚠ ლოკალური გარემო — ავტორიზაციის გარეშე</span>
-      <div className="flex items-center gap-4">
+    <div
+      className={
+        'bg-amber-50 border-b border-amber-200 px-3 py-2 text-xs text-amber-800 font-medium sm:px-6 ' +
+        'flex flex-col gap-2 md:flex-row md:items-center md:justify-between'
+      }
+    >
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onMenuClick}
+          aria-label="მენიუს გახსნა"
+          className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded hover:bg-amber-100 md:hidden"
+        >
+          <Menu className="size-4" />
+        </button>
+        <span className="truncate">⚠ ლოკალური გარემო — ავტორიზაციის გარეშე</span>
+      </div>
+      <div className="flex items-center gap-3 pl-9 md:pl-0">
         <button
           onClick={handleSave}
           disabled={status === 'saving'}
