@@ -16,6 +16,7 @@ export async function GET(
   const size = ALLOWED_SIZES.includes(Number(sizeParam)) ? Number(sizeParam) : 192;
   const maskable = req.nextUrl.searchParams.get('maskable') === '1';
   const fontSize = maskable ? size * 0.32 : size * 0.5;
+  const label = req.nextUrl.searchParams.get('label')?.slice(0, 1).toUpperCase() || 'T';
 
   return new ImageResponse(
     (
@@ -37,7 +38,7 @@ export async function GET(
             fontFamily: 'sans-serif',
           }}
         >
-          T
+          {label}
         </span>
       </div>
     ),
