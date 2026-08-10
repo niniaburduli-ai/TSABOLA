@@ -19,7 +19,7 @@ export async function GET(
   const label = req.nextUrl.searchParams.get('label')?.slice(0, 1).toUpperCase();
   const background = dark ? CHARCOAL : CREAM;
   const logoScale = maskable ? 0.62 : 0.82;
-  const logoUrl = new URL('/logo.png', req.nextUrl.origin).toString();
+  const logoUrl = new URL('/favicon-source.png', req.nextUrl.origin).toString();
 
   return new ImageResponse(
     (

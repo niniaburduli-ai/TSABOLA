@@ -9,7 +9,7 @@ export const contentType = 'image/png';
 const CHARCOAL = '#1a1a1a';
 
 export default function AppleIcon() {
-  const logo = readFileSync(join(process.cwd(), 'public/logo.png')).toString('base64');
+  const logo = readFileSync(join(process.cwd(), 'public/favicon-source.png')).toString('base64');
 
   return new ImageResponse(
     (

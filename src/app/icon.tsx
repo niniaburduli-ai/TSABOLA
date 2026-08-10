@@ -18,7 +18,7 @@ export function generateImageMetadata() {
 
 export default function Icon({ id }: { id: string }) {
   const px = SIZES.includes(Number(id)) ? Number(id) : 32;
-  const logo = readFileSync(join(process.cwd(), 'public/logo.png')).toString('base64');
+  const logo = readFileSync(join(process.cwd(), 'public/favicon-source.png')).toString('base64');
 
   return new ImageResponse(
     (
