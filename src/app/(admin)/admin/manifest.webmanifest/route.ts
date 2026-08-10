@@ -4,7 +4,7 @@ export function GET() {
   return NextResponse.json(
     {
       name: 'Tsabola Admin',
-      short_name: 'Admin',
+      short_name: 'Tsabola Admin',
       description: 'Tsabola site content admin panel',
       start_url: '/admin',
       scope: '/admin',

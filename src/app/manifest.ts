@@ -19,7 +19,7 @@ export default function manifest(): MetadataRoute.Manifest {
     shortcuts: [
       {
         name: 'ადმინ პანელი',
-        short_name: 'Admin',
+        short_name: 'Tsabola Admin',
         description: 'საიტის კონტენტის მართვა',
         url: '/admin',
         icons: [{ src: '/icons/192?label=A', sizes: '192x192', type: 'image/png' }],
