@@ -16,5 +16,14 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: '/icons/512', sizes: '512x512', type: 'image/png', purpose: 'any' },
       { src: '/icons/512?maskable=1', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
+    shortcuts: [
+      {
+        name: 'ადმინ პანელი',
+        short_name: 'Admin',
+        description: 'საიტის კონტენტის მართვა',
+        url: '/admin',
+        icons: [{ src: '/icons/192?label=A', sizes: '192x192', type: 'image/png' }],
+      },
+    ],
   };
 }
