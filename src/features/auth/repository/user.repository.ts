@@ -19,6 +19,16 @@ export const userRepository = {
     return { items };
   },
 
+  async count(): Promise<number> {
+    await mongo.connect();
+    return UserModel.countDocuments();
+  },
+
+  async countByRole(role: 'user' | 'admin'): Promise<number> {
+    await mongo.connect();
+    return UserModel.countDocuments({ role });
+  },
+
   async create(data: Omit<UserDocument, '_id' | 'createdAt' | 'updatedAt'>): Promise<string> {
     await mongo.connect();
     const doc = await UserModel.create(data);

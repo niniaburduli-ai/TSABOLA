@@ -11,6 +11,7 @@ import { slugify } from '@/shared/utils/slugify';
 type PendingTranslation = { path: string; sourceKa: string };
 
 type SiteContentPayload = { content: unknown; theme: unknown; visibility: unknown };
+type SiteContentWithMeta = SiteContentPayload & { updatedAt: string | null };
 
 function normalizeNewsItem(item: NewsItem): NewsItem {
   const fallbackSlug = slugify(item.title?.en ?? '') || slugify(item.title?.ka ?? '') || item.id;
@@ -108,6 +109,7 @@ function normalizeContent(content: SiteContent): SiteContent {
     news: { ...content.news, items: content.news.items.map(normalizeNewsItem) },
     gallery: normalizeGallerySection(content.gallery),
     about: normalizeAboutSection(content.about),
+    contact: { ...DEFAULT_CONTENT.contact, ...content.contact },
   };
 }
 
@@ -185,19 +187,14 @@ async function resolveBilingualTree(
   return node;
 }
 
-export async function getSiteContent(): Promise<ServiceResult<SiteContentPayload>> {
+export async function getSiteContent(): Promise<ServiceResult<SiteContentWithMeta>> {
   const doc = await siteContentRepository.findOne();
-  if (!doc) {
-    return {
-      data: { content: normalizeContent(DEFAULT_CONTENT), theme: DEFAULT_THEME, visibility: DEFAULT_VISIBILITY },
-      status: 200,
-    };
-  }
   return {
     data: {
-      content: normalizeContent(doc.content as SiteContent),
-      theme: normalizeTheme(doc.theme),
-      visibility: doc.visibility,
+      content: normalizeContent((doc?.content as SiteContent) ?? DEFAULT_CONTENT),
+      theme: doc ? normalizeTheme(doc.theme) : DEFAULT_THEME,
+      visibility: doc?.visibility ?? DEFAULT_VISIBILITY,
+      updatedAt: doc?.updatedAt ? new Date(doc.updatedAt).toISOString() : null,
     },
     status: 200,
   };

@@ -5,12 +5,14 @@ vi.mock('@/features/auth/repository/user.repository', () => ({
     findByEmail: vi.fn(),
     findById: vi.fn(),
     create: vi.fn(),
+    count: vi.fn(),
+    countByRole: vi.fn(),
   },
 }));
 
 import { userRepository } from '@/features/auth/repository/user.repository';
 
-import { loginService, registerService, getUserByIdService } from './auth.service';
+import { loginService, registerService, getUserByIdService, getUserCountsService } from './auth.service';
 
 const mockRepo = vi.mocked(userRepository);
 
@@ -85,5 +87,18 @@ describe('getUserByIdService', () => {
     const result = await getUserByIdService('507f1f77bcf86cd799439011');
     expect(result.status).toBe(200);
     expect(result.data).toMatchObject({ name: 'Alice', role: 'admin' });
+  });
+});
+
+describe('getUserCountsService', () => {
+  beforeEach(() => vi.clearAllMocks());
+
+  it('returns total and admin counts', async () => {
+    mockRepo.count.mockResolvedValueOnce(10);
+    mockRepo.countByRole.mockResolvedValueOnce(2);
+    const result = await getUserCountsService();
+    expect(mockRepo.countByRole).toHaveBeenCalledWith('admin');
+    expect(result.status).toBe(200);
+    expect(result.data).toEqual({ total: 10, admins: 2 });
   });
 });

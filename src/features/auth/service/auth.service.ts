@@ -57,6 +57,11 @@ export async function getUserByIdService(id: string): Promise<ServiceResult<User
   };
 }
 
+export async function getUserCountsService(): Promise<ServiceResult<{ total: number; admins: number }>> {
+  const [total, admins] = await Promise.all([userRepository.count(), userRepository.countByRole('admin')]);
+  return { data: { total, admins }, status: 200 };
+}
+
 export async function upsertOAuthUserService(data: {
   email: string;
   name: string;

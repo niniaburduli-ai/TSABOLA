@@ -14,6 +14,7 @@ vi.mock('@/features/auth/schema/user.schema', () => ({
     create: vi.fn(),
     findByIdAndUpdate: vi.fn(),
     findByIdAndDelete: vi.fn(),
+    countDocuments: vi.fn(),
   },
 }));
 
@@ -57,5 +58,20 @@ describe('userRepository', () => {
     (mockModel.create as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ _id: { toString: () => '507f1f77bcf86cd799439011' } });
     const id = await userRepository.create({ name: 'Bob', email: 'bob@test.com', passwordHash: 'hash', role: 'user' });
     expect(id).toBe('507f1f77bcf86cd799439011');
+  });
+
+  it('count connects and returns the total document count', async () => {
+    (mockModel.countDocuments as ReturnType<typeof vi.fn>).mockResolvedValueOnce(42);
+    const total = await userRepository.count();
+    expect(mockMongo.connect).toHaveBeenCalled();
+    expect(mockModel.countDocuments).toHaveBeenCalledWith();
+    expect(total).toBe(42);
+  });
+
+  it('countByRole filters the count by role', async () => {
+    (mockModel.countDocuments as ReturnType<typeof vi.fn>).mockResolvedValueOnce(3);
+    const total = await userRepository.countByRole('admin');
+    expect(mockModel.countDocuments).toHaveBeenCalledWith({ role: 'admin' });
+    expect(total).toBe(3);
   });
 });

@@ -6,6 +6,7 @@ import { AdminHeader } from './admin-header'
 import { AdminSidebar } from './admin-sidebar'
 import { AboutEditor } from './editors/about-editor'
 import { ContactEditor } from './editors/contact-editor'
+import { DashboardEditor } from './editors/dashboard-editor'
 import { FooterEditor } from './editors/footer-editor'
 import { GalleryEditor } from './editors/gallery-editor'
 import { HeroEditor } from './editors/hero-editor'
@@ -21,6 +22,7 @@ import { useContentStore } from '../store/content-store'
 import type { SectionVisibility, SiteContent, ThemeConfig } from '../types'
 
 const EDITOR_MAP: Record<string, React.ComponentType> = {
+  dashboard: DashboardEditor,
   site: SiteEditor,
   hero: HeroEditor,
   wines: WinesEditor,
@@ -49,8 +51,8 @@ export function AdminPanel({ initialContent, initialTheme, initialVisibility }: 
     hydrated.current = true
   }
 
-  const [active, setActive] = useState('site')
-  const Editor = EDITOR_MAP[active] ?? SiteEditor
+  const [active, setActive] = useState('dashboard')
+  const Editor = EDITOR_MAP[active] ?? DashboardEditor
 
   return (
     <div className="force-light-theme flex flex-col h-screen bg-white">

@@ -9,6 +9,7 @@ const CONTENT_SECTIONS = ['site', 'hero', 'wines', 'news', 'gallery', 'about', '
 const APPEARANCE_SECTIONS = ['theme', 'sectionStyle', 'visibility'] as const
 
 const SECTION_LABELS: Record<string, string> = {
+  dashboard: 'დაშბორდი',
   site: 'საიტი',
   hero: 'მთავარი ბანერი',
   wines: 'ღვინოები',
@@ -31,6 +32,10 @@ export function AdminSidebar({ active, onSelect }: Props) {
   return (
     <aside className="w-60 flex-shrink-0 border-r border-border-wine bg-cream h-full overflow-y-auto">
       <div className="p-4">
+        <button onClick={() => onSelect('dashboard')} className={`${linkClass('dashboard')} mb-4`}>
+          {SECTION_LABELS.dashboard}
+        </button>
+
         <p className="text-xs font-bold tracking-widest uppercase text-charcoal/40 mb-2 px-3">კონტენტი</p>
         {CONTENT_SECTIONS.map((s) => (
           <button key={s} onClick={() => onSelect(s)} className={linkClass(s)}>

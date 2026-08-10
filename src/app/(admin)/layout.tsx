@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { type ReactNode } from 'react'
 
 import { auth } from '@/shared/lib/auth'
+import { SessionProvider } from '@/shared/providers/session-provider'
 
 import type { Metadata } from 'next'
 
@@ -26,5 +27,5 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   if (!session) redirect('/sign-in')
   if (sessionUser?.role !== 'admin') redirect('/')
 
-  return <>{children}</>
+  return <SessionProvider>{children}</SessionProvider>
 }

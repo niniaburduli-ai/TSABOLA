@@ -94,7 +94,7 @@ export const SignUpForm = () => {
               type="button"
               variant="outline"
               className="w-full"
-              onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+              onClick={() => signIn('google', { callbackUrl: '/admin' })}
             >
               Continue with Google
             </Button>
