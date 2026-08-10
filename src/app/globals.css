@@ -51,6 +51,11 @@
   --color-charcoal: #1a1a1a;
   --color-cream: #faf8f5;
   --color-border-wine: #e8e0d8;
+  --color-chart-wine-1: #8C3A44;
+  --color-chart-wine-2: #C98A3A;
+  --color-chart-wine-3: #3F8A5C;
+  --color-chart-wine-4: #5C4CA0;
+  --color-chart-wine-other: #9C9690;
   --font-display: var(--font-display);
   --animate-hero-scroll: hero-scroll 24s linear infinite;
 }
