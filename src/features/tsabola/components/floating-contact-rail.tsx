@@ -71,7 +71,7 @@ export function FloatingContactRail() {
       onPointerUp={handlePointerUp}
       onClickCapture={handleClickCapture}
     >
-      <div className="flex flex-col gap-2 rounded-l-xl bg-wine/60 p-2 shadow-lg backdrop-blur-md">
+      <div className="flex flex-col gap-2 rounded-l-xl bg-transparent p-2">
         {links.map(({ key, icon: Icon, label, href, onClick }) =>
           href ? (
             <a
