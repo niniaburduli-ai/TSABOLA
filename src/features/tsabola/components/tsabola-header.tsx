@@ -171,7 +171,7 @@ export function TsabolaHeader() {
         />
         <div
           className={[
-            'absolute inset-y-0 left-0 flex w-72 flex-col bg-cream dark:bg-charcoal shadow-xl',
+            'absolute inset-y-0 left-0 flex w-64 flex-col bg-cream dark:bg-charcoal shadow-xl',
             'transition-transform duration-300 ease-out motion-reduce:transition-none',
             menuOpen ? 'translate-x-0' : '-translate-x-full',
           ].join(' ')}
@@ -193,13 +193,13 @@ export function TsabolaHeader() {
             </button>
           </div>
 
-          <nav className="flex flex-col gap-1 p-4">
+          <nav className="flex flex-col gap-1 p-3">
             {NAV_LINKS.map(({ key, href }) => (
               <Link
                 key={key}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="text-sm md:text-lg font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-2"
+                className="text-sm font-medium text-charcoal dark:text-cream hover:text-wine transition-colors duration-200 py-1.5"
               >
                 {r(t.nav[key])}
               </Link>
