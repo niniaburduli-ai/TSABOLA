@@ -25,12 +25,12 @@ export function WineLikeButton({ wineId, className = '' }: Props) {
       aria-label={liked ? 'გულის მოხსნა' : 'დალაიქება'}
       aria-pressed={liked}
       className={[
-        'flex items-center gap-1 rounded-full bg-cream/90 dark:bg-charcoal/90 px-2 py-1',
-        'text-xs font-semibold text-wine shadow transition-colors hover:bg-cream dark:hover:bg-charcoal',
+        'flex items-center gap-1.5 rounded-full bg-cream/90 dark:bg-charcoal/90 px-3 py-1.5',
+        'text-sm font-semibold text-wine shadow transition-colors hover:bg-cream dark:hover:bg-charcoal',
         className,
       ].join(' ')}
     >
-      <Heart className={`size-4 ${liked ? 'fill-wine text-wine' : 'text-wine'}`} />
+      <Heart className={`size-5 ${liked ? 'fill-wine text-wine' : 'text-wine'}`} />
       <span>{count}</span>
     </button>
   );
