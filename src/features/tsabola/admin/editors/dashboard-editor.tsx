@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
-import { TopLikedChart } from './_top-liked-chart'
+import { TopLikedChart } from './top-liked-chart'
 
 type DashboardStats = {
   wines: number
