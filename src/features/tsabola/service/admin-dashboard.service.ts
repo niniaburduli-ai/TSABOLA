@@ -2,6 +2,7 @@ import { getUserCountsService } from '@/features/auth/service/auth.service';
 import { listGalleryImages } from '@/features/gallery/service/gallery.service';
 import { getSiteContent } from '@/features/tsabola/service/site-content.service';
 import type { SiteContent } from '@/features/tsabola/types';
+import { getAllLikedWinesSortedService } from '@/features/wine-likes/service/wine-like.service';
 import { ServiceResult } from '@/shared/types/common';
 
 export type AdminDashboardStats = {
@@ -10,13 +11,15 @@ export type AdminDashboardStats = {
   gallery: { total: number; published: number };
   users: { total: number; admins: number };
   contentUpdatedAt: string | null;
+  topLikedWines: { wineId: string; name: string; count: number }[];
 };
 
 export async function getAdminDashboardStats(): Promise<ServiceResult<AdminDashboardStats>> {
-  const [siteContentResult, galleryResult, usersResult] = await Promise.all([
+  const [siteContentResult, galleryResult, usersResult, likedWinesResult] = await Promise.all([
     getSiteContent(),
     listGalleryImages(),
     getUserCountsService(),
+    getAllLikedWinesSortedService(),
   ]);
 
   const siteContentData = siteContentResult.data;
@@ -25,6 +28,16 @@ export async function getAdminDashboardStats(): Promise<ServiceResult<AdminDashb
 
   const galleryImages = 'error' in galleryResult.data ? [] : galleryResult.data;
   const users = 'error' in usersResult.data ? { total: 0, admins: 0 } : usersResult.data;
+  const likeCounts = 'error' in likedWinesResult.data ? [] : likedWinesResult.data;
+  const countByWineId = new Map(likeCounts.map((entry) => [entry.wineId, entry.count]));
+
+  const topLikedWines = (content?.wines.items ?? [])
+    .map((wine) => ({
+      wineId: wine.id,
+      name: wine.name.ka || wine.name.en,
+      count: countByWineId.get(wine.id) ?? 0,
+    }))
+    .sort((a, b) => b.count - a.count);
 
   return {
     data: {
@@ -39,6 +52,7 @@ export async function getAdminDashboardStats(): Promise<ServiceResult<AdminDashb
       },
       users,
       contentUpdatedAt,
+      topLikedWines,
     },
     status: 200,
   };
