@@ -115,6 +115,15 @@ export function TsabolaHeader() {
           </nav>
 
           <div className="flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to night mode'}
+              className="w-8 h-8 flex items-center justify-center rounded text-charcoal/60 dark:text-cream/60 hover:text-wine transition-colors"
+            >
+              {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            </button>
+
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -139,15 +148,6 @@ export function TsabolaHeader() {
                 <UkFlagIcon />
               </button>
             </div>
-
-            <button
-              type="button"
-              onClick={() => setTheme(isDark ? 'light' : 'dark')}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to night mode'}
-              className="w-8 h-8 flex items-center justify-center rounded text-charcoal/60 dark:text-cream/60 hover:text-wine transition-colors"
-            >
-              {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-            </button>
           </div>
         </div>
       </header>
