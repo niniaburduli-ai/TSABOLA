@@ -108,7 +108,7 @@ export function NewsEditor() {
               <button
                 onClick={() => moveItem(i, -1)}
                 disabled={i === 0}
-                className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+                className="p-1.5 border border-border-wine rounded text-charcoal/70 hover:bg-cream hover:text-wine disabled:opacity-30"
                 aria-label="ზემოთ გადატანა"
               >
                 <ChevronUp className="w-4 h-4" />
@@ -116,7 +116,7 @@ export function NewsEditor() {
               <button
                 onClick={() => moveItem(i, 1)}
                 disabled={i === news.items.length - 1}
-                className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+                className="p-1.5 border border-border-wine rounded text-charcoal/70 hover:bg-cream hover:text-wine disabled:opacity-30"
                 aria-label="ქვემოთ გადატანა"
               >
                 <ChevronDown className="w-4 h-4" />

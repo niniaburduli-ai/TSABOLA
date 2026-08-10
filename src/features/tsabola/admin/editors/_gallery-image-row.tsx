@@ -38,17 +38,17 @@ export function GalleryImageRow({
         <img src={image.url} alt="" className="w-16 h-16 object-cover rounded flex-shrink-0" />
         <button
           onClick={onToggle}
-          className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2 flex-1"
+          className="font-medium text-charcoal hover:text-wine text-left flex items-center gap-2 flex-1 min-w-0"
         >
-          {image.caption.ka || image.caption.en || image.slug || 'უსახელო სურათი'}
+          <span className="truncate">{image.caption.ka || image.caption.en || image.slug || 'უსახელო სურათი'}</span>
           {image.published === false && (
-            <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60">დრაფტი</span>
+            <span className="text-xs px-2 py-0.5 rounded bg-charcoal/10 text-charcoal/60 flex-shrink-0">დრაფტი</span>
           )}
         </button>
         <button
           onClick={onDelete}
           disabled={deleting}
-          className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50"
+          className="text-xs px-2 py-1 border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50 flex-shrink-0"
         >
           {deleting ? '…' : 'წაშლა'}
         </button>

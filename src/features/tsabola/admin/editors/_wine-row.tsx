@@ -44,7 +44,7 @@ export function WineRow({ wine, index, isFirst, isLast, expanded, onToggleExpand
           <button
             onClick={() => onMove(-1)}
             disabled={isFirst}
-            className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+            className="p-1.5 border border-border-wine rounded text-charcoal/70 hover:bg-cream hover:text-wine disabled:opacity-30"
             aria-label="ზემოთ გადატანა"
           >
             <ChevronUp className="w-4 h-4" />
@@ -52,7 +52,7 @@ export function WineRow({ wine, index, isFirst, isLast, expanded, onToggleExpand
           <button
             onClick={() => onMove(1)}
             disabled={isLast}
-            className="p-1.5 border rounded hover:bg-cream disabled:opacity-30"
+            className="p-1.5 border border-border-wine rounded text-charcoal/70 hover:bg-cream hover:text-wine disabled:opacity-30"
             aria-label="ქვემოთ გადატანა"
           >
             <ChevronDown className="w-4 h-4" />
