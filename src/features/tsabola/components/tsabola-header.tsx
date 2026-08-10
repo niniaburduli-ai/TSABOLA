@@ -92,10 +92,10 @@ export function TsabolaHeader() {
             <Link href="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="" className="h-9 w-9" />
               <span className="flex flex-col leading-tight">
-                <span className="font-display text-2xl font-bold text-wine tracking-wide sm:text-3xl">
+                <span className="font-display text-xl font-bold text-wine tracking-wide sm:text-2xl">
                   {r(t.site.name)}
                 </span>
-                <span className="text-xs text-charcoal/50 dark:text-cream/50">
+                <span className="text-sm text-charcoal/50 dark:text-cream/50">
                   {r(t.site.slogan)}
                 </span>
               </span>
@@ -114,7 +114,7 @@ export function TsabolaHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center justify-center gap-3 sm:justify-start">
+          <div className="flex items-center justify-start gap-3">
             <div className="flex items-center gap-2">
               <button
                 type="button"
