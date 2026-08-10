@@ -1,11 +1,11 @@
 'use client'
 
-import { Facebook, GripVertical, Link2, MessageCircle, Phone } from 'lucide-react'
+import { Facebook, Link2, MessageCircle, Phone } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 import { useLang } from '../hooks/use-lang'
 
-import type { PointerEvent as ReactPointerEvent } from 'react'
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from 'react'
 
 const MIN_TOP_PERCENT = 8
 const MAX_TOP_PERCENT = 92
@@ -23,12 +23,12 @@ export function FloatingContactRail() {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const handlePointerDown = (e: ReactPointerEvent<HTMLButtonElement>) => {
+  const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId)
     dragStateRef.current = { startY: e.clientY, startTop: topPercent, dragging: false }
   }
 
-  const handlePointerMove = (e: ReactPointerEvent<HTMLButtonElement>) => {
+  const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     const drag = dragStateRef.current
     const deltaY = e.clientY - drag.startY
     if (Math.abs(deltaY) > DRAG_THRESHOLD_PX) drag.dragging = true
@@ -38,8 +38,16 @@ export function FloatingContactRail() {
     setTopPercent(nextTop)
   }
 
-  const handlePointerUp = (e: ReactPointerEvent<HTMLButtonElement>) => {
+  const handlePointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId)
+  }
+
+  const handleClickCapture = (e: ReactMouseEvent<HTMLDivElement>) => {
+    if (dragStateRef.current.dragging) {
+      e.preventDefault()
+      e.stopPropagation()
+      dragStateRef.current.dragging = false
+    }
   }
 
   const links = [
@@ -56,8 +64,12 @@ export function FloatingContactRail() {
 
   return (
     <div
-      className="fixed right-0 z-50 flex items-center"
+      className="fixed right-0 z-50 touch-none cursor-grab select-none active:cursor-grabbing"
       style={{ top: `${topPercent}%`, transform: 'translateY(-50%)' }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onClickCapture={handleClickCapture}
     >
       <div className="flex flex-col gap-2 rounded-l-xl bg-wine p-2 shadow-lg">
         {links.map(({ key, icon: Icon, label, href, onClick }) =>
@@ -85,17 +97,6 @@ export function FloatingContactRail() {
           )
         )}
       </div>
-      <button
-        type="button"
-        aria-label="საკონტაქტო პანელის გადაადგილება"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        className="flex size-9 flex-shrink-0 cursor-grab touch-none items-center justify-center
-          rounded-l-lg bg-wine text-cream shadow-lg active:cursor-grabbing"
-      >
-        <GripVertical className="size-5" />
-      </button>
     </div>
   )
 }
