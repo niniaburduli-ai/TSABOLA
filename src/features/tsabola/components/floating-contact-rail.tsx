@@ -13,7 +13,6 @@ const DRAG_THRESHOLD_PX = 4
 
 export function FloatingContactRail() {
   const { t } = useLang()
-  const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [topPercent, setTopPercent] = useState(50)
   const dragStateRef = useRef({ startY: 0, startTop: 50, dragging: false })
@@ -41,7 +40,6 @@ export function FloatingContactRail() {
 
   const handlePointerUp = (e: ReactPointerEvent<HTMLButtonElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId)
-    if (!dragStateRef.current.dragging) setOpen((prev) => !prev)
   }
 
   const links = [
@@ -60,14 +58,8 @@ export function FloatingContactRail() {
     <div
       className="fixed right-0 z-50 flex items-center"
       style={{ top: `${topPercent}%`, transform: 'translateY(-50%)' }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
     >
-      <div
-        className={`flex flex-col gap-2 rounded-l-xl bg-wine p-2 shadow-lg transition-transform duration-300 ease-out ${
-          open ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
+      <div className="flex flex-col gap-2 rounded-l-xl bg-wine p-2 shadow-lg">
         {links.map(({ key, icon: Icon, label, href, onClick }) =>
           href ? (
             <a
@@ -95,7 +87,7 @@ export function FloatingContactRail() {
       </div>
       <button
         type="button"
-        aria-label="საკონტაქტო პანელი"
+        aria-label="საკონტაქტო პანელის გადაადგილება"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
