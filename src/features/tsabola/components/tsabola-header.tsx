@@ -114,7 +114,7 @@ export function TsabolaHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center justify-start gap-3">
+          <div className="flex items-center justify-end gap-3">
             <div className="flex items-center gap-2">
               <button
                 type="button"

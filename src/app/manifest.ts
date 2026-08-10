@@ -22,7 +22,7 @@ export default function manifest(): MetadataRoute.Manifest {
         short_name: 'Tsabola Admin',
         description: 'საიტის კონტენტის მართვა',
         url: '/admin',
-        icons: [{ src: '/icons/192?label=A', sizes: '192x192', type: 'image/png' }],
+        icons: [{ src: '/icons/192?bg=dark', sizes: '192x192', type: 'image/png' }],
       },
     ],
   };

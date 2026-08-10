@@ -6,6 +6,7 @@ export const runtime = 'edge';
 
 const ALLOWED_SIZES = [192, 512];
 const CREAM = '#faf8f5';
+const CHARCOAL = '#1a1a1a';
 
 export async function GET(
   req: NextRequest,
@@ -14,7 +15,9 @@ export async function GET(
   const { size: sizeParam } = await params;
   const size = ALLOWED_SIZES.includes(Number(sizeParam)) ? Number(sizeParam) : 192;
   const maskable = req.nextUrl.searchParams.get('maskable') === '1';
+  const dark = req.nextUrl.searchParams.get('bg') === 'dark';
   const label = req.nextUrl.searchParams.get('label')?.slice(0, 1).toUpperCase();
+  const background = dark ? CHARCOAL : CREAM;
   const logoScale = maskable ? 0.62 : 0.82;
   const logoUrl = new URL('/logo.png', req.nextUrl.origin).toString();
 
@@ -27,7 +30,7 @@ export async function GET(
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: CREAM,
+          background,
         }}
       >
         {label ? (
