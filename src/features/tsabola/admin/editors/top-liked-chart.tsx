@@ -91,13 +91,20 @@ export function TopLikedChart({ wines }: Props) {
         </div>
 
         <div className="flex w-full flex-col gap-2">
-          {slices.map((slice) => (
-            <div key={slice.key} className="flex items-center gap-2">
-              <span className={`size-2.5 shrink-0 rounded-full ${slice.dot}`} />
-              <span className="min-w-0 flex-1 truncate text-sm text-charcoal/70">{slice.name}</span>
-              <span className="shrink-0 text-sm font-bold text-wine">{slice.count}</span>
-            </div>
-          ))}
+          {slices.map((slice) => {
+            const percent = total > 0 ? Math.round((slice.count / total) * 100) : 0
+            return (
+              <div key={slice.key} className="flex items-center gap-2">
+                <span className={`size-2.5 shrink-0 rounded-full ${slice.dot}`} />
+                <span className="max-w-40 truncate text-sm text-charcoal/70">{slice.name}</span>
+                <span className="shrink-0 text-sm font-bold text-wine">
+                  {slice.count}
+                  <span className="text-charcoal/40 font-normal">/{total}</span>
+                </span>
+                <span className="shrink-0 text-xs text-charcoal/50">({percent}%)</span>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
